@@ -15,7 +15,7 @@ const oswald = Oswald({
 
 const Featured = () => {
   return (
-    <div className="w-full mt-24 bg-white/50">
+    <div className="w-full mt-24 bg-white/50 overflow-clip">
       <div className="container mx-auto px-2 lg:px-8 py-16 lg:py-20">
         <h2 className={`text-5xl ${pacifico.className} text-center mb-10`}>
           Latest Addition

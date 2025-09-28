@@ -16,7 +16,7 @@ const oswald = Oswald({
 
 const WhoIAm = () => {
   return (
-    <div className="max-w-4xl w-full mx-auto grid md:grid-cols-2 gap-4 p-2 relative max-md:overflow-clip">
+    <div className="max-w-4xl w-full mx-auto grid md:grid-cols-2 gap-4 p-2 relative max-lg:overflow-clip">
         <Image src={"/doodles/doodle-1.svg"} alt="doodle" className="absolute -top-10 md:-top-20 -left-10 md:-left-20" width={200} height={200} />
         <Image src={"/doodles/doodle-2.svg"} alt="doodle" className="absolute -bottom-10 md:-bottom-20 -right-20 z-[-1]" width={200} height={200} />
         <Image src={"/doodles/doodle-3.svg"} alt="doodle" className="absolute max-md:hidden -top-10 md:-top-30 -right-10 md:-right-20 z-[-1]" width={200} height={200} />
