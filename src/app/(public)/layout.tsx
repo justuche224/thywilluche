@@ -1,4 +1,5 @@
 import Header from "@/components/shared/header";
+import Footer from "@/components/shared/footer";
 import React from "react";
 
 const PublicLayout = ({ children }: { children: React.ReactNode }) => {
@@ -6,6 +7,7 @@ const PublicLayout = ({ children }: { children: React.ReactNode }) => {
     <>
       <Header />
       {children}
+      <Footer />
     </>
   );
 };
