@@ -25,6 +25,7 @@ const Pattern = () => {
           </defs>
           <rect filter="url(#sandTexture)" height="100%" width="100%" />
         </svg>
+        <div className="geometric-overlay" />
       </div>
     </StyledWrapper>
   );
@@ -40,12 +41,58 @@ const StyledWrapper = styled.div`
     height: 100%;
     background: #edf5ef;
     overflow: hidden;
+    position: relative;
   }
   .sandpaper-svg {
     width: 100%;
     height: 100%;
     display: block;
     opacity: 0.85;
+  }
+  .geometric-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      135deg,
+      rgba(72, 187, 120, 0.08) 0%,
+      transparent 25%,
+      transparent 75%,
+      rgba(72, 187, 120, 0.06) 100%
+    );
+    z-index: 1;
+  }
+  .geometric-overlay::before {
+    content: "";
+    position: absolute;
+    top: 20%;
+    right: -10%;
+    width: 40%;
+    height: 60%;
+    background: radial-gradient(
+      ellipse at center,
+      rgba(72, 187, 120, 0.12) 0%,
+      transparent 70%
+    );
+    border-radius: 50%;
+    transform: rotate(-15deg);
+  }
+  .geometric-overlay::after {
+    content: "";
+    position: absolute;
+    bottom: 15%;
+    left: -5%;
+    width: 30%;
+    height: 40%;
+    background: linear-gradient(
+      45deg,
+      rgba(72, 187, 120, 0.1) 0%,
+      transparent 60%
+    );
+    border-radius: 20px;
+    transform: rotate(25deg);
   }
 `;
 

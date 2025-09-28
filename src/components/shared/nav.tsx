@@ -27,6 +27,14 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
+import Image from "next/image";
+import { Oswald } from "next/font/google";
+
+const oswald = Oswald({
+  variable: "--font-oswald",
+  subsets: ["latin"],
+});
+
 
 const components: { title: string; href: string; description: string }[] = [
   {
@@ -74,7 +82,13 @@ export function Navbar() {
     <>
       {isMobile && (
         <div className="flex justify-between items-center">
-          <p>Thy Will Uche</p>
+         <Image
+            src="/logos/LANDSCAPE-LOGO-BLACK.png"
+            alt="logo"
+            width={200}
+            height={100}
+            className="w-auto h-20"
+          />
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon" className="md:hidden">
@@ -87,22 +101,28 @@ export function Navbar() {
         </div>
       )}
       {!isMobile && (
-        <div className="flex justify-between items-center">
-          <p>Thy Will Uche</p>
+        <div className="flex justify-between items-center max-w-7xl mx-auto">
+          <Image
+            src="/logos/LANDSCAPE-LOGO-BLACK.png"
+            alt="logo"
+            width={200}
+            height={100}
+            className="w-auto h-20"
+          />
           <NavigationMenu viewport={false}>
             <NavigationMenuList>
               {/* Home */}
               <NavigationMenuItem>
                 <NavigationMenuLink
                   asChild
-                  className={navigationMenuTriggerStyle() + " bg-transparent"}
+                  className={navigationMenuTriggerStyle() + ` bg-transparent ${oswald.className}`}
                 >
                   <Link href="/">Home</Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
               {/* About Me */}
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="bg-transparent">
+                <NavigationMenuTrigger className={`bg-transparent font-semibold ${oswald.className}`}>
                   About Me
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
@@ -125,7 +145,7 @@ export function Navbar() {
               </NavigationMenuItem>
               {/* Bookshop */}
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="bg-transparent">
+                <NavigationMenuTrigger className={`bg-transparent font-semibold ${oswald.className}`}>
                   Bookshop
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
@@ -144,7 +164,7 @@ export function Navbar() {
               </NavigationMenuItem>
               {/* Services */}
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="bg-transparent">
+                <NavigationMenuTrigger className={`bg-transparent font-semibold ${oswald.className}`}>
                   Services
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
@@ -185,7 +205,7 @@ export function Navbar() {
               <NavigationMenuItem>
                 <NavigationMenuLink
                   asChild
-                  className={navigationMenuTriggerStyle() + " bg-transparent"}
+                  className={navigationMenuTriggerStyle() + ` bg-transparent font-semibold ${oswald.className}`}
                 >
                   <Link href="/community">Community</Link>
                 </NavigationMenuLink>
@@ -194,7 +214,7 @@ export function Navbar() {
               <NavigationMenuItem>
                 <NavigationMenuLink
                   asChild
-                  className={navigationMenuTriggerStyle() + " bg-transparent"}
+                  className={navigationMenuTriggerStyle() + ` bg-transparent font-semibold ${oswald.className}`}
                 >
                   <Link href="/projects">Projects</Link>
                 </NavigationMenuLink>
@@ -221,7 +241,7 @@ function MobileNavContent({ onClose }: { onClose: () => void }) {
         {/* Home */}
         <Link
           href="/"
-          className="text-lg font-medium hover:text-primary transition-colors"
+          className={`text-lg font-medium hover:text-primary transition-colors ${oswald.className}`}
           onClick={onClose}
         >
           Home
@@ -229,7 +249,7 @@ function MobileNavContent({ onClose }: { onClose: () => void }) {
 
         {/* About Me */}
         <Collapsible open={aboutOpen} onOpenChange={setAboutOpen}>
-          <CollapsibleTrigger className="flex items-center justify-between text-lg font-medium hover:text-primary transition-colors">
+          <CollapsibleTrigger className={`flex items-center justify-between text-lg font-medium hover:text-primary transition-colors ${oswald.className}`}>
             About Me
             <ChevronDown
               className={`h-4 w-4 transition-transform ${
@@ -271,7 +291,7 @@ function MobileNavContent({ onClose }: { onClose: () => void }) {
 
         {/* Bookshop */}
         <Collapsible open={bookshopOpen} onOpenChange={setBookshopOpen}>
-          <CollapsibleTrigger className="flex items-center justify-between text-lg font-medium hover:text-primary transition-colors">
+          <CollapsibleTrigger className={`flex items-center justify-between text-lg font-medium hover:text-primary transition-colors ${oswald.className}`}>
             Bookshop
             <ChevronDown
               className={`h-4 w-4 transition-transform ${
@@ -295,7 +315,7 @@ function MobileNavContent({ onClose }: { onClose: () => void }) {
 
         {/* Services */}
         <Collapsible open={servicesOpen} onOpenChange={setServicesOpen}>
-          <CollapsibleTrigger className="flex items-center justify-between text-lg font-medium hover:text-primary transition-colors">
+          <CollapsibleTrigger className={`flex items-center justify-between text-lg font-medium hover:text-primary transition-colors ${oswald.className}`}>
             Services
             <ChevronDown
               className={`h-4 w-4 transition-transform ${
@@ -331,7 +351,7 @@ function MobileNavContent({ onClose }: { onClose: () => void }) {
         {/* Community */}
         <Link
           href="/community"
-          className="text-lg font-medium hover:text-primary transition-colors"
+          className={`text-lg font-medium hover:text-primary transition-colors ${oswald.className}`}
           onClick={onClose}
         >
           Community
@@ -340,7 +360,7 @@ function MobileNavContent({ onClose }: { onClose: () => void }) {
         {/* Projects */}
         <Link
           href="/projects"
-          className="text-lg font-medium hover:text-primary transition-colors"
+          className={`text-lg font-medium hover:text-primary transition-colors ${oswald.className}`}
           onClick={onClose}
         >
           Projects

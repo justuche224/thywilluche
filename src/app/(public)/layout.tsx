@@ -1,13 +1,12 @@
-import Header from '@/components/shared/header'
-import React from 'react'
+import Header from "@/components/shared/header";
+import React from "react";
 
 const PublicLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
-    <Header/>
-    {children}
+      <Header />
+      {children}
     </>
-  )
-}
-
-export default PublicLayout
+  );
+};
+export default PublicLayout;

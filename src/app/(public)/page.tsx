@@ -1,7 +1,9 @@
+import Hero from "@/components/home/hero";
+
 export default function Home() {
   return (
-    <div>
-      <h1 className="text-black">The Will Uche</h1>
-    </div>
+    <>
+      <Hero />
+    </>
   );
 }
