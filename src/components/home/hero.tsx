@@ -36,7 +36,14 @@ const socials = [
 
 const Hero = () => {
   return (
-    <div className="min-h-screen w-full">
+    <div className="min-h-screen w-full relative">
+      <Image
+        src={"/doodles/doodle-4.svg"}
+        alt="doodle"
+        className="absolute max-xl:hidden bottom-70 w-full z-[-1] h-10 "
+        width={200}
+        height={200}
+      />
       <div className="container mx-auto px-6 lg:px-8 py-16 lg:py-20">
         {/* Main Hero Content */}
         <div className="grid lg:grid-cols-12 gap-16 lg:gap-20 items-center min-h-[70vh]">
@@ -50,12 +57,22 @@ const Hero = () => {
                 <span className="block mb-2">365 WINS,</span>
                 <span className="block">EVERY DAY IS VICTORY</span>
               </h1>
-              
+
               <div className="space-y-6">
-                <p className={`text-xl font-semibold max-md:text-center ${oswald.className}`}>Find Me Online</p>
+                <p
+                  className={`text-xl font-semibold max-md:text-center ${oswald.className}`}
+                >
+                  Find Me Online
+                </p>
                 <div className="flex gap-4 max-md:justify-center">
                   {socials.map((social) => (
-                    <Button size="icon" variant="outline" asChild key={social.name} className={`h-12 w-12 ${oswald.className}`}>
+                    <Button
+                      size="icon"
+                      variant="outline"
+                      asChild
+                      key={social.name}
+                      className={`h-12 w-12 ${oswald.className}`}
+                    >
                       <Link href={social.url}>{social.icon}</Link>
                     </Button>
                   ))}
@@ -79,23 +96,31 @@ const Hero = () => {
 
           {/* Right Column - Description */}
           <div className="lg:col-span-4 space-y-8">
-            <h2 className={`text-4xl xl:text-5xl font-semibold leading-tight ${oswald.className}`}>
+            <h2
+              className={`text-4xl xl:text-5xl font-semibold leading-tight ${oswald.className}`}
+            >
               Connecting hearts.
               <br />
               Uplifting minds.
               <br />
               Living one day at a time.
             </h2>
-            
-            <p className={`text-lg xl:text-xl leading-relaxed text-gray-700 ${oswald.className}`}>
+
+            <p
+              className={`text-lg xl:text-xl leading-relaxed text-gray-700 ${oswald.className} text-justify`}
+            >
               Lorem ipsum, dolor sit amet consectetur adipisicing elit. Itaque
-              voluptatem possimus praesentium. Voluptatum quod ea, eligendi velit
-              quam voluptate, iusto quia sequi, sapiente sit suscipit enim!
-              Temporibus ex ipsa nam.
+              voluptatem possimus praesentium. Voluptatum quod ea, eligendi
+              velit quam voluptate, iusto quia sequi, sapiente sit suscipit
+              enim! Temporibus ex ipsa nam.
             </p>
-            
+
             <div className="pt-4">
-              <Button asChild size="lg" className={`px-8 py-6 text-lg ${oswald.className}`}>
+              <Button
+                asChild
+                size="lg"
+                className={`px-8 py-6 text-lg ${oswald.className}`}
+              >
                 <Link href="#">Explore Works</Link>
               </Button>
             </div>
