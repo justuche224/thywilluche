@@ -16,7 +16,7 @@ const oswald = Oswald({
 
 const WhoIAm = () => {
   return (
-    <div className="max-w-4xl w-full mx-auto grid md:grid-cols-2 gap-4 p-2 relative max-lg:overflow-clip">
+    <div className="max-w-2xl lg:max-w-3xl 2xl:max-w-4xl w-full mx-auto grid md:grid-cols-2 gap-4 p-2 relative max-lg:overflow-clip">
         <Image src={"/doodles/doodle-1.svg"} alt="doodle" className="absolute -top-10 md:-top-20 -left-10 md:-left-20" width={200} height={200} />
         <Image src={"/doodles/doodle-2.svg"} alt="doodle" className="absolute -bottom-10 md:-bottom-20 -right-20 z-[-1]" width={200} height={200} />
         <Image src={"/doodles/doodle-3.svg"} alt="doodle" className="absolute max-md:hidden -top-10 md:-top-30 -right-10 md:-right-20 z-[-1]" width={200} height={200} />
@@ -30,7 +30,7 @@ const WhoIAm = () => {
       </div>
       <div className="w-full h-full space-y-4">
         <h2
-          className={`text-5xl ${pacifico.className} text-center md:text-left`}
+          className={`text-3xl lg:text-4xl 2xl:text-5xl ${pacifico.className} text-center md:text-left`}
         >
           Who I Am
         </h2>

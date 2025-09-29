@@ -40,18 +40,18 @@ const Hero = () => {
       <Image
         src={"/doodles/doodle-4.svg"}
         alt="doodle"
-        className="absolute max-xl:hidden bottom-70 w-full z-[-1] h-10 "
+        className="absolute max-2xl:hidden bottom-70 w-full z-[-1] h-10 "
         width={200}
         height={200}
       />
-      <div className="container mx-auto px-6 lg:px-8 py-16 lg:py-20">
+      <div className="container mx-auto px-6 lg:px-8 py-16 lg:py-20 xl:pt-0">
         {/* Main Hero Content */}
         <div className="grid lg:grid-cols-12 gap-16 lg:gap-20 items-center min-h-[70vh]">
           {/* Left Column - Main Content */}
           <div className="lg:col-span-4 space-y-12">
             <div className="space-y-8">
               <h1
-                className={`text-6xl lg:text-6xl xl:text-8xl font-bold tracking-tight leading-none ${oswald.className} max-md:text-center`}
+                className={`text-6xl lg:text-6xl 2xl:text-8xl font-bold tracking-tight leading-none ${oswald.className} max-md:text-center`}
               >
                 <span className="block mb-2">365 TIPS,</span>
                 <span className="block mb-2">365 WINS,</span>
@@ -97,7 +97,7 @@ const Hero = () => {
           {/* Right Column - Description */}
           <div className="lg:col-span-4 space-y-8">
             <h2
-              className={`text-4xl xl:text-5xl font-semibold leading-tight ${oswald.className}`}
+              className={`text-4xl 2xl:text-5xl font-semibold leading-tight ${oswald.className}`}
             >
               Connecting hearts.
               <br />

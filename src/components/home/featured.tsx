@@ -20,7 +20,7 @@ const Featured = () => {
         <h2 className={`text-5xl ${pacifico.className} text-center mb-10`}>
           Latest Addition
         </h2>
-        <div className="max-w-4xl w-full mx-auto grid grid-cols-2 gap-0  relative">
+        <div className=" max-w-2xl 2xl:max-w-4xl w-full mx-auto grid grid-cols-2 gap-0  relative">
           <Image
             src="/doodles/doodle-5.svg"
             alt="doodle"
@@ -67,7 +67,7 @@ const Featured = () => {
             </div>
             <div className="p-2">
               <p
-                className={`text-sm md:text-2xl font-semibold text-justify ${oswald.className}`}
+                className={`text-sm md:text-xl xl:text-2xl font-semibold text-justify ${oswald.className}`}
               >
                 In Days I Do Not Die, Thywill Uche opens the door to his most
                 vulnerable truths-sharing a raw, unfiltered journey through
