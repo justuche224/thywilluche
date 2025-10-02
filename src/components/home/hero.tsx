@@ -51,7 +51,7 @@ const Hero = () => {
           <div className="lg:col-span-4 space-y-12">
             <div className="space-y-8">
               <h1
-                className={`text-6xl lg:text-6xl 2xl:text-8xl font-bold tracking-tight leading-none ${oswald.className} max-md:text-center`}
+                className={`text-6xl lg:text-6xl 2xl:text-8xl font-bold tracking-tight leading-none ${oswald.className} max-lg:text-center`}
               >
                 <span className="block mb-2">365 TIPS,</span>
                 <span className="block mb-2">365 WINS,</span>
@@ -60,11 +60,11 @@ const Hero = () => {
 
               <div className="space-y-6">
                 <p
-                  className={`text-xl font-semibold max-md:text-center ${oswald.className}`}
+                  className={`text-xl font-semibold max-lg:text-center ${oswald.className}`}
                 >
                   Find Me Online
                 </p>
-                <div className="flex gap-4 max-md:justify-center">
+                <div className="flex gap-4 max-lg:justify-center">
                   {socials.map((social) => (
                     <Button
                       size="icon"
