@@ -4,7 +4,6 @@ import React from "react";
 import Image from "next/image";
 import { Pacifico, Oswald } from "next/font/google";
 import { motion } from "framer-motion";
-import { Target, Eye } from "lucide-react";
 import Community from "../home/community";
 import MediaGallery from "./media-gallery";
 
@@ -139,21 +138,14 @@ const About = () => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.2 }}
               >
-                <div className="bg-white rounded-3xl p-8 lg:p-12 shadow-xl hover:shadow-2xl transition-all duration-300 h-full">
-                  <motion.div
-                    className="bg-primary/10 w-20 h-20 rounded-full flex items-center justify-center mb-8"
-                    whileHover={{ scale: 1.1, rotate: 5 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <Target className="w-10 h-10 text-primary" />
-                  </motion.div>
+                <div className="transition-all duration-300 h-full">
                   <h3
                     className={`text-3xl font-semibold mb-6 ${oswald.className}`}
                   >
                     Our Mission
                   </h3>
                   <p
-                    className={`text-lg leading-relaxed text-gray-700 ${oswald.className}`}
+                    className={`text-lg leading-relaxed text-gray-700 ${oswald.className} text-justify`}
                   >
                     To empower individuals worldwide to embrace their mental
                     health journey with courage, compassion, and community. We
@@ -162,7 +154,7 @@ const About = () => {
                     victories.
                   </p>
                   <p
-                    className={`text-lg leading-relaxed text-gray-700 mt-4 ${oswald.className}`}
+                    className={`text-lg leading-relaxed text-gray-700 mt-4 ${oswald.className} text-justify`}
                   >
                     Through storytelling, education, and meaningful connections,
                     we create safe spaces where vulnerability becomes strength
@@ -179,21 +171,14 @@ const About = () => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.4 }}
               >
-                <div className="bg-white rounded-3xl p-8 lg:p-12 shadow-xl hover:shadow-2xl transition-all duration-300 h-full">
-                  <motion.div
-                    className="bg-secondary/10 w-20 h-20 rounded-full flex items-center justify-center mb-8"
-                    whileHover={{ scale: 1.1, rotate: -5 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <Eye className="w-10 h-10 text-secondary" />
-                  </motion.div>
+                <div className="duration-300 h-full">
                   <h3
                     className={`text-3xl font-semibold mb-6 ${oswald.className}`}
                   >
                     Our Vision
                   </h3>
                   <p
-                    className={`text-lg leading-relaxed text-gray-700 ${oswald.className}`}
+                    className={`text-lg leading-relaxed text-gray-700 ${oswald.className} text-justify`}
                   >
                     A world where mental health conversations flow as naturally
                     as breathing, where every individual feels seen, heard, and
@@ -201,7 +186,7 @@ const About = () => {
                     self-discovery.
                   </p>
                   <p
-                    className={`text-lg leading-relaxed text-gray-700 mt-4 ${oswald.className}`}
+                    className={`text-lg leading-relaxed text-gray-700 mt-4 ${oswald.className} text-justify`}
                   >
                     We envision communities built on empathy, where personal
                     stories become catalysts for collective transformation, and
