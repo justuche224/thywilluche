@@ -20,7 +20,7 @@ const Header = () => {
       <div
         className={`px-5 w-full md:px-10 md:py-3 transition-all duration-300 ${
           isScrolled
-            ? "bg-white/50 backdrop-blur-md shadow-md left-0 right-0 w-full fixed top-0 z-[999] "
+            ? "bg-white/50 backdrop-blur-md shadow-md left-0 right-0 w-full fixed top-0 z-[998] "
             : "bg-transparent"
         }`}
       >

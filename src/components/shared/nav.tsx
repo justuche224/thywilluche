@@ -64,7 +64,7 @@ export function Navbar() {
   return (
     <>
       {isMobile && (
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center z-[999]">
           <Image
             src="/logos/LANDSCAPE-LOGO-BLACK.png"
             alt="logo"
@@ -236,7 +236,7 @@ function MobileNavContent({ onClose }: { onClose: () => void }) {
   const [servicesOpen, setServicesOpen] = React.useState(false);
 
   return (
-    <SheetContent side="left" className="w-[300px] sm:w-[400px] flex flex-col">
+    <SheetContent side="left" className="w-[300px] sm:w-[400px] flex flex-col z-[999">
       <SheetHeader className="border-b pb-4">
         <SheetTitle className={`text-2xl ${oswald.className}`}>Menu</SheetTitle>
       </SheetHeader>
