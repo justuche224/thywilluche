@@ -13,7 +13,7 @@ export const user = pgTable("user", {
         .notNull(),
     username: text("username").unique(),
     displayUsername: text("display_username"),
-    role: text("role"),
+    role: text("role").default("USER"),
 });
 
 export const session = pgTable("session", {
