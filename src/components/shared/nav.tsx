@@ -29,65 +29,49 @@ import {
 } from "@/components/ui/collapsible";
 import Image from "next/image";
 import { Oswald } from "next/font/google";
+import { useRouter } from "next/navigation";
 
 const oswald = Oswald({
   variable: "--font-oswald",
   subsets: ["latin"],
 });
 
-
 const components: { title: string; href: string; description: string }[] = [
   {
-    title: "Alert Dialog",
-    href: "/docs/primitives/alert-dialog",
+    title: "Books",
+    href: "/shop/books",
     description:
-      "A modal dialog that interrupts the user with important content and expects a response.",
+      "Browse our collection of inspirational and motivational books to transform your life.",
   },
   {
-    title: "Hover Card",
-    href: "/docs/primitives/hover-card",
+    title: "Merchandise",
+    href: "/shop/merch",
     description:
-      "For sighted users to preview content available behind a link.",
+      "Shop our exclusive merchandise including apparel, accessories, and motivational items.",
   },
   {
-    title: "Progress",
-    href: "/docs/primitives/progress",
-    description:
-      "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
-  },
-  {
-    title: "Scroll-area",
-    href: "/docs/primitives/scroll-area",
-    description: "Visually or semantically separates content.",
-  },
-  {
-    title: "Tabs",
-    href: "/docs/primitives/tabs",
-    description:
-      "A set of layered sections of content—known as tab panels—that are displayed one at a time.",
-  },
-  {
-    title: "Tooltip",
-    href: "/docs/primitives/tooltip",
-    description:
-      "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.",
+    title: "New Releases",
+    href: "/shop/books/new",
+    description: "Discover our latest book releases and upcoming publications.",
   },
 ];
 
 export function Navbar() {
   const isMobile = useIsMobile();
   const [isOpen, setIsOpen] = React.useState(false);
+  const router = useRouter();
 
   return (
     <>
       {isMobile && (
         <div className="flex justify-between items-center">
-         <Image
+          <Image
             src="/logos/LANDSCAPE-LOGO-BLACK.png"
             alt="logo"
             width={200}
             height={100}
             className="w-auto h-20"
+            onClick={() => router.push("/")}
           />
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>
@@ -101,54 +85,65 @@ export function Navbar() {
         </div>
       )}
       {!isMobile && (
-        <div className="flex justify-between items-center max-w-7xl mx-auto">
+        <div className="flex justify-between items-center max-w-7xl mx-auto z-[999]">
           <Image
             src="/logos/LANDSCAPE-LOGO-BLACK.png"
             alt="logo"
             width={200}
             height={100}
             className="w-auto h-20"
+            onClick={() => router.push("/")}
           />
-          <NavigationMenu viewport={false}>
+          <NavigationMenu viewport={false} className="relative z-[9999]">
             <NavigationMenuList>
               {/* Home */}
               <NavigationMenuItem>
                 <NavigationMenuLink
                   asChild
-                  className={navigationMenuTriggerStyle() + ` bg-transparent ${oswald.className}`}
+                  className={
+                    navigationMenuTriggerStyle() +
+                    ` bg-transparent ${oswald.className}`
+                  }
                 >
                   <Link href="/">Home</Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
               {/* About Me */}
               <NavigationMenuItem>
-                <NavigationMenuTrigger className={`bg-transparent font-semibold ${oswald.className}`}>
+                <NavigationMenuTrigger
+                  className={`bg-transparent font-semibold ${oswald.className}`}
+                >
                   About Me
                 </NavigationMenuTrigger>
-                <NavigationMenuContent>
+                <NavigationMenuContent className="z-[9999]">
                   <ul className="grid gap-2 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-                    <ListItem href="/about" title="My Story">
-                      Re-usable components built using Radix UI and Tailwind
-                      CSS.
+                    <ListItem href="/about" title="My Journey">
+                      Learn about my journey, experiences, and the inspiration
+                      behind my work.
                     </ListItem>
                     <ListItem href="/about#vision" title="My Vision">
-                      How to install dependencies and structure your app.
+                      Discover my vision for empowering others and creating
+                      positive change.
                     </ListItem>
                     <ListItem href="/about#mission" title="My Mission">
-                      Styles for headings, paragraphs, lists...etc
+                      Understand my mission to inspire, motivate, and help
+                      others achieve their goals.
                     </ListItem>
                     <ListItem href="/about#media" title="Media Mentions">
-                      Styles for headings, paragraphs, lists...etc
+                      See where I&apos;ve been featured and the impact of my
+                      work in the media.
                     </ListItem>
                   </ul>
                 </NavigationMenuContent>
               </NavigationMenuItem>
-              {/* Bookshop */}
+              {/* Shop */}
               <NavigationMenuItem>
-                <NavigationMenuTrigger className={`bg-transparent font-semibold ${oswald.className}`}>
-                  Bookshop
+                <NavigationMenuTrigger
+                  className={`bg-transparent font-semibold ${oswald.className}`}
+                >
+                  Shop
                 </NavigationMenuTrigger>
-                <NavigationMenuContent>
+                <NavigationMenuContent className="z-[9999]">
                   <ul className="grid w-[400px] gap-2 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
                     {components.map((component) => (
                       <ListItem
@@ -164,10 +159,12 @@ export function Navbar() {
               </NavigationMenuItem>
               {/* Services */}
               <NavigationMenuItem>
-                <NavigationMenuTrigger className={`bg-transparent font-semibold ${oswald.className}`}>
+                <NavigationMenuTrigger
+                  className={`bg-transparent font-semibold ${oswald.className}`}
+                >
                   Services
                 </NavigationMenuTrigger>
-                <NavigationMenuContent>
+                <NavigationMenuContent className="z-[9999]">
                   <ul className="grid w-[300px] gap-4">
                     <li>
                       <NavigationMenuLink asChild>
@@ -205,7 +202,10 @@ export function Navbar() {
               <NavigationMenuItem>
                 <NavigationMenuLink
                   asChild
-                  className={navigationMenuTriggerStyle() + ` bg-transparent font-semibold ${oswald.className}`}
+                  className={
+                    navigationMenuTriggerStyle() +
+                    ` bg-transparent font-semibold ${oswald.className}`
+                  }
                 >
                   <Link href="/community">Community</Link>
                 </NavigationMenuLink>
@@ -214,7 +214,10 @@ export function Navbar() {
               <NavigationMenuItem>
                 <NavigationMenuLink
                   asChild
-                  className={navigationMenuTriggerStyle() + ` bg-transparent font-semibold ${oswald.className}`}
+                  className={
+                    navigationMenuTriggerStyle() +
+                    ` bg-transparent font-semibold ${oswald.className}`
+                  }
                 >
                   <Link href="/projects">Projects</Link>
                 </NavigationMenuLink>
@@ -233,55 +236,59 @@ function MobileNavContent({ onClose }: { onClose: () => void }) {
   const [servicesOpen, setServicesOpen] = React.useState(false);
 
   return (
-    <SheetContent side="left" className="w-[300px] sm:w-[400px]">
-      <SheetHeader>
-        <SheetTitle>Navigation</SheetTitle>
+    <SheetContent side="left" className="w-[300px] sm:w-[400px] flex flex-col">
+      <SheetHeader className="border-b pb-4">
+        <SheetTitle className={`text-2xl ${oswald.className}`}>Menu</SheetTitle>
       </SheetHeader>
-      <nav className="flex flex-col gap-4 mt-6">
+      <nav className="flex flex-col gap-1 mt-4 overflow-y-auto flex-1">
         {/* Home */}
         <Link
           href="/"
-          className={`text-lg font-medium hover:text-primary transition-colors ${oswald.className}`}
+          className={`text-lg font-semibold px-4 py-3 rounded-lg hover:bg-accent hover:text-accent-foreground active:bg-accent/80 transition-all ${oswald.className}`}
           onClick={onClose}
         >
           Home
         </Link>
 
+        <div className="h-px bg-border my-2" />
+
         {/* About Me */}
         <Collapsible open={aboutOpen} onOpenChange={setAboutOpen}>
-          <CollapsibleTrigger className={`flex items-center justify-between text-lg font-medium hover:text-primary transition-colors ${oswald.className}`}>
+          <CollapsibleTrigger
+            className={`w-full flex items-center justify-between text-lg font-semibold px-4 py-3 rounded-lg hover:bg-accent hover:text-accent-foreground active:bg-accent/80 transition-all ${oswald.className}`}
+          >
             About Me
             <ChevronDown
-              className={`h-4 w-4 transition-transform ${
+              className={`h-5 w-5 transition-transform duration-300 ${
                 aboutOpen ? "rotate-180" : ""
               }`}
             />
           </CollapsibleTrigger>
-          <CollapsibleContent className="mt-2 space-y-2">
+          <CollapsibleContent className="mt-1 mb-2 space-y-1 bg-muted/30 rounded-lg py-2">
             <Link
               href="/about"
-              className="block pl-4 text-base text-muted-foreground hover:text-foreground transition-colors"
+              className="block pl-8 pr-4 py-2.5 text-base text-muted-foreground hover:text-foreground hover:bg-accent/50 rounded-md mx-2 transition-all"
               onClick={onClose}
             >
-              My Story
+              My Journey
             </Link>
             <Link
               href="/about#vision"
-              className="block pl-4 text-base text-muted-foreground hover:text-foreground transition-colors"
+              className="block pl-8 pr-4 py-2.5 text-base text-muted-foreground hover:text-foreground hover:bg-accent/50 rounded-md mx-2 transition-all"
               onClick={onClose}
             >
               My Vision
             </Link>
             <Link
               href="/about#mission"
-              className="block pl-4 text-base text-muted-foreground hover:text-foreground transition-colors"
+              className="block pl-8 pr-4 py-2.5 text-base text-muted-foreground hover:text-foreground hover:bg-accent/50 rounded-md mx-2 transition-all"
               onClick={onClose}
             >
               My Mission
             </Link>
             <Link
               href="/about#media"
-              className="block pl-4 text-base text-muted-foreground hover:text-foreground transition-colors"
+              className="block pl-8 pr-4 py-2.5 text-base text-muted-foreground hover:text-foreground hover:bg-accent/50 rounded-md mx-2 transition-all"
               onClick={onClose}
             >
               Media Mentions
@@ -289,22 +296,26 @@ function MobileNavContent({ onClose }: { onClose: () => void }) {
           </CollapsibleContent>
         </Collapsible>
 
-        {/* Bookshop */}
+        <div className="h-px bg-border my-2" />
+
+        {/* Shop */}
         <Collapsible open={bookshopOpen} onOpenChange={setBookshopOpen}>
-          <CollapsibleTrigger className={`flex items-center justify-between text-lg font-medium hover:text-primary transition-colors ${oswald.className}`}>
-            Bookshop
+          <CollapsibleTrigger
+            className={`w-full flex items-center justify-between text-lg font-semibold px-4 py-3 rounded-lg hover:bg-accent hover:text-accent-foreground active:bg-accent/80 transition-all ${oswald.className}`}
+          >
+            Shop
             <ChevronDown
-              className={`h-4 w-4 transition-transform ${
+              className={`h-5 w-5 transition-transform duration-300 ${
                 bookshopOpen ? "rotate-180" : ""
               }`}
             />
           </CollapsibleTrigger>
-          <CollapsibleContent className="mt-2 space-y-2">
+          <CollapsibleContent className="mt-1 mb-2 space-y-1 bg-muted/30 rounded-lg py-2">
             {components.map((component) => (
               <Link
                 key={component.title}
                 href={component.href}
-                className="block pl-4 text-base text-muted-foreground hover:text-foreground transition-colors"
+                className="block pl-8 pr-4 py-2.5 text-base text-muted-foreground hover:text-foreground hover:bg-accent/50 rounded-md mx-2 transition-all"
                 onClick={onClose}
               >
                 {component.title}
@@ -313,34 +324,38 @@ function MobileNavContent({ onClose }: { onClose: () => void }) {
           </CollapsibleContent>
         </Collapsible>
 
+        <div className="h-px bg-border my-2" />
+
         {/* Services */}
         <Collapsible open={servicesOpen} onOpenChange={setServicesOpen}>
-          <CollapsibleTrigger className={`flex items-center justify-between text-lg font-medium hover:text-primary transition-colors ${oswald.className}`}>
+          <CollapsibleTrigger
+            className={`w-full flex items-center justify-between text-lg font-semibold px-4 py-3 rounded-lg hover:bg-accent hover:text-accent-foreground active:bg-accent/80 transition-all ${oswald.className}`}
+          >
             Services
             <ChevronDown
-              className={`h-4 w-4 transition-transform ${
+              className={`h-5 w-5 transition-transform duration-300 ${
                 servicesOpen ? "rotate-180" : ""
               }`}
             />
           </CollapsibleTrigger>
-          <CollapsibleContent className="mt-2 space-y-2">
+          <CollapsibleContent className="mt-1 mb-2 space-y-1 bg-muted/30 rounded-lg py-2">
             <Link
               href="/services/coaching"
-              className="block pl-4 text-base text-muted-foreground hover:text-foreground transition-colors"
+              className="block pl-8 pr-4 py-2.5 text-base text-muted-foreground hover:text-foreground hover:bg-accent/50 rounded-md mx-2 transition-all"
               onClick={onClose}
             >
               Coaching
             </Link>
             <Link
               href="/services/ghostwriting"
-              className="block pl-4 text-base text-muted-foreground hover:text-foreground transition-colors"
+              className="block pl-8 pr-4 py-2.5 text-base text-muted-foreground hover:text-foreground hover:bg-accent/50 rounded-md mx-2 transition-all"
               onClick={onClose}
             >
               Ghostwriting
             </Link>
             <Link
               href="/services/consulting"
-              className="block pl-4 text-base text-muted-foreground hover:text-foreground transition-colors"
+              className="block pl-8 pr-4 py-2.5 text-base text-muted-foreground hover:bg-accent/50 hover:text-foreground rounded-md mx-2 transition-all"
               onClick={onClose}
             >
               Consulting
@@ -348,19 +363,23 @@ function MobileNavContent({ onClose }: { onClose: () => void }) {
           </CollapsibleContent>
         </Collapsible>
 
+        <div className="h-px bg-border my-2" />
+
         {/* Community */}
         <Link
           href="/community"
-          className={`text-lg font-medium hover:text-primary transition-colors ${oswald.className}`}
+          className={`text-lg font-semibold px-4 py-3 rounded-lg hover:bg-accent hover:text-accent-foreground active:bg-accent/80 transition-all ${oswald.className}`}
           onClick={onClose}
         >
           Community
         </Link>
 
+        <div className="h-px bg-border my-2" />
+
         {/* Projects */}
         <Link
           href="/projects"
-          className={`text-lg font-medium hover:text-primary transition-colors ${oswald.className}`}
+          className={`text-lg font-semibold px-4 py-3 rounded-lg hover:bg-accent hover:text-accent-foreground active:bg-accent/80 transition-all ${oswald.className}`}
           onClick={onClose}
         >
           Projects

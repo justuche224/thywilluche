@@ -137,6 +137,7 @@ const About = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.2 }}
+                id="mission"
               >
                 <div className="transition-all duration-300 h-full">
                   <h3
@@ -170,6 +171,7 @@ const About = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.4 }}
+                id="vision"
               >
                 <div className="duration-300 h-full">
                   <h3
