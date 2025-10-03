@@ -219,7 +219,7 @@ export function Navbar() {
                     ` bg-transparent font-semibold ${oswald.className}`
                   }
                 >
-                  <Link href="/projects">Projects</Link>
+                  <Link href="/portfolio">Projects</Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
             </NavigationMenuList>
@@ -378,7 +378,7 @@ function MobileNavContent({ onClose }: { onClose: () => void }) {
 
         {/* Projects */}
         <Link
-          href="/projects"
+          href="/portfolio"
           className={`text-lg font-semibold px-4 py-3 rounded-lg hover:bg-accent hover:text-accent-foreground active:bg-accent/80 transition-all ${oswald.className}`}
           onClick={onClose}
         >
