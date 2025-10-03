@@ -7,12 +7,6 @@ import Link from "next/link";
 import {useState} from "react";
 import {ChevronLeft, ChevronRight} from "lucide-react";
 
-const pacifico = Pacifico({
-    variable: "--font-pacifico",
-    subsets: ["latin"],
-    weight: "400",
-});
-
 const oswald = Oswald({
     variable: "--font-oswald",
     subsets: ["latin"],
