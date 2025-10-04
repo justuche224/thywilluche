@@ -1,0 +1,84 @@
+"use client";
+
+import About from "@/components/about";
+import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { RefreshCw } from "lucide-react";
+
+interface AboutLivePreviewProps {
+  initialJourneyData: Record<string, string>;
+  initialMissionVisionData: Record<string, string>;
+}
+
+export function AboutLivePreview({
+  initialJourneyData,
+  initialMissionVisionData,
+}: AboutLivePreviewProps) {
+  const [journeyData, setJourneyData] = useState(initialJourneyData);
+  const [missionVisionData, setMissionVisionData] = useState(
+    initialMissionVisionData
+  );
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  const refreshPreview = async () => {
+    setIsRefreshing(true);
+    try {
+      const response = await fetch("/api/admin/about-preview");
+      const data = await response.json();
+
+      setJourneyData(data.journey || {});
+      setMissionVisionData(data.missionVision || {});
+    } catch (error) {
+      console.error("Failed to refresh preview:", error);
+    } finally {
+      setIsRefreshing(false);
+    }
+  };
+
+  useEffect(() => {
+    const handleRefresh = () => {
+      refreshPreview();
+    };
+
+    window.addEventListener("refreshAboutPreview", handleRefresh);
+
+    return () => {
+      window.removeEventListener("refreshAboutPreview", handleRefresh);
+    };
+  }, []);
+
+  return (
+    <div className="space-y-4">
+      <div className="flex items-center justify-between sticky top-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-10 px-4 py-2 border-b">
+        <h3 className="text-lg font-semibold">Live Preview</h3>
+        <Button
+          onClick={refreshPreview}
+          disabled={isRefreshing}
+          size="sm"
+          variant="outline"
+        >
+          <RefreshCw
+            className={`h-4 w-4 mr-2 ${isRefreshing ? "animate-spin" : ""}`}
+          />
+          Refresh
+        </Button>
+      </div>
+      <div className="border rounded-lg overflow-hidden bg-white">
+        <div className="scale-50 origin-top-left w-[200%]">
+          <About
+            journeyImage={journeyData.image}
+            journeyTitle={journeyData.title}
+            journeyParagraph1={journeyData.paragraph1}
+            journeyParagraph2={journeyData.paragraph2}
+            missionTitle={missionVisionData.missionTitle}
+            missionParagraph1={missionVisionData.missionParagraph1}
+            missionParagraph2={missionVisionData.missionParagraph2}
+            visionTitle={missionVisionData.visionTitle}
+            visionParagraph1={missionVisionData.visionParagraph1}
+            visionParagraph2={missionVisionData.visionParagraph2}
+          />
+        </div>
+      </div>
+    </div>
+  );
+}

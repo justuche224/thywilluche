@@ -99,6 +99,7 @@ export default function AboutContentManager({
 
       if (result.success) {
         toast.success("About content updated successfully!");
+        window.dispatchEvent(new CustomEvent("refreshAboutPreview"));
       } else {
         toast.error("Failed to update about content");
       }
