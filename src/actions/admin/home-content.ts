@@ -1,10 +1,6 @@
 "use server";
 
-import {
-  updateHomeContent,
-  bulkUpdateHomeContent,
-  getHomeSection,
-} from "@/actions/home-content";
+import { bulkUpdateHomeContent, getHomeSection } from "@/actions/home-content";
 import { uploadFile } from "@/lib/upload";
 import { revalidatePath } from "next/cache";
 
@@ -110,6 +106,77 @@ export async function updateWhoIAmContent(formData: FormData) {
   } catch (error) {
     console.error("Error updating Who I Am content:", error);
     return { success: false, message: "Failed to update Who I Am content" };
+  }
+}
+
+export async function updateFeaturedContent(formData: FormData) {
+  try {
+    const updates = [];
+
+    const title = formData.get("title") as string;
+    const quote = formData.get("quote") as string;
+    const description = formData.get("description") as string;
+    const image1File = formData.get("image1") as File | null;
+    const image2File = formData.get("image2") as File | null;
+    const existingImage1 = formData.get("existingImage1") as string;
+    const existingImage2 = formData.get("existingImage2") as string;
+
+    if (title)
+      updates.push({ section: "featured", key: "title", value: title });
+    if (quote)
+      updates.push({ section: "featured", key: "quote", value: quote });
+    if (description)
+      updates.push({
+        section: "featured",
+        key: "description",
+        value: description,
+      });
+
+    if (image1File && image1File.size > 0) {
+      const imageUrl = await uploadFile(image1File, "featured");
+      updates.push({
+        section: "featured",
+        key: "image1",
+        value: imageUrl,
+        valueType: "image",
+      });
+    } else if (existingImage1) {
+      updates.push({
+        section: "featured",
+        key: "image1",
+        value: existingImage1,
+        valueType: "image",
+      });
+    }
+
+    if (image2File && image2File.size > 0) {
+      const imageUrl = await uploadFile(image2File, "featured");
+      updates.push({
+        section: "featured",
+        key: "image2",
+        value: imageUrl,
+        valueType: "image",
+      });
+    } else if (existingImage2) {
+      updates.push({
+        section: "featured",
+        key: "image2",
+        value: existingImage2,
+        valueType: "image",
+      });
+    }
+
+    await bulkUpdateHomeContent(updates);
+    revalidatePath("/");
+    revalidatePath("/admin/pages/home");
+
+    return {
+      success: true,
+      message: "Featured content updated successfully",
+    };
+  } catch (error) {
+    console.error("Error updating Featured content:", error);
+    return { success: false, message: "Failed to update Featured content" };
   }
 }
 

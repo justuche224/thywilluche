@@ -2,6 +2,7 @@ import { getHomeSection } from "@/actions/admin/home-content";
 import { getSocials } from "@/actions/contact-info";
 import { HeroForm } from "@/components/admin/pages/home/hero-form";
 import { WhoIAmForm } from "@/components/admin/pages/home/who-i-am-form";
+import { FeaturedForm } from "@/components/admin/pages/home/featured-form";
 import { LivePreview } from "@/components/admin/pages/home/live-preview";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -15,6 +16,7 @@ import {
 const page = async () => {
   const heroData = await getHomeSection("hero");
   const whoIAmData = await getHomeSection("whoIAm");
+  const featuredData = await getHomeSection("featured");
   const socials = await getSocials();
 
   return (
@@ -28,9 +30,10 @@ const page = async () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Tabs defaultValue="hero" className="w-full">
-          <TabsList>
-            <TabsTrigger value="hero">Hero Section</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-3">
+            <TabsTrigger value="hero">Hero</TabsTrigger>
             <TabsTrigger value="whoiam">Who I Am</TabsTrigger>
+            <TabsTrigger value="featured">Featured</TabsTrigger>
           </TabsList>
           <TabsContent value="hero">
             <Card>
@@ -58,11 +61,25 @@ const page = async () => {
               </CardContent>
             </Card>
           </TabsContent>
+          <TabsContent value="featured">
+            <Card>
+              <CardHeader>
+                <CardTitle>Featured Section</CardTitle>
+                <CardDescription>
+                  Update the Latest Addition / Featured section
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <FeaturedForm data={featuredData} />
+              </CardContent>
+            </Card>
+          </TabsContent>
         </Tabs>
         <div className="sticky top-0 h-fit">
           <LivePreview
             initialHeroData={heroData}
             initialWhoIAmData={whoIAmData}
+            initialFeaturedData={featuredData}
             initialSocials={socials}
           />
         </div>

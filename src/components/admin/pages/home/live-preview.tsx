@@ -2,6 +2,7 @@
 
 import Hero from "@/components/home/hero";
 import WhoIAm from "@/components/home/who-i-am";
+import Featured from "@/components/home/featured";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { RefreshCw } from "lucide-react";
@@ -9,16 +10,19 @@ import { RefreshCw } from "lucide-react";
 interface LivePreviewProps {
   initialHeroData: Record<string, string>;
   initialWhoIAmData: Record<string, string>;
+  initialFeaturedData: Record<string, string>;
   initialSocials: Array<{ key: string; label: string; url: string }>;
 }
 
 export function LivePreview({
   initialHeroData,
   initialWhoIAmData,
+  initialFeaturedData,
   initialSocials,
 }: LivePreviewProps) {
   const [heroData, setHeroData] = useState(initialHeroData);
   const [whoIAmData, setWhoIAmData] = useState(initialWhoIAmData);
+  const [featuredData, setFeaturedData] = useState(initialFeaturedData);
   const [socials, setSocials] = useState(initialSocials);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
@@ -30,6 +34,7 @@ export function LivePreview({
 
       setHeroData(data.hero || {});
       setWhoIAmData(data.whoIAm || {});
+      setFeaturedData(data.featured || {});
       setSocials(data.socials || []);
     } catch (error) {
       console.error("Failed to refresh preview:", error);
@@ -88,6 +93,13 @@ export function LivePreview({
               image={whoIAmData.image}
             />
           </div>
+          <Featured
+            title={featuredData.title}
+            quote={featuredData.quote}
+            description={featuredData.description}
+            image1={featuredData.image1}
+            image2={featuredData.image2}
+          />
         </div>
       </div>
     </div>

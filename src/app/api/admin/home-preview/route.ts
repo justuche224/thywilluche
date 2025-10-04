@@ -10,6 +10,7 @@ export async function GET() {
     return NextResponse.json({
       hero: content.hero || {},
       whoIAm: content.whoIAm || {},
+      featured: content.featured || {},
       socials,
     });
   } catch (error) {

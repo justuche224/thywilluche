@@ -11,6 +11,7 @@ export default async function Home() {
 
   const heroData = content.hero || {};
   const whoIAmData = content.whoIAm || {};
+  const featuredData = content.featured || {};
 
   return (
     <>
@@ -32,7 +33,13 @@ export default async function Home() {
         description={whoIAmData.description}
         image={whoIAmData.image}
       />
-      <Featured />
+      <Featured
+        title={featuredData.title}
+        quote={featuredData.quote}
+        description={featuredData.description}
+        image1={featuredData.image1}
+        image2={featuredData.image2}
+      />
       <Community />
     </>
   );
