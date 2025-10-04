@@ -18,7 +18,31 @@ const oswald = Oswald({
   subsets: ["latin"],
 });
 
-const About = () => {
+interface AboutProps {
+  journeyImage?: string;
+  journeyTitle?: string;
+  journeyParagraph1?: string;
+  journeyParagraph2?: string;
+  missionTitle?: string;
+  missionParagraph1?: string;
+  missionParagraph2?: string;
+  visionTitle?: string;
+  visionParagraph1?: string;
+  visionParagraph2?: string;
+}
+
+const About = ({
+  journeyImage = "/images/IMG_20240828_162619[1].jpg",
+  journeyTitle = "My Journey",
+  journeyParagraph1 = "From the depths of personal struggle to becoming a beacon of hope for thousands, my journey has been one of transformation, resilience, and unwavering commitment to living authentically.",
+  journeyParagraph2 = "Growing up, I faced challenges that tested my spirit and questioned my path. Mental health struggles, moments of doubt, and the weight of unexpressed emotions shaped me into someone who understands the power of vulnerability and the strength found in community.",
+  missionTitle = "Our Mission",
+  missionParagraph1 = "To empower individuals worldwide to embrace their mental health journey with courage, compassion, and community. We believe that every person deserves to live authentically, heal from their past, and find strength in their daily victories.",
+  missionParagraph2 = "Through storytelling, education, and meaningful connections, we create safe spaces where vulnerability becomes strength and isolation transforms into belonging.",
+  visionTitle = "Our Vision",
+  visionParagraph1 = "A world where mental health conversations flow as naturally as breathing, where every individual feels seen, heard, and supported in their journey toward healing and self-discovery.",
+  visionParagraph2 = "We envision communities built on empathy, where personal stories become catalysts for collective transformation, and where the simple act of showing up becomes the greatest victory of all.",
+}: AboutProps) => {
   return (
     <div className="w-full relative overflow-clip">
       {/* Hero Section - Personal Journey */}
@@ -57,7 +81,7 @@ const About = () => {
               >
                 <div className="relative">
                   <Image
-                    src="/images/IMG_20240828_162619[1].jpg"
+                    src={journeyImage}
                     alt="Thywill Uche - Personal Journey"
                     width={400}
                     height={450}
@@ -79,7 +103,7 @@ const About = () => {
                   <h1
                     className={`text-5xl lg:text-6xl ${pacifico.className} mb-6`}
                   >
-                    My Journey
+                    {journeyTitle}
                   </h1>
                   <div className="w-24 h-1 bg-primary rounded-full mb-8"></div>
                 </div>
@@ -87,19 +111,8 @@ const About = () => {
                 <div
                   className={`space-y-6 text-lg 2xl:text-2xl text-justify leading-relaxed ${oswald.className}`}
                 >
-                  <p>
-                    From the depths of personal struggle to becoming a beacon of
-                    hope for thousands, my journey has been one of
-                    transformation, resilience, and unwavering commitment to
-                    living authentically.
-                  </p>
-                  <p>
-                    Growing up, I faced challenges that tested my spirit and
-                    questioned my path. Mental health struggles, moments of
-                    doubt, and the weight of unexpressed emotions shaped me into
-                    someone who understands the power of vulnerability and the
-                    strength found in community.
-                  </p>
+                  <p>{journeyParagraph1}</p>
+                  <p>{journeyParagraph2}</p>
                 </div>
               </motion.div>
             </div>
@@ -143,23 +156,17 @@ const About = () => {
                   <h3
                     className={`text-3xl font-semibold mb-6 ${oswald.className}`}
                   >
-                    Our Mission
+                    {missionTitle}
                   </h3>
                   <p
                     className={`text-lg leading-relaxed text-gray-700 ${oswald.className} text-justify`}
                   >
-                    To empower individuals worldwide to embrace their mental
-                    health journey with courage, compassion, and community. We
-                    believe that every person deserves to live authentically,
-                    heal from their past, and find strength in their daily
-                    victories.
+                    {missionParagraph1}
                   </p>
                   <p
                     className={`text-lg leading-relaxed text-gray-700 mt-4 ${oswald.className} text-justify`}
                   >
-                    Through storytelling, education, and meaningful connections,
-                    we create safe spaces where vulnerability becomes strength
-                    and isolation transforms into belonging.
+                    {missionParagraph2}
                   </p>
                 </div>
               </motion.div>
@@ -177,23 +184,17 @@ const About = () => {
                   <h3
                     className={`text-3xl font-semibold mb-6 ${oswald.className}`}
                   >
-                    Our Vision
+                    {visionTitle}
                   </h3>
                   <p
                     className={`text-lg leading-relaxed text-gray-700 ${oswald.className} text-justify`}
                   >
-                    A world where mental health conversations flow as naturally
-                    as breathing, where every individual feels seen, heard, and
-                    supported in their journey toward healing and
-                    self-discovery.
+                    {visionParagraph1}
                   </p>
                   <p
                     className={`text-lg leading-relaxed text-gray-700 mt-4 ${oswald.className} text-justify`}
                   >
-                    We envision communities built on empathy, where personal
-                    stories become catalysts for collective transformation, and
-                    where the simple act of showing up becomes the greatest
-                    victory of all.
+                    {visionParagraph2}
                   </p>
                 </div>
               </motion.div>

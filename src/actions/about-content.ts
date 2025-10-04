@@ -1,4 +1,5 @@
-import "server-only";
+"use server"
+
 import db from "@/db";
 import { aboutContent } from "@/db/schema";
 import { eq, and } from "drizzle-orm";
