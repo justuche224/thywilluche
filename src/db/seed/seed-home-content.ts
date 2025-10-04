@@ -49,7 +49,12 @@ async function seedHomeContent() {
       valueType: "text",
     },
     { section: "hero", key: "ctaLink", value: "#", valueType: "text" },
-    { section: "whoIAm", key: "title", value: "Who I Am", valueType: "text" },
+    {
+      section: "whoIAm",
+      key: "title",
+      value: "Who I Am",
+      valueType: "text",
+    },
     {
       section: "whoIAm",
       key: "description",

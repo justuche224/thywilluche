@@ -1,9 +1,8 @@
 import Image from "next/image";
 import React from "react";
-import { Facebook, Instagram, X, Youtube } from "lucide-react";
+import { Facebook, Instagram, X, Youtube, LucideIcon } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-// import { Badge } from "@/components/ui/badge";
 import { Oswald } from "next/font/google";
 
 const oswald = Oswald({
@@ -11,28 +10,18 @@ const oswald = Oswald({
   subsets: ["latin"],
 });
 
-const socials = [
-  {
-    name: "Facebook",
-    url: "#",
-    icon: <Facebook />,
-  },
-  {
-    name: "Instagram",
-    url: "#",
-    icon: <Instagram />,
-  },
-  {
-    name: "Youtube",
-    url: "#",
-    icon: <Youtube />,
-  },
-  {
-    name: "X",
-    url: "#",
-    icon: <X />,
-  },
-];
+const iconMap: Record<string, LucideIcon> = {
+  facebook: Facebook,
+  instagram: Instagram,
+  x: X,
+  youtube: Youtube,
+};
+
+interface Social {
+  key: string;
+  label: string;
+  url: string;
+}
 
 interface HeroProps {
   title1?: string;
@@ -45,6 +34,7 @@ interface HeroProps {
   heroImage?: string;
   ctaText?: string;
   ctaLink?: string;
+  socials?: Social[];
 }
 
 const Hero = ({
@@ -58,6 +48,7 @@ const Hero = ({
   heroImage = "/images/IMG_20240828_162759[1].jpg",
   ctaText = "Explore Works",
   ctaLink = "#",
+  socials = [],
 }: HeroProps) => {
   return (
     <div className="min-h-screen w-full relative">
@@ -82,26 +73,37 @@ const Hero = ({
                 <span className="block">{title3}</span>
               </h1>
 
-              <div className="space-y-6">
-                <p
-                  className={`text-xl font-semibold max-lg:text-center ${oswald.className}`}
-                >
-                  Find Me Online
-                </p>
-                <div className="flex gap-4 max-lg:justify-center">
-                  {socials.map((social) => (
-                    <Button
-                      size="icon"
-                      variant="outline"
-                      asChild
-                      key={social.name}
-                      className={`h-12 w-12 ${oswald.className}`}
-                    >
-                      <Link href={social.url}>{social.icon}</Link>
-                    </Button>
-                  ))}
+              {socials.length > 0 && (
+                <div className="space-y-6">
+                  <p
+                    className={`text-xl font-semibold max-lg:text-center ${oswald.className}`}
+                  >
+                    Find Me Online
+                  </p>
+                  <div className="flex gap-4 max-lg:justify-center">
+                    {socials.map((social) => {
+                      const IconComponent = iconMap[social.key.toLowerCase()];
+                      return (
+                        <Button
+                          size="icon"
+                          variant="outline"
+                          asChild
+                          key={social.key}
+                          className={`h-12 w-12 ${oswald.className}`}
+                        >
+                          <Link
+                            href={social.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            {IconComponent ? <IconComponent /> : <X />}
+                          </Link>
+                        </Button>
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
 

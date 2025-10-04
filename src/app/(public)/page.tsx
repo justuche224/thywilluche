@@ -3,9 +3,11 @@ import WhoIAm from "@/components/home/who-i-am";
 import Featured from "@/components/home/featured";
 import Community from "@/components/home/community";
 import { getHomeContent } from "@/actions/home-content";
+import { getSocials } from "@/actions/contact-info";
 
 export default async function Home() {
   const content = await getHomeContent();
+  const socials = await getSocials();
 
   const heroData = content.hero || {};
   const whoIAmData = content.whoIAm || {};
@@ -23,6 +25,7 @@ export default async function Home() {
         heroImage={heroData.heroImage}
         ctaText={heroData.ctaText}
         ctaLink={heroData.ctaLink}
+        socials={socials}
       />
       <WhoIAm
         title={whoIAmData.title}

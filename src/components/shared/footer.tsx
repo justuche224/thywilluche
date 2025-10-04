@@ -9,37 +9,26 @@ import {
   Mail,
   Phone,
   MapPin,
+  LucideIcon,
 } from "lucide-react";
 import { Oswald } from "next/font/google";
+import { getContactInfo, getSocials } from "@/actions/contact-info";
 
 const oswald = Oswald({
   variable: "--font-oswald",
   subsets: ["latin"],
 });
 
-const Footer = () => {
-  const socials = [
-    {
-      name: "Facebook",
-      url: "#",
-      icon: <Facebook className="w-5 h-5" />,
-    },
-    {
-      name: "Instagram",
-      url: "#",
-      icon: <Instagram className="w-5 h-5" />,
-    },
-    {
-      name: "Youtube",
-      url: "#",
-      icon: <Youtube className="w-5 h-5" />,
-    },
-    {
-      name: "X",
-      url: "#",
-      icon: <X className="w-5 h-5" />,
-    },
-  ];
+const iconMap: Record<string, LucideIcon> = {
+  facebook: Facebook,
+  instagram: Instagram,
+  x: X,
+  youtube: Youtube,
+};
+
+const Footer = async () => {
+  const contactInfo = await getContactInfo();
+  const socials = await getSocials();
 
   const quickLinks = [
     { name: "Home", url: "/" },
@@ -85,16 +74,29 @@ const Footer = () => {
               Join me on this journey of growth and daily victories.
             </p>
             <div className="flex space-x-3">
-              {socials.map((social) => (
-                <Button
-                  key={social.name}
-                  size="icon"
-                  asChild
-                  className="h-10 w-10 border-gray-700 hover:border-primary hover:bg-primary/10"
-                >
-                  <Link href={social.url}>{social.icon}</Link>
-                </Button>
-              ))}
+              {socials.map((social) => {
+                const IconComponent = iconMap[social.key.toLowerCase()];
+                return (
+                  <Button
+                    key={social.key}
+                    size="icon"
+                    asChild
+                    className="h-10 w-10 border-gray-700 hover:border-primary hover:bg-primary/10"
+                  >
+                    <Link
+                      href={social.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {IconComponent ? (
+                        <IconComponent className="w-5 h-5" />
+                      ) : (
+                        <X className="w-5 h-5" />
+                      )}
+                    </Link>
+                  </Button>
+                );
+              })}
             </div>
           </div>
 
@@ -142,24 +144,36 @@ const Footer = () => {
               Get In Touch
             </h4>
             <div className="space-y-4">
-              <div className="flex items-center space-x-3">
-                <Mail className="w-5 h-5 text-primary" />
-                <span className={`text-gray-300 ${oswald.className}`}>
-                  hello@thywilluche.com
-                </span>
-              </div>
-              <div className="flex items-center space-x-3">
-                <Phone className="w-5 h-5 text-primary" />
-                <span className={`text-gray-300 ${oswald.className}`}>
-                  +1 (555) 123-4567
-                </span>
-              </div>
-              <div className="flex items-center space-x-3">
-                <MapPin className="w-5 h-5 text-primary" />
-                <span className={`text-gray-300 ${oswald.className}`}>
-                  Nigeria
-                </span>
-              </div>
+              {contactInfo.email?.value && (
+                <a
+                  href={`mailto:${contactInfo.email.value}`}
+                  className="flex items-center space-x-3 hover:text-primary transition-colors"
+                >
+                  <Mail className="w-5 h-5 text-primary" />
+                  <span className={`text-gray-300 ${oswald.className}`}>
+                    {contactInfo.email.value}
+                  </span>
+                </a>
+              )}
+              {contactInfo.phone?.value && (
+                <a
+                  href={`tel:${contactInfo.phone.value}`}
+                  className="flex items-center space-x-3 hover:text-primary transition-colors"
+                >
+                  <Phone className="w-5 h-5 text-primary" />
+                  <span className={`text-gray-300 ${oswald.className}`}>
+                    {contactInfo.phone.value}
+                  </span>
+                </a>
+              )}
+              {contactInfo.address?.value && (
+                <div className="flex items-center space-x-3">
+                  <MapPin className="w-5 h-5 text-primary" />
+                  <span className={`text-gray-300 ${oswald.className}`}>
+                    {contactInfo.address.value}
+                  </span>
+                </div>
+              )}
             </div>
             <div className="pt-4">
               <Button
