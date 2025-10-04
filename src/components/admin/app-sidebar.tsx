@@ -4,7 +4,7 @@ import * as React from "react"
 import {
     AudioWaveform,
     BookOpen,
-    Bot,
+    NotepadText,
     Command,
     Frame,
     GalleryVerticalEnd,
@@ -26,7 +26,6 @@ import {
     SidebarRail,
 } from "@/components/ui/sidebar"
 
-// This is sample data.
 const data = {
     user: {
         name: "shadcn",
@@ -72,22 +71,22 @@ const data = {
             ],
         },
         {
-            title: "Models",
+            title: "Pages",
             url: "#",
-            icon: Bot,
+            icon: NotepadText,
             isActive: true,
             items: [
                 {
-                    title: "Genesis",
-                    url: "#",
+                    title: "Home",
+                    url: "/admin/pages/home",
                 },
                 {
-                    title: "Explorer",
-                    url: "#",
+                    title: "About",
+                    url: "/admin/pages/about",
                 },
                 {
-                    title: "Quantum",
-                    url: "#",
+                    title: "Services",
+                    url: "/admin/pages/services",
                 },
             ],
         },

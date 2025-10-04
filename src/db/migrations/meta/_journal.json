@@ -64,6 +64,13 @@
       "when": 1759545718489,
       "tag": "0008_common_amphibian",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1759550135559,
+      "tag": "0009_fair_old_lace",
+      "breakpoints": true
     }
   ]
 }

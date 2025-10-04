@@ -34,7 +34,31 @@ const socials = [
   },
 ];
 
-const Hero = () => {
+interface HeroProps {
+  title1?: string;
+  title2?: string;
+  title3?: string;
+  tagline1?: string;
+  tagline2?: string;
+  tagline3?: string;
+  description?: string;
+  heroImage?: string;
+  ctaText?: string;
+  ctaLink?: string;
+}
+
+const Hero = ({
+  title1 = "365 TIPS,",
+  title2 = "365 WINS,",
+  title3 = "EVERY DAY IS VICTORY",
+  tagline1 = "Connecting hearts.",
+  tagline2 = "Uplifting minds.",
+  tagline3 = "Living one day at a time.",
+  description = "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Itaque voluptatem possimus praesentium. Voluptatum quod ea, eligendi velit quam voluptate, iusto quia sequi, sapiente sit suscipit enim! Temporibus ex ipsa nam.",
+  heroImage = "/images/IMG_20240828_162759[1].jpg",
+  ctaText = "Explore Works",
+  ctaLink = "#",
+}: HeroProps) => {
   return (
     <div className="min-h-screen w-full relative">
       <Image
@@ -53,9 +77,9 @@ const Hero = () => {
               <h1
                 className={`text-6xl lg:text-6xl 2xl:text-8xl font-bold tracking-tight leading-none ${oswald.className} max-lg:text-center`}
               >
-                <span className="block mb-2">365 TIPS,</span>
-                <span className="block mb-2">365 WINS,</span>
-                <span className="block">EVERY DAY IS VICTORY</span>
+                <span className="block mb-2">{title1}</span>
+                <span className="block mb-2">{title2}</span>
+                <span className="block">{title3}</span>
               </h1>
 
               <div className="space-y-6">
@@ -85,7 +109,7 @@ const Hero = () => {
           <div className="lg:col-span-4 flex justify-center">
             <div className="relative">
               <Image
-                src={"/images/IMG_20240828_162759[1].jpg"}
+                src={heroImage}
                 alt="hero"
                 width={400}
                 height={500}
@@ -99,20 +123,17 @@ const Hero = () => {
             <h2
               className={`text-4xl 2xl:text-5xl font-semibold leading-tight ${oswald.className}`}
             >
-              Connecting hearts.
+              {tagline1}
               <br />
-              Uplifting minds.
+              {tagline2}
               <br />
-              Living one day at a time.
+              {tagline3}
             </h2>
 
             <p
               className={`text-lg xl:text-xl leading-relaxed text-gray-700 ${oswald.className} text-justify`}
             >
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Itaque
-              voluptatem possimus praesentium. Voluptatum quod ea, eligendi
-              velit quam voluptate, iusto quia sequi, sapiente sit suscipit
-              enim! Temporibus ex ipsa nam.
+              {description}
             </p>
 
             <div className="pt-4">
@@ -121,7 +142,7 @@ const Hero = () => {
                 size="lg"
                 className={`px-8 py-6 text-lg ${oswald.className}`}
               >
-                <Link href="#">Explore Works</Link>
+                <Link href={ctaLink}>{ctaText}</Link>
               </Button>
             </div>
           </div>
