@@ -2,8 +2,6 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { ShoppingCart } from "lucide-react";
 import { Pacifico, Oswald } from "next/font/google";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -13,6 +11,7 @@ import {
   getPublicFeaturedBooks,
 } from "@/actions/shop/books/public";
 import { FeaturedCarousel } from "./featured-carousel";
+import AddToCart from "@/components/cart-button";
 
 const pacifico = Pacifico({
   variable: "--font-pacifico",
@@ -172,15 +171,20 @@ const BooksPage = () => {
                           </div>
                         </div>
                       </div>
-                      <Button
-                        className="w-full gap-2 flex items-center justify-center text-sm md:text-base mt-auto"
-                        disabled={variant.status !== "Available"}
-                      >
-                        <ShoppingCart size={16} />
-                        {variant.status === "Available"
-                          ? "Add to Cart"
-                          : variant.status}
-                      </Button>
+                      <AddToCart
+                        book={{
+                          id: book.id,
+                          tittle: book.tittle,
+                          slug: book.slug,
+                        }}
+                        variant={{
+                          id: variant.id,
+                          variant: variant.variant,
+                          price: variant.price,
+                          imageUrl: variant.imageUrl,
+                          status: variant.status,
+                        }}
+                      />
                     </div>
                   ))}
                 </div>

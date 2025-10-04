@@ -6,7 +6,8 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import { getBookBySlug } from "@/actions/shop/books/public";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -16,6 +17,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import AddToCart from "@/components/cart-button";
 
 const pacifico = Pacifico({
   variable: "--font-pacifico",
@@ -32,11 +34,26 @@ export const BookPage = ({ bookSlug }: { bookSlug: string }) => {
   const [selectedVariantId, setSelectedVariantId] = useState<string | null>(
     null
   );
+  const searchParams = useSearchParams();
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["book", bookSlug],
     queryFn: () => getBookBySlug(bookSlug),
   });
+
+  useEffect(() => {
+    if (data?.book) {
+      const variantParam = searchParams.get("variant");
+      if (variantParam) {
+        const variantExists = data.book.variants.some(
+          (variant) => variant.id === variantParam
+        );
+        if (variantExists) {
+          setSelectedVariantId(variantParam);
+        }
+      }
+    }
+  }, [data?.book, searchParams]);
 
   if (isLoading) {
     return (
@@ -259,6 +276,22 @@ export const BookPage = ({ bookSlug }: { bookSlug: string }) => {
                 >
                   {currentVariant.status}
                 </Badge>
+              </div>
+              <div className="max-w-48">
+                <AddToCart
+                  book={{
+                    id: book.id,
+                    tittle: book.tittle,
+                    slug: book.slug,
+                  }}
+                  variant={{
+                    id: currentVariant.id,
+                    variant: currentVariant.variant,
+                    price: currentVariant.price,
+                    imageUrl: currentVariant.imageUrl,
+                    status: currentVariant.status,
+                  }}
+                />
               </div>
             </div>
 
