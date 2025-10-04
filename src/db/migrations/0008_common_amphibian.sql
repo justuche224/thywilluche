@@ -1,0 +1,1 @@
+ALTER TABLE "book_variants" ADD COLUMN "external_links" text;

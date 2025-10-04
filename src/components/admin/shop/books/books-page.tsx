@@ -3,15 +3,15 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { ShoppingCart } from "lucide-react";
+import { Plus } from "lucide-react";
 import { Pacifico, Oswald } from "next/font/google";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useQuery } from "@tanstack/react-query";
 import {
-  getPublicBooksWithVariants,
-  getPublicFeaturedBooks,
-} from "@/actions/shop/books/public";
+  getBooksWithVariants,
+  getFeaturedBooks,
+} from "@/actions/shop/books/admin-new";
 import { FeaturedCarousel } from "./featured-carousel";
 
 const pacifico = Pacifico({
@@ -51,32 +51,43 @@ const BookSkeleton = () => (
 
 const BooksPage = () => {
   const { data, isLoading, error } = useQuery({
-    queryKey: ["public-books"],
-    queryFn: () => getPublicBooksWithVariants(1, 10),
+    queryKey: ["admin-books"],
+    queryFn: () => getBooksWithVariants(1, 10),
   });
 
   const { data: featuredData } = useQuery({
-    queryKey: ["public-featured-books"],
-    queryFn: () => getPublicFeaturedBooks(),
+    queryKey: ["featured-books"],
+    queryFn: () => getFeaturedBooks(),
   });
 
   return (
     <div className="container mx-auto px-4 py-10 space-y-10">
+      <div className="flex items-center justify-between">
+        <div>
+          <h1
+            className={`text-3xl lg:text-4xl xl:text-5xl ${pacifico.className} font-bold text-gray-900 mb-2`}
+          >
+            Books Management
+          </h1>
+          <p className="text-lg md:text-xl text-muted-foreground">
+            Manage your book catalog and variants
+          </p>
+        </div>
+        <Link href="/admin/shop/books/add">
+          <Button className="gap-2">
+            <Plus size={16} />
+            Add New Book
+          </Button>
+        </Link>
+      </div>
+
       {featuredData?.books && featuredData.books.length > 0 && (
         <div id="featured-books" className="space-y-6">
           <FeaturedCarousel books={featuredData.books} />
         </div>
       )}
-      <div className="container mx-auto max-w-7xl px-2 md:px-5 lg:px-10 bg-white py-10 rounded-lg">
-        <h1
-          className={`text-3xl lg:text-4xl xl:text-5xl ${pacifico.className} font-bold text-gray-900 mb-2`}
-        >
-          Books
-        </h1>
-        <p className="text-lg md:text-xl text-muted-foreground mb-8">
-          Discover our collection of inspiring books
-        </p>
 
+      <div className="container mx-auto max-w-7xl px-2 md:px-5 lg:px-10 bg-white py-10 rounded-lg">
         {isLoading ? (
           <div className="space-y-10">
             <BookSkeleton />
@@ -91,42 +102,54 @@ const BooksPage = () => {
           </div>
         ) : !data?.books || data.books.length === 0 ? (
           <div className="text-center py-20">
-            <p className="text-xl text-muted-foreground">
-              No books available at the moment
-            </p>
+            <p className="text-xl text-muted-foreground mb-4">No books found</p>
+            <Link href="/admin/shop/books/add">
+              <Button>
+                <Plus size={16} className="mr-2" />
+                Add Your First Book
+              </Button>
+            </Link>
           </div>
         ) : (
           <div className="space-y-10">
             {data.books.map((book, index) => (
               <div key={book.id} className="space-y-6">
-                <div className="space-y-2">
-                  <div className="flex items-center gap-3 flex-wrap">
+                <div className="space-y-2 flex items-start justify-between">
+                  <div className="flex-1">
                     <h2
                       className={`text-2xl md:text-3xl font-bold ${oswald.className} text-gray-900`}
                     >
                       {book.tittle}
                     </h2>
-                    {book.badge && (
-                      <span className="px-3 py-1 text-xs font-semibold rounded-full bg-primary text-primary-foreground">
-                        {book.badge}
-                      </span>
+                    <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-4xl mt-2 line-clamp-5">
+                      {book.synopsis}
+                    </p>
+                    {book.tags && book.tags.length > 0 && (
+                      <div className="flex flex-wrap gap-2 mt-3">
+                        {book.tags.map((tag) => (
+                          <span
+                            key={tag}
+                            className="px-2 py-1 text-xs rounded-full bg-secondary text-secondary-foreground"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
                     )}
                   </div>
-                  <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-4xl line-clamp-3">
-                    {book.synopsis}
-                  </p>
-                  {book.tags && book.tags.length > 0 && (
-                    <div className="flex flex-wrap gap-2 mt-2">
-                      {book.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="px-2 py-1 text-xs rounded-full bg-secondary text-secondary-foreground"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  )}
+                  <div className="flex gap-2">
+                    <Link href={`/admin/shop/books/${book.id}/edit`}>
+                      <Button variant="outline" size="sm">
+                        Edit Book
+                      </Button>
+                    </Link>
+                    <Link href={`/admin/shop/books/${book.id}/add-variant`}>
+                      <Button variant="outline" size="sm" className="gap-2">
+                        <Plus size={14} />
+                        Add Variant
+                      </Button>
+                    </Link>
+                  </div>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-6">
                   {book.variants.map((variant) => (
@@ -134,17 +157,14 @@ const BooksPage = () => {
                       key={variant.id}
                       className="w-full p-4 flex flex-col gap-3 border rounded-lg hover:shadow-md transition-shadow"
                     >
-                      <Link
-                        href={`/shop/books/${book.slug}?variant=${variant.id}`}
-                        className="aspect-[3/4] w-full overflow-hidden rounded-md relative"
-                      >
+                      <div className="aspect-[3/4] w-full overflow-hidden rounded-md relative">
                         <Image
                           fill
                           alt={`${book.tittle} - ${variant.variant}`}
                           src={variant.imageUrl}
-                          className="object-cover hover:scale-105 transition-transform"
+                          className="object-cover"
                         />
-                      </Link>
+                      </div>
                       <div className="space-y-2">
                         <div className="flex items-center justify-between">
                           <h3
@@ -169,18 +189,44 @@ const BooksPage = () => {
                             <p className="text-xl font-bold text-primary">
                               ${variant.price}
                             </p>
+                            {variant.slashedFrom && (
+                              <p className="text-sm text-muted-foreground line-through">
+                                ${variant.slashedFrom}
+                              </p>
+                            )}
                           </div>
+                          <p
+                            className={`text-sm ${
+                              variant.isListed
+                                ? "text-green-600"
+                                : "text-gray-500"
+                            }`}
+                          >
+                            {variant.isListed ? "Listed" : "Unlisted"}
+                          </p>
                         </div>
                       </div>
-                      <Button
-                        className="w-full gap-2 flex items-center justify-center text-sm md:text-base mt-auto"
-                        disabled={variant.status !== "Available"}
-                      >
-                        <ShoppingCart size={16} />
-                        {variant.status === "Available"
-                          ? "Add to Cart"
-                          : variant.status}
-                      </Button>
+                      <div className="flex gap-2">
+                        <Link
+                          href={`/admin/shop/books/variant/${variant.id}/edit`}
+                          className="flex-1"
+                        >
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="w-full"
+                          >
+                            Edit
+                          </Button>
+                        </Link>
+                        <Button
+                          variant="destructive"
+                          size="sm"
+                          className="flex-1"
+                        >
+                          Delete
+                        </Button>
+                      </div>
                     </div>
                   ))}
                 </div>

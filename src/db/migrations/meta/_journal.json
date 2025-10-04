@@ -29,6 +29,41 @@
       "when": 1759528014323,
       "tag": "0003_light_venus",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1759540789664,
+      "tag": "0004_melodic_khan",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1759541011087,
+      "tag": "0005_natural_nextwave",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1759542178835,
+      "tag": "0006_gifted_lenny_balinger",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1759544605125,
+      "tag": "0007_tired_sway",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1759545718489,
+      "tag": "0008_common_amphibian",
+      "breakpoints": true
     }
   ]
 }
