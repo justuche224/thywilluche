@@ -40,6 +40,7 @@ export function HeroForm({ data }: HeroFormProps) {
 
     if (result.success) {
       toast.success(result.message);
+      window.dispatchEvent(new Event("refreshPreview"));
     } else {
       toast.error(result.message);
     }
@@ -49,7 +50,7 @@ export function HeroForm({ data }: HeroFormProps) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-2">
           <Label htmlFor="title1">Title Line 1</Label>
           <Input
@@ -79,7 +80,7 @@ export function HeroForm({ data }: HeroFormProps) {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-2">
           <Label htmlFor="tagline1">Tagline Line 1</Label>
           <Input

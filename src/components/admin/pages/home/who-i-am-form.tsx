@@ -40,6 +40,7 @@ export function WhoIAmForm({ data }: WhoIAmFormProps) {
 
     if (result.success) {
       toast.success(result.message);
+      window.dispatchEvent(new Event("refreshPreview"));
     } else {
       toast.error(result.message);
     }
