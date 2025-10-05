@@ -99,89 +99,107 @@ const ConsultingPage = ({ content = {} }: ConsultingPageProps) => {
           <div className="max-w-6xl mx-auto space-y-16">
             <div className="text-center space-y-4">
               <h2 className={`text-4xl lg:text-5xl ${pacifico.className}`}>
-                Consulting Areas
+                {content.whatToExpectTitle || "What to Expect"}
               </h2>
               <p
                 className={`text-xl text-gray-700 max-w-3xl mx-auto ${oswald.className}`}
               >
-                Strategic guidance for organizations and individuals
+                {content.whatToExpectSubtitle ||
+                  "Strategic guidance that creates real impact and authentic connections"}
               </p>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-2 gap-8">
               <motion.div
-                className="space-y-4"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                className="flex items-start gap-4"
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.1 }}
               >
-                <div className="aspect-[4/3] relative rounded-lg overflow-hidden">
-                  <Image
-                    src="/images/community.jpg"
-                    alt="Mental Health Programs"
-                    fill
-                    className="object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                <div className="p-2 bg-primary/10 rounded-lg shrink-0">
+                  <CheckCircle className="w-6 h-6 text-primary" />
                 </div>
-                <h3 className={`text-2xl font-semibold ${oswald.className}`}>
-                  Mental Health Advocacy
-                </h3>
-                <p className={`text-gray-700 ${oswald.className}`}>
-                  Design and implement authentic mental health programs that
-                  create real impact and foster supportive communities.
-                </p>
+                <div>
+                  <h3
+                    className={`text-2xl font-semibold mb-2 ${oswald.className}`}
+                  >
+                    {content.strategyTitle || "Strategic Planning"}
+                  </h3>
+                  <p className={`text-gray-700 ${oswald.className}`}>
+                    {content.strategyDescription ||
+                      "Comprehensive analysis and strategic planning to create initiatives that align with your values and achieve measurable impact."}
+                  </p>
+                </div>
               </motion.div>
 
               <motion.div
-                className="space-y-4"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                className="flex items-start gap-4"
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.2 }}
               >
-                <div className="aspect-[4/3] relative rounded-lg overflow-hidden">
-                  <Image
-                    src="/images/IMG_20240828_162619[1].jpg"
-                    alt="Content Strategy"
-                    fill
-                    className="object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                <div className="p-2 bg-primary/10 rounded-lg shrink-0">
+                  <CheckCircle className="w-6 h-6 text-primary" />
                 </div>
-                <h3 className={`text-2xl font-semibold ${oswald.className}`}>
-                  Content & Brand Strategy
-                </h3>
-                <p className={`text-gray-700 ${oswald.className}`}>
-                  Develop compelling content strategies and authentic brand
-                  narratives that resonate with your target audience.
-                </p>
+                <div>
+                  <h3
+                    className={`text-2xl font-semibold mb-2 ${oswald.className}`}
+                  >
+                    {content.implementationTitle || "Implementation Support"}
+                  </h3>
+                  <p className={`text-gray-700 ${oswald.className}`}>
+                    {content.implementationDescription ||
+                      "Hands-on support throughout the implementation process, ensuring your initiatives are executed effectively and sustainably."}
+                  </p>
+                </div>
               </motion.div>
 
               <motion.div
-                className="space-y-4"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                className="flex items-start gap-4"
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.3 }}
               >
-                <div className="aspect-[4/3] relative rounded-lg overflow-hidden">
-                  <Image
-                    src="/images/IMG_20250918_104735[2].jpg"
-                    alt="Community Building"
-                    fill
-                    className="object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                <div className="p-2 bg-primary/10 rounded-lg shrink-0">
+                  <CheckCircle className="w-6 h-6 text-primary" />
                 </div>
-                <h3 className={`text-2xl font-semibold ${oswald.className}`}>
-                  Community Engagement
-                </h3>
-                <p className={`text-gray-700 ${oswald.className}`}>
-                  Build and nurture engaged communities through strategic
-                  initiatives and meaningful connection opportunities.
-                </p>
+                <div>
+                  <h3
+                    className={`text-2xl font-semibold mb-2 ${oswald.className}`}
+                  >
+                    {content.supportTitle || "Ongoing Support"}
+                  </h3>
+                  <p className={`text-gray-700 ${oswald.className}`}>
+                    {content.supportDescription ||
+                      "Continued guidance and support as your initiatives grow, with regular check-ins and strategic adjustments."}
+                  </p>
+                </div>
+              </motion.div>
+
+              <motion.div
+                className="flex items-start gap-4"
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+              >
+                <div className="p-2 bg-primary/10 rounded-lg shrink-0">
+                  <CheckCircle className="w-6 h-6 text-primary" />
+                </div>
+                <div>
+                  <h3
+                    className={`text-2xl font-semibold mb-2 ${oswald.className}`}
+                  >
+                    {content.resultsTitle || "Measurable Results"}
+                  </h3>
+                  <p className={`text-gray-700 ${oswald.className}`}>
+                    {content.resultsDescription ||
+                      "Focus on creating initiatives that deliver measurable impact and authentic community engagement."}
+                  </p>
+                </div>
               </motion.div>
             </div>
           </div>

@@ -401,6 +401,146 @@ const servicesSeedData = [
       "This service is perfect for nonprofits, educational institutions, content creators, and organizations committed to authentic mental health advocacy and community engagement.",
     valueType: "text",
   },
+  // Ghostwriting Services Offered Section
+  {
+    section: "ghostwriting",
+    key: "servicesTitle",
+    value: "Services Offered",
+    valueType: "text",
+  },
+  {
+    section: "ghostwriting",
+    key: "servicesSubtitle",
+    value: "Comprehensive writing support from concept to completion",
+    valueType: "text",
+  },
+  {
+    section: "ghostwriting",
+    key: "memoirsTitle",
+    value: "Memoirs & Life Stories",
+    valueType: "text",
+  },
+  {
+    section: "ghostwriting",
+    key: "memoirsDescription",
+    value:
+      "Transform your experiences into compelling narratives that preserve your legacy and inspire others through authentic storytelling.",
+    valueType: "text",
+  },
+  {
+    section: "ghostwriting",
+    key: "memoirsImage",
+    value: "/images/IMG_20250907_010252[1].jpg",
+    valueType: "image",
+  },
+  {
+    section: "ghostwriting",
+    key: "selfHelpTitle",
+    value: "Self-Help & Motivational",
+    valueType: "text",
+  },
+  {
+    section: "ghostwriting",
+    key: "selfHelpDescription",
+    value:
+      "Create empowering content that helps others overcome challenges and achieve their goals through your unique insights and experiences.",
+    valueType: "text",
+  },
+  {
+    section: "ghostwriting",
+    key: "selfHelpImage",
+    value: "/images/IMG_20250907_010336[1].jpg",
+    valueType: "image",
+  },
+  {
+    section: "ghostwriting",
+    key: "businessTitle",
+    value: "Business & Professional",
+    valueType: "text",
+  },
+  {
+    section: "ghostwriting",
+    key: "businessDescription",
+    value:
+      "Professional content that establishes your expertise and builds your brand, from thought leadership pieces to comprehensive guides.",
+    valueType: "text",
+  },
+  {
+    section: "ghostwriting",
+    key: "businessImage",
+    value: "/images/IMG_20240828_162619[1].jpg",
+    valueType: "image",
+  },
+  // Consulting Areas Section
+  {
+    section: "consulting",
+    key: "areasTitle",
+    value: "Consulting Areas",
+    valueType: "text",
+  },
+  {
+    section: "consulting",
+    key: "areasSubtitle",
+    value: "Strategic guidance for organizations and individuals",
+    valueType: "text",
+  },
+  {
+    section: "consulting",
+    key: "advocacyTitle",
+    value: "Mental Health Advocacy",
+    valueType: "text",
+  },
+  {
+    section: "consulting",
+    key: "advocacyDescription",
+    value:
+      "Design and implement authentic mental health programs that create real impact and foster supportive communities.",
+    valueType: "text",
+  },
+  {
+    section: "consulting",
+    key: "advocacyImage",
+    value: "/images/community.jpg",
+    valueType: "image",
+  },
+  {
+    section: "consulting",
+    key: "contentTitle",
+    value: "Content Strategy",
+    valueType: "text",
+  },
+  {
+    section: "consulting",
+    key: "contentDescription",
+    value:
+      "Develop compelling content strategies that build authentic connections and drive meaningful engagement with your audience.",
+    valueType: "text",
+  },
+  {
+    section: "consulting",
+    key: "contentImage",
+    value: "/images/IMG_20240828_162619[1].jpg",
+    valueType: "image",
+  },
+  {
+    section: "consulting",
+    key: "communityTitle",
+    value: "Community Building",
+    valueType: "text",
+  },
+  {
+    section: "consulting",
+    key: "communityDescription",
+    value:
+      "Create and nurture communities that provide genuine support and foster authentic relationships around shared values.",
+    valueType: "text",
+  },
+  {
+    section: "consulting",
+    key: "communityImage",
+    value: "/images/IMG_20240828_162759[1].jpg",
+    valueType: "image",
+  },
 ];
 
 export async function seedServicesContent() {

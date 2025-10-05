@@ -99,91 +99,107 @@ const GhostwritingPage = ({ content = {} }: GhostwritingPageProps) => {
           <div className="max-w-6xl mx-auto space-y-16">
             <div className="text-center space-y-4">
               <h2 className={`text-4xl lg:text-5xl ${pacifico.className}`}>
-                Services Offered
+                {content.whatToExpectTitle || "What to Expect"}
               </h2>
               <p
                 className={`text-xl text-gray-700 max-w-3xl mx-auto ${oswald.className}`}
               >
-                Comprehensive writing support from concept to completion
+                {content.whatToExpectSubtitle ||
+                  "Collaborative storytelling that honors your voice and vision"}
               </p>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-2 gap-8">
               <motion.div
-                className="space-y-4"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                className="flex items-start gap-4"
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.1 }}
               >
-                <div className="aspect-[4/3] relative rounded-lg overflow-hidden">
-                  <Image
-                    src="/images/IMG_20250907_010252[1].jpg"
-                    alt="Memoirs"
-                    fill
-                    className="object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                <div className="p-2 bg-primary/10 rounded-lg shrink-0">
+                  <CheckCircle className="w-6 h-6 text-primary" />
                 </div>
-                <h3 className={`text-2xl font-semibold ${oswald.className}`}>
-                  Memoirs & Life Stories
-                </h3>
-                <p className={`text-gray-700 ${oswald.className}`}>
-                  Transform your experiences into compelling narratives that
-                  preserve your legacy and inspire others through authentic
-                  storytelling.
-                </p>
+                <div>
+                  <h3
+                    className={`text-2xl font-semibold mb-2 ${oswald.className}`}
+                  >
+                    {content.processTitle || "Collaborative Process"}
+                  </h3>
+                  <p className={`text-gray-700 ${oswald.className}`}>
+                    {content.processDescription ||
+                      "We work together throughout the entire process, from initial concept to final manuscript, ensuring your voice and vision are preserved."}
+                  </p>
+                </div>
               </motion.div>
 
               <motion.div
-                className="space-y-4"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                className="flex items-start gap-4"
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.2 }}
               >
-                <div className="aspect-[4/3] relative rounded-lg overflow-hidden">
-                  <Image
-                    src="/images/IMG_20250907_010336[1].jpg"
-                    alt="Self-Help"
-                    fill
-                    className="object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                <div className="p-2 bg-primary/10 rounded-lg shrink-0">
+                  <CheckCircle className="w-6 h-6 text-primary" />
                 </div>
-                <h3 className={`text-2xl font-semibold ${oswald.className}`}>
-                  Self-Help & Motivational
-                </h3>
-                <p className={`text-gray-700 ${oswald.className}`}>
-                  Share your insights and lessons with the world through
-                  engaging self-help books that create real impact and
-                  transformation.
-                </p>
+                <div>
+                  <h3
+                    className={`text-2xl font-semibold mb-2 ${oswald.className}`}
+                  >
+                    {content.collaborationTitle || "Authentic Storytelling"}
+                  </h3>
+                  <p className={`text-gray-700 ${oswald.className}`}>
+                    {content.collaborationDescription ||
+                      "I specialize in capturing your unique voice and authentic experiences, creating narratives that resonate with your intended audience."}
+                  </p>
+                </div>
               </motion.div>
 
               <motion.div
-                className="space-y-4"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                className="flex items-start gap-4"
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.3 }}
               >
-                <div className="aspect-[4/3] relative rounded-lg overflow-hidden">
-                  <Image
-                    src="/images/IMG_20250918_104735[2].jpg"
-                    alt="Content Development"
-                    fill
-                    className="object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                <div className="p-2 bg-primary/10 rounded-lg shrink-0">
+                  <CheckCircle className="w-6 h-6 text-primary" />
                 </div>
-                <h3 className={`text-2xl font-semibold ${oswald.className}`}>
-                  Manuscript Development
-                </h3>
-                <p className={`text-gray-700 ${oswald.className}`}>
-                  Professional editing, restructuring, and refinement to take
-                  your existing manuscript to the next level of excellence.
-                </p>
+                <div>
+                  <h3
+                    className={`text-2xl font-semibold mb-2 ${oswald.className}`}
+                  >
+                    {content.qualityTitle || "Professional Quality"}
+                  </h3>
+                  <p className={`text-gray-700 ${oswald.className}`}>
+                    {content.qualityDescription ||
+                      "From manuscript development to final editing, every aspect of your book receives professional attention and polish."}
+                  </p>
+                </div>
+              </motion.div>
+
+              <motion.div
+                className="flex items-start gap-4"
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+              >
+                <div className="p-2 bg-primary/10 rounded-lg shrink-0">
+                  <CheckCircle className="w-6 h-6 text-primary" />
+                </div>
+                <div>
+                  <h3
+                    className={`text-2xl font-semibold mb-2 ${oswald.className}`}
+                  >
+                    {content.confidentialityTitle || "Complete Confidentiality"}
+                  </h3>
+                  <p className={`text-gray-700 ${oswald.className}`}>
+                    {content.confidentialityDescription ||
+                      "Your story is safe with me. I maintain strict confidentiality throughout our collaboration and beyond."}
+                  </p>
+                </div>
               </motion.div>
             </div>
           </div>

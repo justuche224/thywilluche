@@ -24,6 +24,7 @@ export function GhostwritingForm({ data }: GhostwritingFormProps) {
 
       if (result.success) {
         toast.success(result.message);
+        window.dispatchEvent(new Event("refreshServicesPreview"));
       } else {
         toast.error(result.message);
       }
