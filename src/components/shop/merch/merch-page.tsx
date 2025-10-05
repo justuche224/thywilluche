@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import {Oswald, Pacifico} from "next/font/google";
+import {Oswald} from "next/font/google";
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
 import {useState} from "react";

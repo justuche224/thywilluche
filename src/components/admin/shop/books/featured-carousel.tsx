@@ -53,11 +53,13 @@ export function FeaturedCarousel({ books }: FeaturedCarouselProps) {
     if (!isAutoPlaying || books.length <= 1) return;
 
     const interval = setInterval(() => {
-      nextSlide();
+      setCurrentIndex((prevIndex) =>
+        prevIndex === books.length - 1 ? 0 : prevIndex + 1
+      );
     }, 5000);
 
     return () => clearInterval(interval);
-  }, [currentIndex, isAutoPlaying, books.length]);
+  }, [isAutoPlaying, books.length]);
 
   if (books.length === 0) {
     return null;
