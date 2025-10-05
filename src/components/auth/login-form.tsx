@@ -71,7 +71,7 @@ export function SigninForm({
           {
             onSuccess: () => {
               toast.success("Logged in successfully");
-              router.push("/community/home");
+              router.push("/admin");
             },
             onError: (ctx) => {
               toast.error(ctx.error.message);
