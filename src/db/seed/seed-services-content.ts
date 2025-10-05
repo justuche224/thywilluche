@@ -562,8 +562,11 @@ export async function seedServicesContent() {
     }
 
     console.log("Services content seeded successfully");
+    process.exit(0);
   } catch (error) {
     console.error("Error seeding services content:", error);
     throw error;
   }
 }
+
+seedServicesContent();
