@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Lightbulb, Users, PenTool, ArrowRight } from "lucide-react";
 import { Pacifico, Oswald } from "next/font/google";
+import { getServiceSection } from "@/actions/services-content";
 
 const pacifico = Pacifico({
   variable: "--font-pacifico",
@@ -16,19 +17,19 @@ const oswald = Oswald({
   subsets: ["latin"],
 });
 
-const page = () => {
+const page = async () => {
+  const content = await getServiceSection("overview");
   return (
     <div className="container mx-auto px-4 py-10 space-y-16">
       <div className="text-center space-y-6 max-w-4xl mx-auto">
         <h1
           className={`text-4xl lg:text-5xl xl:text-6xl ${pacifico.className} font-bold text-gray-900`}
         >
-          Services
+          {content.title || "Services"}
         </h1>
         <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-          Transform your vision into reality with personalized guidance, expert
-          consulting, and professional writing services tailored to your unique
-          journey.
+          {content.subtitle ||
+            "Transform your vision into reality with personalized guidance, expert consulting, and professional writing services tailored to your unique journey."}
         </p>
       </div>
 
@@ -37,7 +38,9 @@ const page = () => {
           <div className="grid lg:grid-cols-2 gap-8 items-center">
             <div className="aspect-[4/3] relative overflow-hidden rounded-lg order-2 lg:order-1">
               <Image
-                src="/images/IMG_20240828_162759[1].jpg"
+                src={
+                  content.coachingImage || "/images/IMG_20240828_162759[1].jpg"
+                }
                 alt="Coaching services"
                 fill
                 className="object-cover group-hover:scale-105 transition-transform duration-500"
@@ -52,14 +55,12 @@ const page = () => {
                 <h2
                   className={`text-3xl md:text-4xl font-bold ${oswald.className} text-gray-900`}
                 >
-                  Coaching
+                  {content.coachingTitle || "Coaching"}
                 </h2>
               </div>
               <p className="text-muted-foreground text-lg leading-relaxed">
-                One-on-one personalized coaching sessions designed to help you
-                navigate life&apos;s challenges, build resilience, and achieve
-                your personal goals. Together, we&apos;ll create a roadmap for
-                your mental wellness and personal growth.
+                {content.coachingDescription ||
+                  "One-on-one personalized coaching sessions designed to help you navigate life's challenges, build resilience, and achieve your personal goals. Together, we'll create a roadmap for your mental wellness and personal growth."}
               </p>
               <ul
                 className={`space-y-3 text-muted-foreground ${oswald.className}`}
@@ -97,14 +98,12 @@ const page = () => {
                 <h2
                   className={`text-3xl md:text-4xl font-bold ${oswald.className} text-gray-900`}
                 >
-                  Ghostwriting
+                  {content.ghostwritingTitle || "Ghostwriting"}
                 </h2>
               </div>
               <p className="text-muted-foreground text-lg leading-relaxed">
-                Bring your story to life with professional ghostwriting
-                services. Whether it&apos;s a memoir, self-help book, or
-                personal project, I&apos;ll help you craft compelling narratives
-                that resonate with your audience.
+                {content.ghostwritingDescription ||
+                  "Bring your story to life with professional ghostwriting services. Whether it's a memoir, self-help book, or personal project, I'll help you craft compelling narratives that resonate with your audience."}
               </p>
               <ul
                 className={`space-y-3 text-muted-foreground ${oswald.className}`}
@@ -131,7 +130,10 @@ const page = () => {
             </div>
             <div className="aspect-[4/3] relative overflow-hidden rounded-lg order-2">
               <Image
-                src="/images/IMG_20250907_010336[1].jpg"
+                src={
+                  content.ghostwritingImage ||
+                  "/images/IMG_20250907_010336[1].jpg"
+                }
                 alt="Ghostwriting services"
                 fill
                 className="object-cover group-hover:scale-105 transition-transform duration-500"
@@ -145,7 +147,10 @@ const page = () => {
           <div className="grid lg:grid-cols-2 gap-8 items-center">
             <div className="aspect-[4/3] relative overflow-hidden rounded-lg order-2 lg:order-1">
               <Image
-                src="/images/IMG_20250716_093443[1].jpg"
+                src={
+                  content.consultingImage ||
+                  "/images/IMG_20250716_093443[1].jpg"
+                }
                 alt="Consulting services"
                 fill
                 className="object-cover group-hover:scale-105 transition-transform duration-500"
@@ -160,14 +165,12 @@ const page = () => {
                 <h2
                   className={`text-3xl md:text-4xl font-bold ${oswald.className} text-gray-900`}
                 >
-                  Consulting
+                  {content.consultingTitle || "Consulting"}
                 </h2>
               </div>
               <p className="text-muted-foreground text-lg leading-relaxed">
-                Strategic consulting for organizations, content creators, and
-                individuals looking to build authentic mental health
-                initiatives, develop impactful content, or create meaningful
-                community engagement strategies.
+                {content.consultingDescription ||
+                  "Strategic consulting for organizations, content creators, and individuals looking to build authentic mental health initiatives, develop impactful content, or create meaningful community engagement strategies."}
               </p>
               <ul
                 className={`space-y-3 text-muted-foreground ${oswald.className}`}
@@ -200,15 +203,14 @@ const page = () => {
         <h3
           className={`text-2xl md:text-3xl font-bold ${oswald.className} text-gray-900`}
         >
-          Ready to Get Started?
+          {content.ctaTitle || "Ready to Get Started?"}
         </h3>
         <p className="text-muted-foreground">
-          Whether you&apos;re looking for personal coaching, need help writing
-          your story, or want to build impactful initiatives, I&apos;m here to
-          support your journey.
+          {content.ctaDescription ||
+            "Whether you're looking for personal coaching, need help writing your story, or want to build impactful initiatives, I'm here to support your journey."}
         </p>
         <Button size="lg" className="gap-2">
-          Book a Consultation
+          {content.ctaButtonText || "Book a Consultation"}
           <ArrowRight size={20} />
         </Button>
       </div>

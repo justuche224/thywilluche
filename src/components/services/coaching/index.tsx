@@ -18,7 +18,11 @@ const oswald = Oswald({
   subsets: ["latin"],
 });
 
-const CoachingPage = () => {
+interface CoachingPageProps {
+  content?: Record<string, string>;
+}
+
+const CoachingPage = ({ content = {} }: CoachingPageProps) => {
   return (
     <div className="w-full relative overflow-clip">
       <motion.section
@@ -41,15 +45,14 @@ const CoachingPage = () => {
                 </div>
               </div>
               <h1 className={`text-5xl lg:text-6xl ${pacifico.className}`}>
-                Personal Coaching
+                {content.title || "Personal Coaching"}
               </h1>
               <div className="w-24 h-1 bg-primary rounded-full"></div>
               <p
                 className={`text-xl text-gray-700 leading-relaxed ${oswald.className}`}
               >
-                Experience transformative one-on-one coaching that empowers you
-                to overcome challenges, build lasting resilience, and create
-                meaningful change in your life.
+                {content.description ||
+                  "Experience transformative one-on-one coaching that empowers you to overcome challenges, build lasting resilience, and create meaningful change in your life."}
               </p>
               <div className="flex flex-wrap gap-4">
                 <Button size="lg" className="gap-2">
@@ -71,7 +74,9 @@ const CoachingPage = () => {
             >
               <div className="relative max-w-md 2xl:max-w-xl mx-auto aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl">
                 <Image
-                  src="/images/IMG_20240828_162759[1].jpg"
+                  src={
+                    content.heroImage || "/images/IMG_20240828_162759[1].jpg"
+                  }
                   alt="Personal Coaching"
                   fill
                   className="object-cover"
@@ -94,12 +99,13 @@ const CoachingPage = () => {
           <div className="max-w-6xl mx-auto space-y-16">
             <div className="text-center space-y-4">
               <h2 className={`text-4xl lg:text-5xl ${pacifico.className}`}>
-                What to Expect
+                {content.whatToExpectTitle || "What to Expect"}
               </h2>
               <p
                 className={`text-xl text-gray-700 max-w-3xl mx-auto ${oswald.className}`}
               >
-                Personalized support tailored to your unique journey
+                {content.whatToExpectSubtitle ||
+                  "Personalized support tailored to your unique journey"}
               </p>
             </div>
 
@@ -119,12 +125,11 @@ const CoachingPage = () => {
                     <h3
                       className={`text-2xl font-semibold mb-2 ${oswald.className}`}
                     >
-                      Personalized Strategy
+                      {content.strategyTitle || "Personalized Strategy"}
                     </h3>
                     <p className={`text-gray-700 ${oswald.className}`}>
-                      Every session is tailored to your specific goals,
-                      challenges, and circumstances. We&apos;ll work together to
-                      create a roadmap that fits your life.
+                      {content.strategyDescription ||
+                        "Every session is tailored to your specific goals, challenges, and circumstances. We'll work together to create a roadmap that fits your life."}
                     </p>
                   </div>
                 </div>
@@ -145,12 +150,11 @@ const CoachingPage = () => {
                     <h3
                       className={`text-2xl font-semibold mb-2 ${oswald.className}`}
                     >
-                      Practical Tools
+                      {content.toolsTitle || "Practical Tools"}
                     </h3>
                     <p className={`text-gray-700 ${oswald.className}`}>
-                      Leave each session with actionable strategies and
-                      techniques you can implement immediately to build
-                      resilience and navigate challenges.
+                      {content.toolsDescription ||
+                        "Leave each session with actionable strategies and techniques you can implement immediately to build resilience and navigate challenges."}
                     </p>
                   </div>
                 </div>
@@ -171,11 +175,12 @@ const CoachingPage = () => {
                     <h3
                       className={`text-2xl font-semibold mb-2 ${oswald.className}`}
                     >
-                      Accountability & Support
+                      {content.accountabilityTitle ||
+                        "Accountability & Support"}
                     </h3>
                     <p className={`text-gray-700 ${oswald.className}`}>
-                      Regular check-ins and ongoing support to help you stay on
-                      track and celebrate your progress along the way.
+                      {content.accountabilityDescription ||
+                        "Regular check-ins and ongoing support to help you stay on track and celebrate your progress along the way."}
                     </p>
                   </div>
                 </div>
@@ -196,12 +201,11 @@ const CoachingPage = () => {
                     <h3
                       className={`text-2xl font-semibold mb-2 ${oswald.className}`}
                     >
-                      Safe Space
+                      {content.safeSpaceTitle || "Safe Space"}
                     </h3>
                     <p className={`text-gray-700 ${oswald.className}`}>
-                      A judgment-free environment where vulnerability is
-                      welcomed and authenticity is celebrated. Your story
-                      matters.
+                      {content.safeSpaceDescription ||
+                        "A judgment-free environment where vulnerability is welcomed and authenticity is celebrated. Your story matters."}
                     </p>
                   </div>
                 </div>
@@ -224,22 +228,18 @@ const CoachingPage = () => {
               <h2
                 className={`text-3xl md:text-4xl font-bold ${oswald.className}`}
               >
-                Who This Is For
+                {content.whoThisIsForTitle || "Who This Is For"}
               </h2>
               <div
                 className={`text-lg text-gray-700 space-y-4 text-left ${oswald.className}`}
               >
                 <p>
-                  My coaching services are designed for individuals who are
-                  ready to invest in themselves and their mental wellness
-                  journey. Whether you&apos;re facing specific challenges or simply
-                  want to build a stronger foundation for personal growth, I&apos;m
-                  here to support you.
+                  {content.whoThisIsForDescription1 ||
+                    "My coaching services are designed for individuals who are ready to invest in themselves and their mental wellness journey. Whether you're facing specific challenges or simply want to build a stronger foundation for personal growth, I'm here to support you."}
                 </p>
                 <p>
-                  This is for you if you&apos;re navigating life transitions, working
-                  through mental health challenges, seeking to build resilience,
-                  or wanting to live more authentically and purposefully.
+                  {content.whoThisIsForDescription2 ||
+                    "This is for you if you're navigating life transitions, working through mental health challenges, seeking to build resilience, or wanting to live more authentically and purposefully."}
                 </p>
               </div>
               <div className="pt-4">

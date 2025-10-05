@@ -18,7 +18,11 @@ const oswald = Oswald({
   subsets: ["latin"],
 });
 
-const GhostwritingPage = () => {
+interface GhostwritingPageProps {
+  content?: Record<string, string>;
+}
+
+const GhostwritingPage = ({ content = {} }: GhostwritingPageProps) => {
   return (
     <div className="w-full relative overflow-clip">
       <motion.section
@@ -41,15 +45,14 @@ const GhostwritingPage = () => {
                 </div>
               </div>
               <h1 className={`text-5xl lg:text-6xl ${pacifico.className}`}>
-                Ghostwriting Services
+                {content.title || "Professional Ghostwriting"}
               </h1>
               <div className="w-24 h-1 bg-primary rounded-full"></div>
               <p
                 className={`text-xl text-gray-700 leading-relaxed ${oswald.className}`}
               >
-                Your story deserves to be told. Let me help you craft compelling
-                narratives that inspire, connect, and resonate with your
-                audience.
+                {content.description ||
+                  "Bring your story to life with professional ghostwriting services that capture your voice, honor your journey, and create compelling narratives that resonate with readers."}
               </p>
               <div className="flex flex-wrap gap-4">
                 <Button size="lg" className="gap-2">
@@ -71,7 +74,9 @@ const GhostwritingPage = () => {
             >
               <div className="relative  max-w-md 2xl:max-w-xl mx-auto aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl">
                 <Image
-                  src="/images/IMG_20250907_010336[1].jpg"
+                  src={
+                    content.heroImage || "/images/IMG_20250907_010336[1].jpg"
+                  }
                   alt="Ghostwriting Services"
                   fill
                   className="object-cover"
@@ -223,8 +228,8 @@ const GhostwritingPage = () => {
                     Discovery Call
                   </h3>
                   <p className={`text-gray-700 ${oswald.className}`}>
-                    We&apos;ll discuss your vision, goals, and story to ensure we&apos;re
-                    the right fit and outline the project scope.
+                    We&apos;ll discuss your vision, goals, and story to ensure
+                    we&apos;re the right fit and outline the project scope.
                   </p>
                 </div>
               </motion.div>
@@ -318,9 +323,10 @@ const GhostwritingPage = () => {
                 Ready to Write Your Story?
               </h2>
               <p className={`text-lg text-gray-700 ${oswald.className}`}>
-                Let&apos;s collaborate to bring your vision to life. Whether you have
-                a fully formed concept or just the seed of an idea, I&apos;m here to
-                help you craft a narrative that truly resonates.
+                Let&apos;s collaborate to bring your vision to life. Whether you
+                have a fully formed concept or just the seed of an idea,
+                I&apos;m here to help you craft a narrative that truly
+                resonates.
               </p>
               <div className="pt-4">
                 <Button size="lg" className="gap-2">

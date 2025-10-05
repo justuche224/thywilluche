@@ -18,7 +18,11 @@ const oswald = Oswald({
   subsets: ["latin"],
 });
 
-const ConsultingPage = () => {
+interface ConsultingPageProps {
+  content?: Record<string, string>;
+}
+
+const ConsultingPage = ({ content = {} }: ConsultingPageProps) => {
   return (
     <div className="w-full relative overflow-clip">
       <motion.section
@@ -41,15 +45,14 @@ const ConsultingPage = () => {
                 </div>
               </div>
               <h1 className={`text-5xl lg:text-6xl ${pacifico.className}`}>
-                Strategic Consulting
+                {content.title || "Strategic Consulting"}
               </h1>
               <div className="w-24 h-1 bg-primary rounded-full"></div>
               <p
                 className={`text-xl text-gray-700 leading-relaxed ${oswald.className}`}
               >
-                Build authentic mental health initiatives, develop impactful
-                content strategies, and create meaningful community engagement
-                programs.
+                {content.description ||
+                  "Strategic consulting for organizations, content creators, and individuals looking to build authentic mental health initiatives, develop impactful content, or create meaningful community engagement strategies."}
               </p>
               <div className="flex flex-wrap gap-4">
                 <Button size="lg" className="gap-2">
@@ -71,7 +74,9 @@ const ConsultingPage = () => {
             >
               <div className="relative max-w-md 2xl:max-w-xl mx-auto aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl">
                 <Image
-                  src="/images/IMG_20250716_093443[1].jpg"
+                  src={
+                    content.heroImage || "/images/IMG_20250716_093443[1].jpg"
+                  }
                   alt="Strategic Consulting"
                   fill
                   className="object-cover"
@@ -317,10 +322,10 @@ const ConsultingPage = () => {
                 Let&apos;s Build Something Meaningful
               </h2>
               <p className={`text-lg text-gray-700 ${oswald.className}`}>
-                Whether you&apos;re an organization looking to launch a mental health
-                initiative, a content creator wanting to develop your brand, or
-                an individual with a vision for community impact, I&apos;m here to
-                help you succeed.
+                Whether you&apos;re an organization looking to launch a mental
+                health initiative, a content creator wanting to develop your
+                brand, or an individual with a vision for community impact,
+                I&apos;m here to help you succeed.
               </p>
               <div className="pt-4">
                 <Button size="lg" className="gap-2">
