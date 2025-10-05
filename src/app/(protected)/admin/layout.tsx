@@ -14,6 +14,8 @@ import {
     SidebarTrigger,
 } from "@/components/ui/sidebar"
 import React from "react";
+import { serverAuth } from "@/lib/server-auth";
+import { redirect } from "next/navigation";
 import type {Metadata} from "next";
 
 export const metadata: Metadata = {
@@ -21,7 +23,17 @@ export const metadata: Metadata = {
     description: "Manage your application",
 };
 
-export default function AdminLayout({children}: { children: React.ReactNode}) {
+export default async function AdminLayout({children}: { children: React.ReactNode}) {
+    // TODO: move to individual pages
+    const data = await serverAuth();
+
+    if (!data?.user) {
+      redirect("/login");
+    }
+  
+    if (data.user.role !== "ADMIN") {
+      redirect("/");
+    }
     return (
         <SidebarProvider>
             <AppSidebar />
