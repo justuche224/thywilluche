@@ -28,7 +28,7 @@ export default async function AdminLayout({children}: { children: React.ReactNod
     const data = await serverAuth();
 
     if (!data?.user) {
-      redirect("/login");
+      redirect("/auth/login");
     }
   
     if (data.user.role !== "ADMIN") {
