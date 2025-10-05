@@ -1,9 +1,16 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import React from "react";
 import styled from "styled-components";
 
 const Pattern = () => {
+
+  const pathname = usePathname();
+  const isAdminBlog = pathname.includes("/admin/blog");
+
+  if (isAdminBlog) return null;
+
   return (
     <StyledWrapper>
       <div className="sandpaper-pattern">
