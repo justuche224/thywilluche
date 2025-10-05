@@ -4,16 +4,7 @@ import React from "react";
 import Image from "next/image";
 import { Pacifico, Oswald } from "next/font/google";
 import { motion } from "framer-motion";
-import {
-  Newspaper,
-  Quote,
-  Award,
-  TrendingUp,
-  Mic,
-  Users,
-  Star,
-  Camera,
-} from "lucide-react";
+import { Quote, TrendingUp, Star } from "lucide-react";
 
 const pacifico = Pacifico({
   variable: "--font-pacifico",
@@ -36,7 +27,6 @@ const mediaHighlights = [
       "Featured in CNN's special series on mental health advocacy and personal transformation.",
     quote: "A powerful voice in the mental health conversation...",
     image: "/images/main.jpg",
-    icon: Newspaper,
     color: "primary",
     date: "2024",
   },
@@ -48,7 +38,6 @@ const mediaHighlights = [
       "Guest appearance discussing resilience, vulnerability, and the power of daily victories.",
     quote: "Your story resonates with millions...",
     image: "/images/IMG_20250918_104735[2].jpg",
-    icon: Mic,
     color: "secondary",
     date: "2024",
   },
@@ -60,7 +49,6 @@ const mediaHighlights = [
       "Recognized by the National Mental Health Foundation for outstanding community impact.",
     quote: "Transforming lives through authentic storytelling...",
     image: "/images/IMG_20250907_010336[1].jpg",
-    icon: Award,
     color: "primary",
     date: "2024",
   },
@@ -72,7 +60,6 @@ const mediaHighlights = [
       "Social media campaign reached over 2 million people, sparking global conversations.",
     quote: "Building bridges of understanding...",
     image: "/images/community.jpg",
-    icon: TrendingUp,
     color: "secondary",
     date: "2024",
   },
@@ -84,7 +71,6 @@ const mediaHighlights = [
       "Testimonials from community members whose lives have been transformed.",
     quote: "You gave me the courage to share my story...",
     image: "/images/IMG_20240828_162759[1].jpg",
-    icon: Users,
     color: "primary",
     date: "2024",
   },
@@ -96,7 +82,6 @@ const mediaHighlights = [
       "Behind-the-scenes moments capturing the authentic journey of growth and healing.",
     quote: "Every photograph tells a story...",
     image: "/images/IMG_20250716_093443[1].jpg",
-    icon: Camera,
     color: "secondary",
     date: "2024",
   },
@@ -154,7 +139,6 @@ const MediaGallery = () => {
           {/* Media Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
             {mediaHighlights.map((item, index) => {
-              const Icon = item.icon;
               return (
                 <motion.div
                   key={item.id}
@@ -193,20 +177,6 @@ const MediaGallery = () => {
                         className="object-cover transition-transform duration-500 group-hover:scale-110"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-
-                      {/* Icon Overlay */}
-                      <motion.div
-                        className={`absolute top-4 left-4 w-12 h-12 rounded-full flex items-center justify-center ${
-                          item.color === "primary"
-                            ? "bg-primary/90"
-                            : "bg-secondary/90"
-                        } text-white shadow-lg`}
-                        whileHover={{ scale: 1.1, rotate: 5 }}
-                        transition={{ duration: 0.3 }}
-                      >
-                        <Icon className="w-6 h-6" />
-                      </motion.div>
-
                       {/* Date Badge */}
                       <div className="absolute top-4 right-4 bg-black/70 text-white px-3 py-1 rounded-full text-xs font-medium">
                         {item.date}

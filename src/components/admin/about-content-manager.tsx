@@ -6,9 +6,10 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { bulkUpdateAboutContent } from "@/actions/about-content";
+import { updateAboutJourneyContent } from "@/actions/admin/about-content";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
+import Image from "next/image";
 
 interface AboutContentManagerProps {
   initialData: {
@@ -23,8 +24,8 @@ export default function AboutContentManager({
   const [isLoading, setIsLoading] = useState(false);
 
   // Journey State
-  const [journeyImage, setJourneyImage] = useState(
-    initialData.journey.image || ""
+  const [journeyPreviewImage, setJourneyPreviewImage] = useState<string | null>(
+    initialData.journey.image || null
   );
   const [journeyTitle, setJourneyTitle] = useState(
     initialData.journey.title || ""
@@ -35,6 +36,17 @@ export default function AboutContentManager({
   const [journeyParagraph2, setJourneyParagraph2] = useState(
     initialData.journey.paragraph2 || ""
   );
+
+  const handleJourneyImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setJourneyPreviewImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   // Mission & Vision State
   const [missionTitle, setMissionTitle] = useState(
@@ -56,46 +68,14 @@ export default function AboutContentManager({
     initialData.missionVision.visionParagraph2 || ""
   );
 
-  const handleSaveAll = async () => {
+  const handleSaveAll = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     setIsLoading(true);
     try {
-      const updates = [
-        // Journey Section
-        { section: "journey", key: "image", value: journeyImage },
-        { section: "journey", key: "title", value: journeyTitle },
-        { section: "journey", key: "paragraph1", value: journeyParagraph1 },
-        { section: "journey", key: "paragraph2", value: journeyParagraph2 },
+      const formData = new FormData(e.currentTarget);
+      formData.append("existingJourneyImage", initialData.journey.image || "");
 
-        // Mission & Vision Section
-        {
-          section: "missionVision",
-          key: "missionTitle",
-          value: missionTitle,
-        },
-        {
-          section: "missionVision",
-          key: "missionParagraph1",
-          value: missionParagraph1,
-        },
-        {
-          section: "missionVision",
-          key: "missionParagraph2",
-          value: missionParagraph2,
-        },
-        { section: "missionVision", key: "visionTitle", value: visionTitle },
-        {
-          section: "missionVision",
-          key: "visionParagraph1",
-          value: visionParagraph1,
-        },
-        {
-          section: "missionVision",
-          key: "visionParagraph2",
-          value: visionParagraph2,
-        },
-      ];
-
-      const result = await bulkUpdateAboutContent(updates);
+      const result = await updateAboutJourneyContent(formData);
 
       if (result.success) {
         toast.success("About content updated successfully!");
@@ -112,10 +92,10 @@ export default function AboutContentManager({
   };
 
   return (
-    <div className="space-y-8">
+    <form onSubmit={handleSaveAll} className="space-y-8">
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold">About Page Content Manager</h1>
-        <Button onClick={handleSaveAll} disabled={isLoading}>
+        <Button type="submit" disabled={isLoading}>
           {isLoading ? (
             <>
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -134,15 +114,27 @@ export default function AboutContentManager({
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="space-y-2">
-            <Label htmlFor="journeyImage">Journey Image URL</Label>
+            <Label htmlFor="journeyImage">Journey Image</Label>
+            {journeyPreviewImage && (
+              <div className="mb-4">
+                <Image
+                  src={journeyPreviewImage}
+                  alt="Journey Preview"
+                  width={200}
+                  height={200}
+                  className="rounded-lg object-cover"
+                />
+              </div>
+            )}
             <Input
               id="journeyImage"
-              value={journeyImage}
-              onChange={(e) => setJourneyImage(e.target.value)}
-              placeholder="/images/your-image.jpg"
+              name="journeyImage"
+              type="file"
+              accept="image/*"
+              onChange={handleJourneyImageChange}
             />
             <p className="text-sm text-muted-foreground">
-              Full path to the journey image
+              Upload an image for your journey section
             </p>
           </div>
 
@@ -150,6 +142,7 @@ export default function AboutContentManager({
             <Label htmlFor="journeyTitle">Section Title</Label>
             <Input
               id="journeyTitle"
+              name="journeyTitle"
               value={journeyTitle}
               onChange={(e) => setJourneyTitle(e.target.value)}
               placeholder="My Journey"
@@ -160,6 +153,7 @@ export default function AboutContentManager({
             <Label htmlFor="journeyParagraph1">First Paragraph</Label>
             <Textarea
               id="journeyParagraph1"
+              name="journeyParagraph1"
               value={journeyParagraph1}
               onChange={(e) => setJourneyParagraph1(e.target.value)}
               rows={4}
@@ -171,6 +165,7 @@ export default function AboutContentManager({
             <Label htmlFor="journeyParagraph2">Second Paragraph</Label>
             <Textarea
               id="journeyParagraph2"
+              name="journeyParagraph2"
               value={journeyParagraph2}
               onChange={(e) => setJourneyParagraph2(e.target.value)}
               rows={4}
@@ -193,6 +188,7 @@ export default function AboutContentManager({
               <Label htmlFor="missionTitle">Mission Title</Label>
               <Input
                 id="missionTitle"
+                name="missionTitle"
                 value={missionTitle}
                 onChange={(e) => setMissionTitle(e.target.value)}
                 placeholder="Our Mission"
@@ -203,6 +199,7 @@ export default function AboutContentManager({
               <Label htmlFor="missionParagraph1">First Paragraph</Label>
               <Textarea
                 id="missionParagraph1"
+                name="missionParagraph1"
                 value={missionParagraph1}
                 onChange={(e) => setMissionParagraph1(e.target.value)}
                 rows={4}
@@ -214,6 +211,7 @@ export default function AboutContentManager({
               <Label htmlFor="missionParagraph2">Second Paragraph</Label>
               <Textarea
                 id="missionParagraph2"
+                name="missionParagraph2"
                 value={missionParagraph2}
                 onChange={(e) => setMissionParagraph2(e.target.value)}
                 rows={4}
@@ -229,6 +227,7 @@ export default function AboutContentManager({
               <Label htmlFor="visionTitle">Vision Title</Label>
               <Input
                 id="visionTitle"
+                name="visionTitle"
                 value={visionTitle}
                 onChange={(e) => setVisionTitle(e.target.value)}
                 placeholder="Our Vision"
@@ -239,6 +238,7 @@ export default function AboutContentManager({
               <Label htmlFor="visionParagraph1">First Paragraph</Label>
               <Textarea
                 id="visionParagraph1"
+                name="visionParagraph1"
                 value={visionParagraph1}
                 onChange={(e) => setVisionParagraph1(e.target.value)}
                 rows={4}
@@ -250,6 +250,7 @@ export default function AboutContentManager({
               <Label htmlFor="visionParagraph2">Second Paragraph</Label>
               <Textarea
                 id="visionParagraph2"
+                name="visionParagraph2"
                 value={visionParagraph2}
                 onChange={(e) => setVisionParagraph2(e.target.value)}
                 rows={4}
@@ -259,20 +260,6 @@ export default function AboutContentManager({
           </div>
         </CardContent>
       </Card>
-
-      {/* Bottom Save Button */}
-      <div className="flex justify-end">
-        <Button onClick={handleSaveAll} disabled={isLoading}>
-          {isLoading ? (
-            <>
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              Saving...
-            </>
-          ) : (
-            "Save All Changes"
-          )}
-        </Button>
-      </div>
-    </div>
+    </form>
   );
 }
