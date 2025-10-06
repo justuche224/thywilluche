@@ -13,7 +13,6 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import { useIsMobile } from "@/hooks/use-mobile";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -30,6 +29,7 @@ import {
 import Image from "next/image";
 import { Oswald } from "next/font/google";
 import { useRouter } from "next/navigation";
+import { useBreakpoint } from "@/hooks/use-breakpoint";
 
 const oswald = Oswald({
   variable: "--font-oswald",
@@ -57,7 +57,7 @@ const components: { title: string; href: string; description: string }[] = [
 ];
 
 export function Navbar() {
-  const isMobile = useIsMobile();
+  const isMobile = useBreakpoint("max-lg");
   const [isOpen, setIsOpen] = React.useState(false);
   const router = useRouter();
 
@@ -75,7 +75,7 @@ export function Navbar() {
           />
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="md:hidden">
+              <Button variant="ghost" size="icon" className="lg:hidden">
                 <Menu className="h-6 w-6" />
                 <span className="sr-only">Toggle menu</span>
               </Button>
