@@ -5,3 +5,4 @@ export * from "./contact-info";
 export * from "./blog";
 export * from "./books";
 export * from "./services-content";
+export * from "./media-highlights";

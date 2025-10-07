@@ -1,12 +1,17 @@
 import React from "react";
 import About from "@/components/about";
 import { getAboutContent } from "@/actions/about-content";
+import { getMediaHighlights } from "@/actions/media-highlights";
 
 const page = async () => {
   const content = await getAboutContent();
+  const mediaHighlightsResult = await getMediaHighlights();
 
   const journeyData = content.journey || {};
   const missionVisionData = content.missionVision || {};
+  const mediaHighlights = mediaHighlightsResult.success
+    ? mediaHighlightsResult.data
+    : [];
 
   return (
     <About
@@ -20,6 +25,7 @@ const page = async () => {
       visionTitle={missionVisionData.visionTitle}
       visionParagraph1={missionVisionData.visionParagraph1}
       visionParagraph2={missionVisionData.visionParagraph2}
+      mediaHighlights={mediaHighlights}
     />
   );
 };

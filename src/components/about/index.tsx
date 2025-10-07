@@ -6,6 +6,7 @@ import { Pacifico, Oswald } from "next/font/google";
 import { motion } from "framer-motion";
 import Community from "../home/community";
 import MediaGallery from "./media-gallery";
+import { MediaHighlight } from "@/db/schema/media-highlights";
 
 const pacifico = Pacifico({
   variable: "--font-pacifico",
@@ -29,6 +30,7 @@ interface AboutProps {
   visionTitle?: string;
   visionParagraph1?: string;
   visionParagraph2?: string;
+  mediaHighlights?: MediaHighlight[];
 }
 
 const About = ({
@@ -42,6 +44,7 @@ const About = ({
   visionTitle = "Our Vision",
   visionParagraph1 = "A world where mental health conversations flow as naturally as breathing, where every individual feels seen, heard, and supported in their journey toward healing and self-discovery.",
   visionParagraph2 = "We envision communities built on empathy, where personal stories become catalysts for collective transformation, and where the simple act of showing up becomes the greatest victory of all.",
+  mediaHighlights = [],
 }: AboutProps) => {
   return (
     <div className="w-full relative overflow-clip">
@@ -204,7 +207,7 @@ const About = ({
       </motion.section>
 
       {/* Media Gallery Section */}
-      <MediaGallery />
+      <MediaGallery mediaHighlights={mediaHighlights} />
 
       <Community />
     </div>

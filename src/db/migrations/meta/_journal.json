@@ -99,6 +99,13 @@
       "when": 1759639803210,
       "tag": "0013_cool_toad_men",
       "breakpoints": true
+    },
+    {
+      "idx": 14,
+      "version": "7",
+      "when": 1759800724569,
+      "tag": "0014_cultured_red_ghost",
+      "breakpoints": true
     }
   ]
 }

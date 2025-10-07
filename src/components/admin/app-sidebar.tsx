@@ -9,9 +9,10 @@ import {
   MessageCircleQuestionMark,
   GalleryVerticalEnd,
   Map,
-  PieChart,
+  Play,
   Settings2,
   Store,
+  Star,
 } from "lucide-react";
 
 import { NavMain } from "@/components/admin/nav-main";
@@ -91,6 +92,18 @@ const data = {
       ],
     },
     {
+      title: "Media",
+      url: "#",
+      icon: Star,
+      isActive: true,
+      items: [
+        {
+          title: "Media Highlights",
+          url: "/admin/media-highlights",
+        },
+      ],
+    },
+    {
       title: "Documentation",
       url: "#",
       icon: BookOpen,
@@ -144,9 +157,9 @@ const data = {
       icon: MessageCircleQuestionMark,
     },
     {
-      name: "Sales & Marketing",
-      url: "#",
-      icon: PieChart,
+      name: "Media Highlights",
+      url: "/admin/media-highlights",
+      icon: Play,
     },
     {
       name: "Travel",
