@@ -117,8 +117,11 @@ export function Navbar() {
                 </NavigationMenuTrigger>
                 <NavigationMenuContent className="z-[9999]">
                   <ul className="grid gap-2 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-                    <ListItem href="/about" title="My Journey">
-                      Learn about my journey, experiences, and the inspiration
+                    <ListItem href="/about" title="Who I Am">
+                      Discover the person behind the creative works and vision.
+                    </ListItem>
+                    <ListItem href="/about#journey" title="My Journey">
+                      Explore my journey, experiences, and the inspiration
                       behind my work.
                     </ListItem>
                     <ListItem href="/about#vision" title="My Vision">
@@ -306,6 +309,13 @@ function MobileNavContent({ onClose }: { onClose: () => void }) {
           <CollapsibleContent className="mt-1 mb-2 space-y-1 bg-muted/30 rounded-lg py-2">
             <Link
               href="/about"
+              className="block pl-8 pr-4 py-2.5 text-base text-muted-foreground hover:text-foreground hover:bg-accent/50 rounded-md mx-2 transition-all"
+              onClick={onClose}
+            >
+              Who I Am
+            </Link>
+            <Link
+              href="/about#journey"
               className="block pl-8 pr-4 py-2.5 text-base text-muted-foreground hover:text-foreground hover:bg-accent/50 rounded-md mx-2 transition-all"
               onClick={onClose}
             >

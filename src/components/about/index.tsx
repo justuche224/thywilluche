@@ -142,7 +142,8 @@ const About = ({
 
       {/* Hero Section - Personal Journey */}
       <motion.section
-        className="w-full relative overflow-hidden min-h-[90vh] gird place-content-center"
+        className="w-full relative overflow-hidden min-h-[90vh] grid place-content-center"
+        id="journey"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
