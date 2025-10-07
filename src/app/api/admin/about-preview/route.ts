@@ -6,6 +6,7 @@ export async function GET() {
     const content = await getAboutContent();
 
     return NextResponse.json({
+      whoIAm: content.whoIAm || {},
       journey: content.journey || {},
       purpose: content.purpose || {},
       missionVision: content.missionVision || {},

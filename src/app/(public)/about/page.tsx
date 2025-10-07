@@ -7,6 +7,7 @@ const page = async () => {
   const content = await getAboutContent();
   const mediaHighlightsResult = await getMediaHighlights();
 
+  const whoIAmData = content.whoIAm || {};
   const journeyData = content.journey || {};
   const purposeData = content.purpose || {};
   const missionVisionData = content.missionVision || {};
@@ -16,6 +17,12 @@ const page = async () => {
 
   return (
     <About
+      whoIAmImage={whoIAmData.image}
+      whoIAmTitle={whoIAmData.title}
+      whoIAmParagraph1={whoIAmData.paragraph1}
+      whoIAmParagraph2={whoIAmData.paragraph2}
+      whoIAmParagraph3={whoIAmData.paragraph3}
+      whoIAmParagraph4={whoIAmData.paragraph4}
       journeyImage={journeyData.image}
       journeyTitle={journeyData.title}
       journeyParagraph1={journeyData.paragraph1}

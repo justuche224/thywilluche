@@ -8,6 +8,11 @@ export async function updateAboutJourneyContent(formData: FormData) {
   try {
     const updates = [];
 
+    const whoIAmTitle = formData.get("whoIAmTitle") as string;
+    const whoIAmParagraph1 = formData.get("whoIAmParagraph1") as string;
+    const whoIAmParagraph2 = formData.get("whoIAmParagraph2") as string;
+    const whoIAmParagraph3 = formData.get("whoIAmParagraph3") as string;
+    const whoIAmParagraph4 = formData.get("whoIAmParagraph4") as string;
     const journeyTitle = formData.get("journeyTitle") as string;
     const journeyParagraph1 = formData.get("journeyParagraph1") as string;
     const journeyParagraph2 = formData.get("journeyParagraph2") as string;
@@ -21,8 +26,55 @@ export async function updateAboutJourneyContent(formData: FormData) {
     const visionTitle = formData.get("visionTitle") as string;
     const visionParagraph1 = formData.get("visionParagraph1") as string;
     const visionParagraph2 = formData.get("visionParagraph2") as string;
+    const whoIAmImageFile = formData.get("whoIAmImage") as File | null;
+    const existingWhoIAmImage = formData.get("existingWhoIAmImage") as string;
     const journeyImageFile = formData.get("journeyImage") as File | null;
     const existingJourneyImage = formData.get("existingJourneyImage") as string;
+
+    // Who I Am Section
+    if (whoIAmTitle)
+      updates.push({ section: "whoIAm", key: "title", value: whoIAmTitle });
+    if (whoIAmParagraph1)
+      updates.push({
+        section: "whoIAm",
+        key: "paragraph1",
+        value: whoIAmParagraph1,
+      });
+    if (whoIAmParagraph2)
+      updates.push({
+        section: "whoIAm",
+        key: "paragraph2",
+        value: whoIAmParagraph2,
+      });
+    if (whoIAmParagraph3)
+      updates.push({
+        section: "whoIAm",
+        key: "paragraph3",
+        value: whoIAmParagraph3,
+      });
+    if (whoIAmParagraph4)
+      updates.push({
+        section: "whoIAm",
+        key: "paragraph4",
+        value: whoIAmParagraph4,
+      });
+
+    if (whoIAmImageFile && whoIAmImageFile.size > 0) {
+      const imageUrl = await uploadFile(whoIAmImageFile, "whoIAm");
+      updates.push({
+        section: "whoIAm",
+        key: "image",
+        value: imageUrl,
+        valueType: "image",
+      });
+    } else if (existingWhoIAmImage) {
+      updates.push({
+        section: "whoIAm",
+        key: "image",
+        value: existingWhoIAmImage,
+        valueType: "image",
+      });
+    }
 
     // Journey Section
     if (journeyTitle)

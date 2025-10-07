@@ -12,6 +12,7 @@ import {
 export default async function AdminAboutPage() {
   const content = await getAboutContent();
 
+  const whoIAmData = content.whoIAm || {};
   const journeyData = content.journey || {};
   const purposeData = content.purpose || {};
   const missionVisionData = content.missionVision || {};
@@ -38,6 +39,7 @@ export default async function AdminAboutPage() {
             <CardContent>
               <AboutContentManager
                 initialData={{
+                  whoIAm: whoIAmData,
                   journey: journeyData,
                   purpose: purposeData,
                   missionVision: missionVisionData,
@@ -48,6 +50,7 @@ export default async function AdminAboutPage() {
         </div>
         <div className="sticky top-0 h-fit">
           <AboutLivePreview
+            initialWhoIAmData={whoIAmData}
             initialJourneyData={journeyData}
             initialPurposeData={purposeData}
             initialMissionVisionData={missionVisionData}

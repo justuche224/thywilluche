@@ -6,16 +6,19 @@ import { Button } from "@/components/ui/button";
 import { RefreshCw } from "lucide-react";
 
 interface AboutLivePreviewProps {
+  initialWhoIAmData: Record<string, string>;
   initialJourneyData: Record<string, string>;
   initialPurposeData: Record<string, string>;
   initialMissionVisionData: Record<string, string>;
 }
 
 export function AboutLivePreview({
+  initialWhoIAmData,
   initialJourneyData,
   initialPurposeData,
   initialMissionVisionData,
 }: AboutLivePreviewProps) {
+  const [whoIAmData, setWhoIAmData] = useState(initialWhoIAmData);
   const [journeyData, setJourneyData] = useState(initialJourneyData);
   const [purposeData, setPurposeData] = useState(initialPurposeData);
   const [missionVisionData, setMissionVisionData] = useState(
@@ -29,6 +32,7 @@ export function AboutLivePreview({
       const response = await fetch("/api/admin/about-preview");
       const data = await response.json();
 
+      setWhoIAmData(data.whoIAm || {});
       setJourneyData(data.journey || {});
       setPurposeData(data.purpose || {});
       setMissionVisionData(data.missionVision || {});
@@ -70,6 +74,12 @@ export function AboutLivePreview({
       <div className="border rounded-lg overflow-hidden bg-white">
         <div className="scale-50 origin-top-left w-[200%]">
           <About
+            whoIAmImage={whoIAmData.image}
+            whoIAmTitle={whoIAmData.title}
+            whoIAmParagraph1={whoIAmData.paragraph1}
+            whoIAmParagraph2={whoIAmData.paragraph2}
+            whoIAmParagraph3={whoIAmData.paragraph3}
+            whoIAmParagraph4={whoIAmData.paragraph4}
             journeyImage={journeyData.image}
             journeyTitle={journeyData.title}
             journeyParagraph1={journeyData.paragraph1}

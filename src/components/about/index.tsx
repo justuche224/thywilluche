@@ -15,6 +15,12 @@ const oswald = Oswald({
 });
 
 interface AboutProps {
+  whoIAmImage?: string;
+  whoIAmTitle?: string;
+  whoIAmParagraph1?: string;
+  whoIAmParagraph2?: string;
+  whoIAmParagraph3?: string;
+  whoIAmParagraph4?: string;
   journeyImage?: string;
   journeyTitle?: string;
   journeyParagraph1?: string;
@@ -33,6 +39,12 @@ interface AboutProps {
 }
 
 const About = ({
+  whoIAmImage = "/images/IMG_20240828_162619[1].jpg",
+  whoIAmTitle = "Who I Am",
+  whoIAmParagraph1 = "I am Thywill Uche — a writer, poet, founder, ghostwriter, and life coach.",
+  whoIAmParagraph2 = "A voice of resilience and transformation, devoted to helping others find strength in their stories.",
+  whoIAmParagraph3 = "I stand at the intersection of art and healing — using words to mend hearts, awaken purpose, and empower individuals to rise beyond their pain and struggle.",
+  whoIAmParagraph4 = "My life and my book, Days I Do Not Die, embody survival, spiritual strength, and rebirth. I am more than an author — I am a movement. A living testament that healing is possible, that creativity is sacred, and that authenticity is power. Through my work, I guide others to evolve through their struggles — not by concealing their scars, but by transforming them into stories that inspire hope, courage, and the will to keep rising. I remind the world that every day we live is another day we do not die.",
   journeyImage = "/images/IMG_20240828_162619[1].jpg",
   journeyTitle = "My Journey",
   journeyParagraph1 = "From the depths of personal struggle to becoming a beacon of hope for thousands, my journey has been one of transformation, resilience, and unwavering commitment to living authentically.",
@@ -51,6 +63,83 @@ const About = ({
 }: AboutProps) => {
   return (
     <div className="w-full relative overflow-clip">
+      {/* Who I Am Section */}
+      <motion.section
+        className="w-full relative overflow-hidden min-h-[90vh] flex items-center"
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+      >
+        {/* Background Doodles */}
+        <Image
+          src="/doodles/doodle-2.svg"
+          alt="doodle"
+          className="absolute -top-10 md:-top-20 -left-10 md:-left-20 z-[-1]"
+          width={200}
+          height={200}
+        />
+        <Image
+          src="/doodles/doodle-4.svg"
+          alt="doodle"
+          className="absolute -bottom-10 md:-bottom-20 -right-10 md:-right-20 z-[-1] rotate-180"
+          width={200}
+          height={200}
+        />
+
+        <div className="container mx-auto px-6 lg:px-8 max-lg:py-10">
+          <div className="max-w-5xl 2xl:max-w-7xl mx-auto">
+            <div className="grid lg:grid-cols-2 max-lg:gap-10 2xl:gap-20 items-center">
+              {/* Left Column - Image */}
+              <motion.div
+                className="relative max-w-96 2xl:max-w-4xl mx-auto"
+                initial={{ opacity: 0, x: -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+              >
+                <div className="relative">
+                  <Image
+                    src={whoIAmImage}
+                    alt="Thywill Uche - Who I Am"
+                    width={400}
+                    height={450}
+                    className="rounded-3xl shadow-2xl object-cover w-full aspect-[4/5]"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-3xl"></div>
+                </div>
+              </motion.div>
+
+              {/* Right Column - Who I Am Content */}
+              <motion.div
+                className="space-y-8 max-w-96 2xl:max-w-4xl mx-auto"
+                initial={{ opacity: 0, x: 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+              >
+                <div>
+                  <h1
+                    className={`text-5xl lg:text-6xl ${georgiaItalic.className} mb-6`}
+                  >
+                    {whoIAmTitle}
+                  </h1>
+                  <div className="w-24 h-1 bg-primary rounded-full mb-8"></div>
+                </div>
+
+                <div
+                  className={`space-y-6 text-lg 2xl:text-2xl text-justify leading-relaxed ${oswald.className}`}
+                >
+                  <p>{whoIAmParagraph1}</p>
+                  <p>{whoIAmParagraph2}</p>
+                  <p>{whoIAmParagraph3}</p>
+                  <p>{whoIAmParagraph4}</p>
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        </div>
+      </motion.section>
+
       {/* Hero Section - Personal Journey */}
       <motion.section
         className="w-full relative overflow-hidden min-h-[90vh] gird place-content-center"
@@ -77,27 +166,8 @@ const About = ({
         <div className="container mx-auto px-6 lg:px-8 max-lg:py-10">
           <div className="max-w-5xl 2xl:max-w-7xl mx-auto">
             <div className="grid lg:grid-cols-2 max-lg:gap-10 2xl:gap-20 items-center">
-              {/* Left Column - Image */}
-              <motion.div
-                className="relative max-w-96 2xl:max-w-4xl mx-auto"
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-              >
-                <div className="relative">
-                  <Image
-                    src={journeyImage}
-                    alt="Thywill Uche - Personal Journey"
-                    width={400}
-                    height={450}
-                    className="rounded-3xl shadow-2xl object-cover w-full aspect-[4/5]"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-3xl"></div>
-                </div>
-              </motion.div>
-
-              {/* Right Column - Journey Narrative */}
+              
+              {/* Left Column - Journey Narrative */}
               <motion.div
                 className="space-y-8 max-w-96 2xl:max-w-4xl mx-auto"
                 initial={{ opacity: 0, x: 50 }}
@@ -119,6 +189,25 @@ const About = ({
                 >
                   <p>{journeyParagraph1}</p>
                   <p>{journeyParagraph2}</p>
+                </div>
+              </motion.div>
+              {/* Right Column - Image */}
+              <motion.div
+                className="relative max-w-96 2xl:max-w-4xl mx-auto"
+                initial={{ opacity: 0, x: -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+              >
+                <div className="relative">
+                  <Image
+                    src={journeyImage}
+                    alt="Thywill Uche - Personal Journey"
+                    width={400}
+                    height={450}
+                    className="rounded-3xl shadow-2xl object-cover w-full aspect-[4/5]"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-3xl"></div>
                 </div>
               </motion.div>
             </div>
