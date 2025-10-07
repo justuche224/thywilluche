@@ -64,14 +64,22 @@ const Footer = async () => {
                 <h3 className={`text-xl font-semibold ${oswald.className}`}>
                   Thywill Uche
                 </h3>
-                <p className={`text-sm text-gray-400 ${oswald.className}`}>
-                  Author & Motivator
+                <p
+                  className={`text-sm text-gray-400 ${oswald.className} italic`}
+                >
+                  Founder, Creator, and Life Coach
+                </p>
+                <p
+                  className={`text-sm text-gray-400 ${oswald.className} italic`}
+                >
+                  Author of Days I Do Not Die
                 </p>
               </div>
             </div>
             <p className={`text-gray-300 leading-relaxed ${oswald.className}`}>
-              Connecting hearts, uplifting minds, and living one day at a time.
-              Join me on this journey of growth and daily victories.
+              Empowering others to heal, create, and rise through authentic
+              storytelling. Join me on this ongoing journey of growth, purpose,
+              and daily victories.
             </p>
             <div className="flex space-x-3">
               {socials.map((social) => {

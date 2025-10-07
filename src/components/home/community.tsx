@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Users, Heart, MessageCircle, BookOpen } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import {  Oswald } from "next/font/google";
+import { Oswald } from "next/font/google";
 import { motion } from "framer-motion";
 import { georgiaItalic } from "@/utils/georgia-italic";
 
@@ -42,9 +42,12 @@ const Community = () => {
             <p
               className={`text-lg lg:text-xl text-white/90 max-w-3xl mx-auto leading-relaxed ${oswald.className}`}
             >
-              Connect with like-minded individuals on a journey of growth,
-              healing, and daily victories. Share your story, find support, and
-              discover strength in numbers.
+              Healing begins where stories meet hearts — and vulnerability
+              becomes strength.
+              <br />
+              Become part of a growing community of readers, creative writers,
+              and seekers — individuals who believe in growth through art,
+              truth, and shared experience.
             </p>
           </div>
 
@@ -65,12 +68,12 @@ const Community = () => {
                 <Users className="w-8 h-8 text-primary" />
               </motion.div>
               <h3 className={`text-2xl font-semibold mb-4 ${oswald.className}`}>
-                Supportive Network
+                Share your story.
               </h3>
-              <p className={`text-white leading-relaxed ${oswald.className}`}>
+              {/* <p className={`text-white leading-relaxed ${oswald.className}`}>
                 Connect with others who understand your journey and share
                 similar experiences of growth and resilience.
-              </p>
+              </p> */}
             </motion.div>
 
             <motion.div
@@ -89,12 +92,12 @@ const Community = () => {
                 <Heart className="w-8 h-8 text-secondary" />
               </motion.div>
               <h3 className={`text-2xl font-semibold mb-4 ${oswald.className}`}>
-                Daily Inspiration
+                Connect with others.
               </h3>
-              <p className={`text-white leading-relaxed ${oswald.className}`}>
+              {/* <p className={`text-white leading-relaxed ${oswald.className}`}>
                 Receive daily tips, motivational content, and stories that
                 remind you that every day is a victory worth celebrating.
-              </p>
+              </p> */}
             </motion.div>
 
             <motion.div
@@ -113,12 +116,12 @@ const Community = () => {
                 <MessageCircle className="w-8 h-8 text-primary" />
               </motion.div>
               <h3 className={`text-2xl font-semibold mb-4 ${oswald.className}`}>
-                Meaningful Conversations
+                Grow through creativity and reflection.
               </h3>
-              <p className={`text-white leading-relaxed ${oswald.className}`}>
+              {/* <p className={`text-white leading-relaxed ${oswald.className}`}>
                 Engage in thoughtful discussions about mental health, personal
                 growth, and the power of daily victories.
-              </p>
+              </p> */}
             </motion.div>
           </div>
 
@@ -143,9 +146,9 @@ const Community = () => {
             <p
               className={`text-lg lg:text-xl text-white mb-8 max-w-2xl mx-auto leading-relaxed ${oswald.className}`}
             >
-              Join thousands of individuals who are transforming their lives one
-              day at a time. Your story matters, and your victory is worth
-              sharing.
+              Here, every story matters. Every struggle has meaning. And every
+              soul deserves to rise again. Connect with thousands who understand
+              your journey — and become a light for others.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <motion.div
