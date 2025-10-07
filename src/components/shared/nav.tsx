@@ -234,6 +234,18 @@ export function Navbar() {
                   <Link href="/blog">Blog</Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
+              {/* Contact Me */}
+              <NavigationMenuItem>
+                <NavigationMenuLink
+                  asChild
+                  className={
+                    navigationMenuTriggerStyle() +
+                    ` bg-transparent font-semibold ${oswald.className} text-[#800000]`
+                  }
+                >
+                  <Link href="/contact">Contact Me</Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
         </div>
@@ -407,6 +419,19 @@ function MobileNavContent({ onClose }: { onClose: () => void }) {
         >
           Blog
         </Link>
+
+        <div className="h-px bg-border my-2" />
+
+        {/* Contact Me */}
+        <Link
+          href="/contact"
+          className={`text-lg font-semibold px-4 py-3 rounded-lg hover:bg-accent hover:text-accent-foreground active:bg-accent/80 transition-all ${oswald.className} text-[#800000]`}
+          onClick={onClose}
+        >
+          Contact Me
+        </Link>
+
+        <div className="h-px bg-border my-2" />
       </nav>
     </SheetContent>
   );
