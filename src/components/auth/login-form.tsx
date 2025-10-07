@@ -27,6 +27,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { getUserRole } from "@/actions/user";
 
 export function SigninForm({
   className,
@@ -69,9 +70,21 @@ export function SigninForm({
             password: values.password,
           },
           {
-            onSuccess: () => {
+            onSuccess: async (ctx) => {
+              const { data } = ctx;
               toast.success("Logged in successfully");
-              router.push("/admin");
+              const userRole = await getUserRole(data.user.id);
+              switch (userRole) {
+                case "ADMIN":
+                  router.push("/admin");
+                  break;
+                case "USER":
+                  router.push("/community/home");
+                  break;
+                default:
+                  router.push("/");
+                  break;
+              }
             },
             onError: (ctx) => {
               toast.error(ctx.error.message);
@@ -86,9 +99,21 @@ export function SigninForm({
             password: values.password,
           },
           {
-            onSuccess: () => {
+            onSuccess: async (ctx) => {
+              const { data } = ctx;
               toast.success("Logged in successfully");
-              router.push("/community/home");
+              const userRole = await getUserRole(data.user.id);
+              switch (userRole) {
+                case "ADMIN":
+                  router.push("/admin");
+                  break;
+                case "USER":
+                  router.push("/community/home");
+                  break;
+                default:
+                  router.push("/");
+                  break;
+              }
             },
             onError: (ctx) => {
               toast.error(ctx.error.message);
