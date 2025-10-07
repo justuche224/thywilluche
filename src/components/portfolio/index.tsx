@@ -61,15 +61,16 @@ const PortfolioPage = ({ projects }: PortfolioPageProps) => {
         <div className="container mx-auto px-6 lg:px-8">
           <div className="max-w-6xl mx-auto text-center space-y-6">
             <h1 className={`text-5xl lg:text-6xl ${georgiaItalic.className}`}>
-              Portfolio & Projects
+              Creative Works & Purpose-Driven Initiatives
             </h1>
             <div className="w-24 h-1 bg-primary rounded-full mx-auto"></div>
             <p
               className={`text-xl text-gray-700 max-w-3xl mx-auto ${oswald.className}`}
             >
-              Explore the creative works, programs, and collaborative
-              initiatives dedicated to mental health advocacy and community
-              building.
+              Explore the projects, creative works, programs, and collaborations
+              inspired by a shared mission — to promote healing, mental health
+              awareness, and personal growth through art, storytelling, and
+              community impact.
             </p>
           </div>
         </div>
