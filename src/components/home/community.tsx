@@ -5,14 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Users, Heart, MessageCircle, BookOpen } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import { Pacifico, Oswald } from "next/font/google";
+import {  Oswald } from "next/font/google";
 import { motion } from "framer-motion";
-
-const pacifico = Pacifico({
-  variable: "--font-pacifico",
-  subsets: ["latin"],
-  weight: "400",
-});
+import { georgiaItalic } from "@/utils/georgia-italic";
 
 const oswald = Oswald({
   variable: "--font-oswald",
@@ -40,7 +35,7 @@ const Community = () => {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2
-              className={`text-5xl lg:text-6xl ${pacifico.className} mb-6 text-white`}
+              className={`text-5xl lg:text-6xl ${georgiaItalic.className} mb-6 text-white`}
             >
               Join Our Community
             </h2>

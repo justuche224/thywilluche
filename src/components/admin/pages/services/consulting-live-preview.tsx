@@ -4,15 +4,10 @@ import React from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Lightbulb, CheckCircle, Target, Calendar } from "lucide-react";
-import { Pacifico, Oswald } from "next/font/google";
+import {  Oswald } from "next/font/google";
 import { useEffect, useState } from "react";
 import { RefreshCw } from "lucide-react";
-
-const pacifico = Pacifico({
-  variable: "--font-pacifico",
-  subsets: ["latin"],
-  weight: "400",
-});
+import { georgiaItalic } from "@/utils/georgia-italic";
 
 const oswald = Oswald({
   variable: "--font-oswald",
@@ -84,7 +79,7 @@ export function ConsultingLivePreview({
                       </div>
                     </div>
                     <h1
-                      className={`text-5xl lg:text-6xl ${pacifico.className}`}
+                      className={`text-5xl lg:text-6xl ${georgiaItalic.className}`}
                     >
                       {consultingData.title || "Strategic Consulting"}
                     </h1>
@@ -130,7 +125,7 @@ export function ConsultingLivePreview({
                 <div className="max-w-6xl mx-auto space-y-16">
                   <div className="text-center space-y-4">
                     <h2
-                      className={`text-4xl lg:text-5xl ${pacifico.className}`}
+                      className={`text-4xl lg:text-5xl ${georgiaItalic.className}`}
                     >
                       {consultingData.whatToExpectTitle || "What to Expect"}
                     </h2>
@@ -221,7 +216,7 @@ export function ConsultingLivePreview({
                 <div className="max-w-6xl mx-auto space-y-12">
                   <div className="text-center space-y-4">
                     <h2
-                      className={`text-4xl lg:text-5xl ${pacifico.className}`}
+                      className={`text-4xl lg:text-5xl ${georgiaItalic.className}`}
                     >
                       Why Work With Me
                     </h2>

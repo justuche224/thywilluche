@@ -4,15 +4,10 @@ import React from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Users, CheckCircle, Calendar, MessageCircle } from "lucide-react";
-import { Pacifico, Oswald } from "next/font/google";
+import {  Oswald } from "next/font/google";
 import { useEffect, useState } from "react";
 import { RefreshCw } from "lucide-react";
-
-const pacifico = Pacifico({
-  variable: "--font-pacifico",
-  subsets: ["latin"],
-  weight: "400",
-});
+import { georgiaItalic } from "@/utils/georgia-italic";
 
 const oswald = Oswald({
   variable: "--font-oswald",
@@ -84,7 +79,7 @@ export function CoachingLivePreview({
                       </div>
                     </div>
                     <h1
-                      className={`text-5xl lg:text-6xl ${pacifico.className}`}
+                      className={`text-5xl lg:text-6xl ${georgiaItalic.className}`}
                     >
                       {coachingData.title || "Personal Coaching"}
                     </h1>
@@ -130,7 +125,7 @@ export function CoachingLivePreview({
                 <div className="max-w-6xl mx-auto space-y-16">
                   <div className="text-center space-y-4">
                     <h2
-                      className={`text-4xl lg:text-5xl ${pacifico.className}`}
+                      className={`text-4xl lg:text-5xl ${georgiaItalic.className}`}
                     >
                       {coachingData.whatToExpectTitle || "What to Expect"}
                     </h2>

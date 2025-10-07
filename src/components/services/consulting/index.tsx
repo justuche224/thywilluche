@@ -4,14 +4,9 @@ import React from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Lightbulb, CheckCircle, Target, Calendar } from "lucide-react";
-import { Pacifico, Oswald } from "next/font/google";
+import {  Oswald } from "next/font/google";
 import { motion } from "framer-motion";
-
-const pacifico = Pacifico({
-  variable: "--font-pacifico",
-  subsets: ["latin"],
-  weight: "400",
-});
+import { georgiaItalic } from "@/utils/georgia-italic";
 
 const oswald = Oswald({
   variable: "--font-oswald",
@@ -44,7 +39,7 @@ const ConsultingPage = ({ content = {} }: ConsultingPageProps) => {
                   <Lightbulb className="w-10 h-10 text-primary" />
                 </div>
               </div>
-              <h1 className={`text-5xl lg:text-6xl ${pacifico.className}`}>
+              <h1 className={`text-5xl lg:text-6xl ${georgiaItalic.className}`}>
                 {content.title || "Strategic Consulting"}
               </h1>
               <div className="w-24 h-1 bg-primary rounded-full"></div>
@@ -98,7 +93,7 @@ const ConsultingPage = ({ content = {} }: ConsultingPageProps) => {
         <div className="container mx-auto px-6 lg:px-8">
           <div className="max-w-6xl mx-auto space-y-16">
             <div className="text-center space-y-4">
-              <h2 className={`text-4xl lg:text-5xl ${pacifico.className}`}>
+              <h2 className={`text-4xl lg:text-5xl ${georgiaItalic.className}`}>
                 {content.whatToExpectTitle || "What to Expect"}
               </h2>
               <p
@@ -216,7 +211,7 @@ const ConsultingPage = ({ content = {} }: ConsultingPageProps) => {
         <div className="container mx-auto px-6 lg:px-8">
           <div className="max-w-6xl mx-auto space-y-12">
             <div className="text-center space-y-4">
-              <h2 className={`text-4xl lg:text-5xl ${pacifico.className}`}>
+              <h2 className={`text-4xl lg:text-5xl ${georgiaItalic.className}`}>
                 Why Work With Me
               </h2>
               <p

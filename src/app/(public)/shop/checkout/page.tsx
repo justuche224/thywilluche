@@ -15,14 +15,10 @@ import {
   Mail,
   Shield,
 } from "lucide-react";
-import { Pacifico, Oswald } from "next/font/google";
+import {  Oswald } from "next/font/google";
 import { toast } from "sonner";
+import { georgiaItalic } from "@/utils/georgia-italic";
 
-const pacifico = Pacifico({
-  variable: "--font-pacifico",
-  subsets: ["latin"],
-  weight: "400",
-});
 
 const oswald = Oswald({
   variable: "--font-oswald",
@@ -88,7 +84,7 @@ const CheckoutPage = () => {
             <div className="space-y-4">
               <Shield className="w-16 h-16 mx-auto text-muted-foreground" />
               <h1
-                className={`text-4xl lg:text-5xl font-bold ${pacifico.className} text-gray-900`}
+                className={`text-4xl lg:text-5xl font-bold ${georgiaItalic.className} text-gray-900`}
               >
                 No Items to Checkout
               </h1>
@@ -113,7 +109,7 @@ const CheckoutPage = () => {
           <div className="flex items-center justify-between">
             <div>
               <h1
-                className={`text-4xl lg:text-5xl font-bold ${pacifico.className} text-gray-900`}
+                className={`text-4xl lg:text-5xl font-bold ${georgiaItalic.className} text-gray-900`}
               >
                 Checkout
               </h1>

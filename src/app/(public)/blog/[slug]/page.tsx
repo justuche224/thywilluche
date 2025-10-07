@@ -4,18 +4,13 @@ import Image from "next/image";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Oswald, Pacifico } from "next/font/google";
+import { Oswald } from "next/font/google";
+import { georgiaItalic } from "@/utils/georgia-italic";
 import React from "react";
 
 const oswald = Oswald({
   variable: "--font-oswald",
   subsets: ["latin"],
-});
-
-const pacifico = Pacifico({
-  variable: "--font-pacifico",
-  subsets: ["latin"],
-  weight: "400",
 });
 
 interface BlogPostPageProps {
@@ -65,7 +60,7 @@ function renderContent(content: ContentNode, index = 0): React.ReactNode {
     const level = (content.attrs?.level as number) || 1;
     const Component = `h${level}` as "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
     const headingClasses = {
-      1: `text-4xl lg:text-5xl font-bold mb-8 mt-12 ${pacifico.className}`,
+      1: `text-4xl lg:text-5xl font-bold mb-8 mt-12 ${georgiaItalic.className}`,
       2: `text-3xl lg:text-4xl font-bold mb-6 mt-10 ${oswald.className}`,
       3: `text-2xl lg:text-3xl font-semibold mb-4 mt-8 ${oswald.className}`,
       4: `text-xl lg:text-2xl font-semibold mb-4 mt-6 ${oswald.className}`,
@@ -168,7 +163,7 @@ function renderContent(content: ContentNode, index = 0): React.ReactNode {
     return (
       <blockquote
         key={index}
-        className={`border-l-4 border-primary pl-8 py-4 mb-8 italic text-xl text-gray-600 bg-gray-50 rounded-r-2xl ${pacifico.className}`}
+        className={`border-l-4 border-primary pl-8 py-4 mb-8 italic text-xl text-gray-600 bg-gray-50 rounded-r-2xl ${georgiaItalic.className}`}
       >
         {content.content?.map((node, idx) => renderContent(node, idx))}
       </blockquote>
@@ -241,7 +236,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               </div>
 
               <h1
-                className={`text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight ${pacifico.className}`}
+                className={`text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight ${georgiaItalic.className}`}
               >
                 {post.title}
               </h1>

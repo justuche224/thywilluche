@@ -1,13 +1,8 @@
 import Image from "next/image";
 import React from "react";
+import { Oswald } from "next/font/google";
+import { georgiaItalic } from "@/utils/georgia-italic";
 
-import { Pacifico, Oswald } from "next/font/google";
-
-const pacifico = Pacifico({
-  variable: "--font-pacifico",
-  subsets: ["latin"],
-  weight: "400",
-});
 
 const oswald = Oswald({
   variable: "--font-oswald",
@@ -53,7 +48,7 @@ const WhoIAm = ({
       </div>
       <div className="w-full h-full space-y-4">
         <h2
-          className={`text-3xl lg:text-4xl 2xl:text-5xl ${pacifico.className} text-center md:text-left`}
+          className={`text-3xl lg:text-4xl 2xl:text-5xl ${georgiaItalic.className} text-center md:text-left`}
         >
           {title}
         </h2>

@@ -1,17 +1,12 @@
 import { getPublishedBlogPosts } from "@/actions/blog";
 import Image from "next/image";
 import Link from "next/link";
-import { Oswald, Pacifico } from "next/font/google";
+import { Oswald } from "next/font/google";
+import { georgiaItalic } from "@/utils/georgia-italic";
 
 const oswald = Oswald({
   variable: "--font-oswald",
   subsets: ["latin"],
-});
-
-const pacifico = Pacifico({
-  variable: "--font-pacifico",
-  subsets: ["latin"],
-  weight: "400",
 });
 
 interface BlogPost {
@@ -49,7 +44,7 @@ export default async function BlogListingPage({
       <div className="container mx-auto px-6 lg:px-8 py-16 lg:py-20">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h1 className={`text-5xl lg:text-6xl ${pacifico.className} mb-6`}>
+            <h1 className={`text-5xl lg:text-6xl ${georgiaItalic.className} mb-6`}>
               Words & Wisdom
             </h1>
             <div className="w-24 h-1 bg-primary rounded-full mx-auto mb-8"></div>

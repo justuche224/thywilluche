@@ -3,13 +3,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { BookOpen, ShoppingBag, ArrowRight } from "lucide-react";
-import { Pacifico, Oswald } from "next/font/google";
-
-const pacifico = Pacifico({
-  variable: "--font-pacifico",
-  subsets: ["latin"],
-  weight: "400",
-});
+import {  Oswald } from "next/font/google";
+import { georgiaItalic } from "@/utils/georgia-italic";
 
 const oswald = Oswald({
   variable: "--font-oswald",
@@ -22,7 +17,7 @@ const page = () => {
       {/* Hero Section */}
       <div className="text-center space-y-6 max-w-4xl mx-auto">
         <h1
-          className={`text-4xl lg:text-5xl xl:text-6xl ${pacifico.className} font-bold text-gray-900`}
+          className={`text-4xl lg:text-5xl xl:text-6xl ${georgiaItalic.className} font-bold text-gray-900`}
         >
           Shop ThyWillUche
         </h1>

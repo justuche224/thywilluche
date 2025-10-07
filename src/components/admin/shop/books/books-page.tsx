@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import { Pacifico, Oswald } from "next/font/google";
+import {  Oswald } from "next/font/google";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useQuery } from "@tanstack/react-query";
@@ -13,12 +13,8 @@ import {
   getFeaturedBooks,
 } from "@/actions/shop/books/admin-new";
 import { FeaturedCarousel } from "./featured-carousel";
+import { georgiaItalic } from "@/utils/georgia-italic";
 
-const pacifico = Pacifico({
-  variable: "--font-pacifico",
-  subsets: ["latin"],
-  weight: "400",
-});
 
 const oswald = Oswald({
   variable: "--font-oswald",
@@ -65,7 +61,7 @@ const BooksPage = () => {
       <div className="flex items-center justify-between">
         <div>
           <h1
-            className={`text-3xl lg:text-4xl xl:text-5xl ${pacifico.className} font-bold text-gray-900 mb-2`}
+            className={`text-3xl lg:text-4xl xl:text-5xl ${georgiaItalic.className} font-bold text-gray-900 mb-2`}
           >
             Books Management
           </h1>

@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Oswald, Pacifico } from "next/font/google";
+import { Oswald } from "next/font/google";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
@@ -18,12 +18,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import AddToCart from "@/components/cart-button";
+import { georgiaItalic } from "@/utils/georgia-italic";
 
-const pacifico = Pacifico({
-  variable: "--font-pacifico",
-  subsets: ["latin"],
-  weight: "400",
-});
 
 const oswald = Oswald({
   variable: "--font-oswald",
@@ -145,7 +141,7 @@ export const BookPage = ({ bookSlug }: { bookSlug: string }) => {
 
               <div className={"flex flex-col gap-3 mt-6"}>
                 <p
-                  className={`text-lg md:text-xl font-semibold text-center ${pacifico.className}`}
+                  className={`text-lg md:text-xl font-semibold text-center ${georgiaItalic.className}`}
                 >
                   Available now
                 </p>

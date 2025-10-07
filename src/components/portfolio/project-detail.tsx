@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Pacifico, Oswald } from "next/font/google";
+import {  Oswald } from "next/font/google";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -17,12 +17,7 @@ import {
 import ReviewForm from "./review-form";
 import ReviewList from "./review-list";
 import { getPublicProjects } from "@/actions/projects";
-
-const pacifico = Pacifico({
-  variable: "--font-pacifico",
-  subsets: ["latin"],
-  weight: "400",
-});
+import { georgiaItalic } from "@/utils/georgia-italic";
 
 const oswald = Oswald({
   variable: "--font-oswald",
@@ -66,7 +61,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project }) => {
   if (!project) {
     return (
       <div className="container mx-auto px-6 py-20 text-center">
-        <h1 className={`text-4xl ${pacifico.className} mb-4`}>
+        <h1 className={`text-4xl ${georgiaItalic.className} mb-4`}>
           Project Not Found
         </h1>
         <Link href="/portfolio">
@@ -117,7 +112,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project }) => {
                   >
                     {project.category.replace("-", " ")}
                   </span>
-                  <h1 className={`text-4xl lg:text-5xl ${pacifico.className}`}>
+                  <h1 className={`text-4xl lg:text-5xl ${georgiaItalic.className}`}>
                     {project.title}
                   </h1>
                   <div className="flex items-center gap-4 mt-4 text-gray-600">
@@ -215,7 +210,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project }) => {
         <div className="container mx-auto px-6 lg:px-8">
           <div className="max-w-4xl mx-auto space-y-8">
             <div className="flex items-center justify-between">
-              <h2 className={`text-3xl lg:text-4xl ${pacifico.className}`}>
+              <h2 className={`text-3xl lg:text-4xl ${georgiaItalic.className}`}>
                 Reviews
               </h2>
               {!showReviewForm && (
@@ -258,7 +253,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project }) => {
         <div className="container mx-auto px-6 lg:px-8">
           <div className="max-w-6xl mx-auto">
             <h2
-              className={`text-3xl lg:text-4xl ${pacifico.className} text-center mb-12`}
+              className={`text-3xl lg:text-4xl ${georgiaItalic.className} text-center mb-12`}
             >
               Related Projects
             </h2>

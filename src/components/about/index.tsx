@@ -2,17 +2,13 @@
 
 import React from "react";
 import Image from "next/image";
-import { Pacifico, Oswald } from "next/font/google";
+import { Oswald } from "next/font/google";
 import { motion } from "framer-motion";
 import Community from "../home/community";
 import MediaGallery from "./media-gallery";
 import { MediaHighlight } from "@/db/schema/media-highlights";
+import { georgiaItalic } from "@/utils/georgia-italic";
 
-const pacifico = Pacifico({
-  variable: "--font-pacifico",
-  subsets: ["latin"],
-  weight: "400",
-});
 
 const oswald = Oswald({
   variable: "--font-oswald",
@@ -104,7 +100,7 @@ const About = ({
               >
                 <div>
                   <h1
-                    className={`text-5xl lg:text-6xl ${pacifico.className} mb-6`}
+                    className={`text-5xl lg:text-6xl ${georgiaItalic.className} mb-6`}
                   >
                     {journeyTitle}
                   </h1>
@@ -134,7 +130,7 @@ const About = ({
         <div className="container mx-auto px-6 lg:px-8">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className={`text-5xl lg:text-6xl ${pacifico.className} mb-6`}>
+              <h2 className={`text-5xl lg:text-6xl ${georgiaItalic.className} mb-6`}>
                 Mission & Vision
               </h2>
               <p

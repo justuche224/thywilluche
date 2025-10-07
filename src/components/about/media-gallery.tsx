@@ -2,16 +2,12 @@
 
 import React from "react";
 import Image from "next/image";
-import { Pacifico, Oswald } from "next/font/google";
+import { Oswald } from "next/font/google";
 import { motion } from "framer-motion";
 import { Quote, TrendingUp, Star } from "lucide-react";
 import { MediaHighlight } from "@/db/schema/media-highlights";
-
-const pacifico = Pacifico({
-  variable: "--font-pacifico",
-  subsets: ["latin"],
-  weight: "400",
-});
+import { georgiaItalic } from "@/utils/georgia-italic";
+  
 
 const oswald = Oswald({
   variable: "--font-oswald",
@@ -58,7 +54,7 @@ const MediaGallery = ({ mediaHighlights }: MediaGalleryProps) => {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <h2 className={`text-5xl lg:text-6xl ${pacifico.className} mb-6`}>
+              <h2 className={`text-5xl lg:text-6xl ${georgiaItalic.className} mb-6`}>
                 Media Highlights
               </h2>
               <div className="w-24 h-1 bg-primary rounded-full mx-auto mb-8"></div>

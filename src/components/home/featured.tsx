@@ -1,14 +1,10 @@
 import Image from "next/image";
 import React from "react";
-import { Pacifico, Oswald } from "next/font/google";
+import {  Oswald } from "next/font/google";
 import { Button } from "../ui/button";
 import Link from "next/link";
+import { georgiaItalic } from "@/utils/georgia-italic";
 
-const pacifico = Pacifico({
-  variable: "--font-pacifico",
-  subsets: ["latin"],
-  weight: "400",
-});
 
 const oswald = Oswald({
   variable: "--font-oswald",
@@ -33,7 +29,7 @@ const Featured = ({
   return (
     <div className="w-full mt-24 bg-white/50 overflow-clip">
       <div className="container mx-auto px-2 lg:px-8 py-16 lg:py-20">
-        <h2 className={`text-5xl ${pacifico.className} text-center mb-10`}>
+        <h2 className={`text-5xl ${georgiaItalic.className} text-center mb-10`}>
           {title}
         </h2>
         <div className=" max-w-2xl 2xl:max-w-4xl w-full mx-auto grid grid-cols-2 gap-0  relative">
