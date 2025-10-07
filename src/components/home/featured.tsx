@@ -1,6 +1,8 @@
 import Image from "next/image";
 import React from "react";
 import { Pacifico, Oswald } from "next/font/google";
+import { Button } from "../ui/button";
+import Link from "next/link";
 
 const pacifico = Pacifico({
   variable: "--font-pacifico",
@@ -86,6 +88,11 @@ const Featured = ({
               </p>
             </div>
           </div>
+        </div>
+        <div className="flex justify-center mt-5">
+          <Button asChild>
+            <Link href="/shop/books">Buy Now</Link>
+          </Button>
         </div>
       </div>
     </div>
