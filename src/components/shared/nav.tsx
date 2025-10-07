@@ -102,7 +102,7 @@ export function Navbar() {
                   asChild
                   className={
                     navigationMenuTriggerStyle() +
-                    ` bg-transparent ${oswald.className}`
+                    ` bg-transparent ${oswald.className} text-[#800000]`
                   }
                 >
                   <Link href="/">Home</Link>
@@ -111,7 +111,7 @@ export function Navbar() {
               {/* About Me */}
               <NavigationMenuItem>
                 <NavigationMenuTrigger
-                  className={`bg-transparent font-semibold ${oswald.className}`}
+                  className={`bg-transparent font-semibold ${oswald.className} text-[#800000]`}
                 >
                   About Me
                 </NavigationMenuTrigger>
@@ -139,7 +139,7 @@ export function Navbar() {
               {/* Shop */}
               <NavigationMenuItem>
                 <NavigationMenuTrigger
-                  className={`bg-transparent font-semibold ${oswald.className}`}
+                  className={`bg-transparent font-semibold ${oswald.className} text-[#800000]`}
                 >
                   Shop
                 </NavigationMenuTrigger>
@@ -160,7 +160,7 @@ export function Navbar() {
               {/* Services */}
               <NavigationMenuItem>
                 <NavigationMenuTrigger
-                  className={`bg-transparent font-semibold ${oswald.className}`}
+                  className={`bg-transparent font-semibold ${oswald.className} text-[#800000]`}
                 >
                   Services
                 </NavigationMenuTrigger>
@@ -204,7 +204,7 @@ export function Navbar() {
                   asChild
                   className={
                     navigationMenuTriggerStyle() +
-                    ` bg-transparent font-semibold ${oswald.className}`
+                    ` bg-transparent font-semibold ${oswald.className} text-[#800000]`
                   }
                 >
                   <Link href="/community">Community</Link>
@@ -216,7 +216,7 @@ export function Navbar() {
                   asChild
                   className={
                     navigationMenuTriggerStyle() +
-                    ` bg-transparent font-semibold ${oswald.className}`
+                    ` bg-transparent font-semibold ${oswald.className} text-[#800000]`
                   }
                 >
                   <Link href="/portfolio">Projects</Link>
@@ -228,7 +228,7 @@ export function Navbar() {
                   asChild
                   className={
                     navigationMenuTriggerStyle() +
-                    ` bg-transparent font-semibold ${oswald.className}`
+                    ` bg-transparent font-semibold ${oswald.className} text-[#800000]`
                   }
                 >
                   <Link href="/blog">Blog</Link>
@@ -256,7 +256,7 @@ function MobileNavContent({ onClose }: { onClose: () => void }) {
         {/* Home */}
         <Link
           href="/"
-          className={`text-lg font-semibold px-4 py-3 rounded-lg hover:bg-accent hover:text-accent-foreground active:bg-accent/80 transition-all ${oswald.className}`}
+          className={`text-lg font-semibold px-4 py-3 rounded-lg hover:bg-accent hover:text-accent-foreground active:bg-accent/80 transition-all ${oswald.className} text-[#800000]`}
           onClick={onClose}
         >
           Home
@@ -267,7 +267,7 @@ function MobileNavContent({ onClose }: { onClose: () => void }) {
         {/* About Me */}
         <Collapsible open={aboutOpen} onOpenChange={setAboutOpen}>
           <CollapsibleTrigger
-            className={`w-full flex items-center justify-between text-lg font-semibold px-4 py-3 rounded-lg hover:bg-accent hover:text-accent-foreground active:bg-accent/80 transition-all ${oswald.className}`}
+            className={`w-full flex items-center justify-between text-lg font-semibold px-4 py-3 rounded-lg hover:bg-accent hover:text-accent-foreground active:bg-accent/80 transition-all ${oswald.className} text-[#800000]`}
           >
             About Me
             <ChevronDown
@@ -313,7 +313,7 @@ function MobileNavContent({ onClose }: { onClose: () => void }) {
         {/* Shop */}
         <Collapsible open={bookshopOpen} onOpenChange={setBookshopOpen}>
           <CollapsibleTrigger
-            className={`w-full flex items-center justify-between text-lg font-semibold px-4 py-3 rounded-lg hover:bg-accent hover:text-accent-foreground active:bg-accent/80 transition-all ${oswald.className}`}
+            className={`w-full flex items-center justify-between text-lg font-semibold px-4 py-3 rounded-lg hover:bg-accent hover:text-accent-foreground active:bg-accent/80 transition-all ${oswald.className} text-[#800000]`}
           >
             Shop
             <ChevronDown
@@ -341,7 +341,7 @@ function MobileNavContent({ onClose }: { onClose: () => void }) {
         {/* Services */}
         <Collapsible open={servicesOpen} onOpenChange={setServicesOpen}>
           <CollapsibleTrigger
-            className={`w-full flex items-center justify-between text-lg font-semibold px-4 py-3 rounded-lg hover:bg-accent hover:text-accent-foreground active:bg-accent/80 transition-all ${oswald.className}`}
+            className={`w-full flex items-center justify-between text-lg font-semibold px-4 py-3 rounded-lg hover:bg-accent hover:text-accent-foreground active:bg-accent/80 transition-all ${oswald.className} text-[#800000]`}
           >
             Services
             <ChevronDown
@@ -380,7 +380,7 @@ function MobileNavContent({ onClose }: { onClose: () => void }) {
         {/* Community */}
         <Link
           href="/community"
-          className={`text-lg font-semibold px-4 py-3 rounded-lg hover:bg-accent hover:text-accent-foreground active:bg-accent/80 transition-all ${oswald.className}`}
+          className={`text-lg font-semibold px-4 py-3 rounded-lg hover:bg-accent hover:text-accent-foreground active:bg-accent/80 transition-all ${oswald.className} text-[#800000]`}
           onClick={onClose}
         >
           Community
@@ -391,7 +391,7 @@ function MobileNavContent({ onClose }: { onClose: () => void }) {
         {/* Projects */}
         <Link
           href="/portfolio"
-          className={`text-lg font-semibold px-4 py-3 rounded-lg hover:bg-accent hover:text-accent-foreground active:bg-accent/80 transition-all ${oswald.className}`}
+          className={`text-lg font-semibold px-4 py-3 rounded-lg hover:bg-accent hover:text-accent-foreground active:bg-accent/80 transition-all ${oswald.className} text-[#800000]`}
           onClick={onClose}
         >
           Projects
@@ -402,7 +402,7 @@ function MobileNavContent({ onClose }: { onClose: () => void }) {
         {/* Blog */}
         <Link
           href="/blog"
-          className={`text-lg font-semibold px-4 py-3 rounded-lg hover:bg-accent hover:text-accent-foreground active:bg-accent/80 transition-all ${oswald.className}`}
+          className={`text-lg font-semibold px-4 py-3 rounded-lg hover:bg-accent hover:text-accent-foreground active:bg-accent/80 transition-all ${oswald.className} text-[#800000]`}
           onClick={onClose}
         >
           Blog
