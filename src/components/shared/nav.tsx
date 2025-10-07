@@ -198,6 +198,18 @@ export function Navbar() {
                   </ul>
                 </NavigationMenuContent>
               </NavigationMenuItem>
+              {/* NGO */}
+              <NavigationMenuItem>
+                <NavigationMenuLink
+                  asChild
+                  className={
+                    navigationMenuTriggerStyle() +
+                    ` bg-transparent font-semibold ${oswald.className} text-[#800000]`
+                  }
+                >
+                  <Link href="/ngo">NGO</Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
               {/* Community */}
               <NavigationMenuItem>
                 <NavigationMenuLink
@@ -260,7 +272,10 @@ function MobileNavContent({ onClose }: { onClose: () => void }) {
   const [servicesOpen, setServicesOpen] = React.useState(false);
 
   return (
-    <SheetContent side="left" className="w-[300px] sm:w-[400px] flex flex-col z-[999">
+    <SheetContent
+      side="left"
+      className="w-[300px] sm:w-[400px] flex flex-col z-[999"
+    >
       <SheetHeader className="border-b pb-4">
         <SheetTitle className={`text-2xl ${oswald.className}`}>Menu</SheetTitle>
       </SheetHeader>
@@ -386,6 +401,17 @@ function MobileNavContent({ onClose }: { onClose: () => void }) {
             </Link>
           </CollapsibleContent>
         </Collapsible>
+
+        <div className="h-px bg-border my-2" />
+
+        {/* NGO */}
+        <Link
+          href="/ngo"
+          className={`text-lg font-semibold px-4 py-3 rounded-lg hover:bg-accent hover:text-accent-foreground active:bg-accent/80 transition-all ${oswald.className} text-[#800000]`}
+          onClick={onClose}
+        >
+          NGO
+        </Link>
 
         <div className="h-px bg-border my-2" />
 
