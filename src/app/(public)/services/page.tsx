@@ -73,12 +73,20 @@ const page = async () => {
                   <span>Practical tools for daily resilience</span>
                 </li>
               </ul>
-              <Link href="/services/coaching">
-                <Button className="gap-2 mt-4">
-                  Learn More
-                  <ArrowRight size={16} />
-                </Button>
-              </Link>
+              <div className="flex flex-wrap gap-3 mt-4">
+                <Link href="/services/coaching">
+                  <Button variant="outline" className="gap-2">
+                    Learn More
+                    <ArrowRight size={16} />
+                  </Button>
+                </Link>
+                <Link href="/services/coaching/booking">
+                  <Button className="gap-2">
+                    Book Session
+                    <ArrowRight size={16} />
+                  </Button>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
@@ -116,12 +124,20 @@ const page = async () => {
                   <span>Content editing and manuscript development</span>
                 </li>
               </ul>
-              <Link href="/services/ghostwriting">
-                <Button className="gap-2 mt-4">
-                  Learn More
-                  <ArrowRight size={16} />
-                </Button>
-              </Link>
+              <div className="flex flex-wrap gap-3 mt-4">
+                <Link href="/services/ghostwriting">
+                  <Button variant="outline" className="gap-2">
+                    Learn More
+                    <ArrowRight size={16} />
+                  </Button>
+                </Link>
+                <Link href="/services/ghostwriting/booking">
+                  <Button className="gap-2">
+                    Get Started
+                    <ArrowRight size={16} />
+                  </Button>
+                </Link>
+              </div>
             </div>
             <div className="aspect-[4/3] relative overflow-hidden rounded-lg order-2">
               <Image
@@ -183,12 +199,20 @@ const page = async () => {
                   <span>Community building and engagement</span>
                 </li>
               </ul>
-              <Link href="/services/consulting">
-                <Button className="gap-2 mt-4">
-                  Learn More
-                  <ArrowRight size={16} />
-                </Button>
-              </Link>
+              <div className="flex flex-wrap gap-3 mt-4">
+                <Link href="/services/consulting">
+                  <Button variant="outline" className="gap-2">
+                    Learn More
+                    <ArrowRight size={16} />
+                  </Button>
+                </Link>
+                <Link href="/services/consulting/booking">
+                  <Button className="gap-2">
+                    Book Consultation
+                    <ArrowRight size={16} />
+                  </Button>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
@@ -204,10 +228,20 @@ const page = async () => {
           {content.ctaDescription ||
             "Whether you're looking for personal coaching, need help writing your story, or want to build impactful initiatives, I'm here to support your journey."}
         </p>
-        <Button size="lg" className="gap-2">
-          {content.ctaButtonText || "Book a Consultation"}
-          <ArrowRight size={20} />
-        </Button>
+        <div className="flex flex-wrap gap-4 justify-center">
+          <Link href="/services/consulting/booking">
+            <Button size="lg" className="gap-2">
+              {content.ctaButtonText || "Book a Consultation"}
+              <ArrowRight size={20} />
+            </Button>
+          </Link>
+          <Link href="/services/custom">
+            <Button size="lg" variant="outline" className="gap-2">
+              Custom Request
+              <ArrowRight size={20} />
+            </Button>
+          </Link>
+        </div>
       </div>
     </div>
   );

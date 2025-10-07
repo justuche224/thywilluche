@@ -8,7 +8,6 @@ import { Oswald } from "next/font/google";
 import { georgiaItalic } from "@/utils/georgia-italic";
 import { motion } from "framer-motion";
 
-
 const oswald = Oswald({
   variable: "--font-oswald",
   subsets: ["latin"],
@@ -51,13 +50,17 @@ const CoachingPage = ({ content = {} }: CoachingPageProps) => {
                   "Experience transformative one-on-one coaching that empowers you to overcome challenges, build lasting resilience, and create meaningful change in your life."}
               </p>
               <div className="flex flex-wrap gap-4">
-                <Button size="lg" className="gap-2">
-                  <Calendar size={20} />
-                  Book a Session
+                <Button size="lg" className="gap-2" asChild>
+                  <a href="/services/coaching/booking">
+                    <Calendar size={20} />
+                    Book a Session
+                  </a>
                 </Button>
-                <Button size="lg" variant="outline" className="gap-2">
-                  <MessageCircle size={20} />
-                  Free Consultation
+                <Button size="lg" variant="outline" className="gap-2" asChild>
+                  <a href="/services/custom">
+                    <MessageCircle size={20} />
+                    Free Consultation
+                  </a>
                 </Button>
               </div>
             </motion.div>
@@ -239,9 +242,11 @@ const CoachingPage = ({ content = {} }: CoachingPageProps) => {
                 </p>
               </div>
               <div className="pt-4">
-                <Button size="lg" className="gap-2">
-                  Start Your Journey
-                  <Users size={20} />
+                <Button size="lg" className="gap-2" asChild>
+                  <a href="/services/coaching/booking">
+                    Start Your Journey
+                    <Users size={20} />
+                  </a>
                 </Button>
               </div>
             </div>

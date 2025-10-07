@@ -4,10 +4,9 @@ import React from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { PenTool, CheckCircle, BookOpen, Mail } from "lucide-react";
-import {  Oswald } from "next/font/google";
+import { Oswald } from "next/font/google";
 import { motion } from "framer-motion";
 import { georgiaItalic } from "@/utils/georgia-italic";
-
 
 const oswald = Oswald({
   variable: "--font-oswald",
@@ -51,13 +50,17 @@ const GhostwritingPage = ({ content = {} }: GhostwritingPageProps) => {
                   "Bring your story to life with professional ghostwriting services that capture your voice, honor your journey, and create compelling narratives that resonate with readers."}
               </p>
               <div className="flex flex-wrap gap-4">
-                <Button size="lg" className="gap-2">
-                  <Mail size={20} />
-                  Get Started
+                <Button size="lg" className="gap-2" asChild>
+                  <a href="/services/ghostwriting/booking">
+                    <Mail size={20} />
+                    Get Started
+                  </a>
                 </Button>
-                <Button size="lg" variant="outline" className="gap-2">
-                  <BookOpen size={20} />
-                  View Portfolio
+                <Button size="lg" variant="outline" className="gap-2" asChild>
+                  <a href="/services/custom">
+                    <BookOpen size={20} />
+                    Custom Request
+                  </a>
                 </Button>
               </div>
             </motion.div>
@@ -341,9 +344,11 @@ const GhostwritingPage = ({ content = {} }: GhostwritingPageProps) => {
                 resonates.
               </p>
               <div className="pt-4">
-                <Button size="lg" className="gap-2">
-                  <Mail size={20} />
-                  Contact Me
+                <Button size="lg" className="gap-2" asChild>
+                  <a href="/services/ghostwriting/booking">
+                    <Mail size={20} />
+                    Contact Me
+                  </a>
                 </Button>
               </div>
             </div>

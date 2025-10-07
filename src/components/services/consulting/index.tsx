@@ -4,7 +4,7 @@ import React from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Lightbulb, CheckCircle, Target, Calendar } from "lucide-react";
-import {  Oswald } from "next/font/google";
+import { Oswald } from "next/font/google";
 import { motion } from "framer-motion";
 import { georgiaItalic } from "@/utils/georgia-italic";
 
@@ -50,13 +50,17 @@ const ConsultingPage = ({ content = {} }: ConsultingPageProps) => {
                   "Strategic consulting for organizations, content creators, and individuals looking to build authentic mental health initiatives, develop impactful content, or create meaningful community engagement strategies."}
               </p>
               <div className="flex flex-wrap gap-4">
-                <Button size="lg" className="gap-2">
-                  <Calendar size={20} />
-                  Schedule Consultation
+                <Button size="lg" className="gap-2" asChild>
+                  <a href="/services/consulting/booking">
+                    <Calendar size={20} />
+                    Schedule Consultation
+                  </a>
                 </Button>
-                <Button size="lg" variant="outline" className="gap-2">
-                  <Target size={20} />
-                  Learn More
+                <Button size="lg" variant="outline" className="gap-2" asChild>
+                  <a href="/services/custom">
+                    <Target size={20} />
+                    Custom Request
+                  </a>
                 </Button>
               </div>
             </motion.div>
@@ -341,9 +345,11 @@ const ConsultingPage = ({ content = {} }: ConsultingPageProps) => {
                 I&apos;m here to help you succeed.
               </p>
               <div className="pt-4">
-                <Button size="lg" className="gap-2">
-                  <Calendar size={20} />
-                  Book a Discovery Call
+                <Button size="lg" className="gap-2" asChild>
+                  <a href="/services/consulting/booking">
+                    <Calendar size={20} />
+                    Book a Discovery Call
+                  </a>
                 </Button>
               </div>
             </div>
