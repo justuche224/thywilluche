@@ -9,7 +9,6 @@ import MediaGallery from "./media-gallery";
 import { MediaHighlight } from "@/db/schema/media-highlights";
 import { georgiaItalic } from "@/utils/georgia-italic";
 
-
 const oswald = Oswald({
   variable: "--font-oswald",
   subsets: ["latin"],
@@ -20,6 +19,10 @@ interface AboutProps {
   journeyTitle?: string;
   journeyParagraph1?: string;
   journeyParagraph2?: string;
+  purposeTitle?: string;
+  purposeParagraph1?: string;
+  purposeParagraph2?: string;
+  purposeParagraph3?: string;
   missionTitle?: string;
   missionParagraph1?: string;
   missionParagraph2?: string;
@@ -34,6 +37,10 @@ const About = ({
   journeyTitle = "My Journey",
   journeyParagraph1 = "From the depths of personal struggle to becoming a beacon of hope for thousands, my journey has been one of transformation, resilience, and unwavering commitment to living authentically.",
   journeyParagraph2 = "Growing up, I faced challenges that tested my spirit and questioned my path. Mental health struggles, moments of doubt, and the weight of unexpressed emotions shaped me into someone who understands the power of vulnerability and the strength found in community.",
+  purposeTitle = "The Purpose Behind This Platform",
+  purposeParagraph1 = "This platform was born from a simple truth — that healing begins when we give our pain a voice and our stories a place to belong.",
+  purposeParagraph2 = "Days I Do Not Die was the first spark — a raw, unfiltered reflection of survival, faith, and the human spirit's ability to rise again.",
+  purposeParagraph3 = "But it didn't end with the book. It evolved into something greater — a movement. A creative and wellness space built to remind people that strength is not the absence of struggle, but the courage to keep showing up. Through storytelling, poetry, and community, we seek to bridge the gap between art and healing — creating a space where authenticity is celebrated, vulnerability is power, and every voice has the right to be heard.",
   missionTitle = "Our Mission",
   missionParagraph1 = "To empower individuals worldwide to embrace their mental health journey with courage, compassion, and community. We believe that every person deserves to live authentically, heal from their past, and find strength in their daily victories.",
   missionParagraph2 = "Through storytelling, education, and meaningful connections, we create safe spaces where vulnerability becomes strength and isolation transforms into belonging.",
@@ -119,6 +126,45 @@ const About = ({
         </div>
       </motion.section>
 
+      {/* Purpose Section */}
+      <motion.section
+        className="w-full py-20 lg:py-24 bg-gradient-to-br from-gray-50 to-white"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+      >
+        <div className="container mx-auto px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              <h2
+                className={`text-4xl lg:text-5xl ${georgiaItalic.className} mb-8`}
+              >
+                {purposeTitle}
+              </h2>
+              <div className="w-24 h-1 bg-primary rounded-full mx-auto mb-12"></div>
+            </motion.div>
+
+            <motion.div
+              className={`space-y-8 text-lg lg:text-xl text-gray-700 leading-relaxed ${oswald.className}`}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+            >
+              <p className="text-justify">{purposeParagraph1}</p>
+              <p className="text-justify">{purposeParagraph2}</p>
+              <p className="text-justify">{purposeParagraph3}</p>
+            </motion.div>
+          </div>
+        </div>
+      </motion.section>
+
       {/* Mission & Vision Section */}
       <motion.section
         className="w-full py-20 lg:py-24 bg-white/50"
@@ -130,7 +176,9 @@ const About = ({
         <div className="container mx-auto px-6 lg:px-8">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className={`text-5xl lg:text-6xl ${georgiaItalic.className} mb-6`}>
+              <h2
+                className={`text-5xl lg:text-6xl ${georgiaItalic.className} mb-6`}
+              >
                 Mission & Vision
               </h2>
               <p

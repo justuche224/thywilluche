@@ -7,14 +7,17 @@ import { RefreshCw } from "lucide-react";
 
 interface AboutLivePreviewProps {
   initialJourneyData: Record<string, string>;
+  initialPurposeData: Record<string, string>;
   initialMissionVisionData: Record<string, string>;
 }
 
 export function AboutLivePreview({
   initialJourneyData,
+  initialPurposeData,
   initialMissionVisionData,
 }: AboutLivePreviewProps) {
   const [journeyData, setJourneyData] = useState(initialJourneyData);
+  const [purposeData, setPurposeData] = useState(initialPurposeData);
   const [missionVisionData, setMissionVisionData] = useState(
     initialMissionVisionData
   );
@@ -27,6 +30,7 @@ export function AboutLivePreview({
       const data = await response.json();
 
       setJourneyData(data.journey || {});
+      setPurposeData(data.purpose || {});
       setMissionVisionData(data.missionVision || {});
     } catch (error) {
       console.error("Failed to refresh preview:", error);
@@ -70,6 +74,10 @@ export function AboutLivePreview({
             journeyTitle={journeyData.title}
             journeyParagraph1={journeyData.paragraph1}
             journeyParagraph2={journeyData.paragraph2}
+            purposeTitle={purposeData.title}
+            purposeParagraph1={purposeData.paragraph1}
+            purposeParagraph2={purposeData.paragraph2}
+            purposeParagraph3={purposeData.paragraph3}
             missionTitle={missionVisionData.missionTitle}
             missionParagraph1={missionVisionData.missionParagraph1}
             missionParagraph2={missionVisionData.missionParagraph2}

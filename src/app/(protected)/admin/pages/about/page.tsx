@@ -13,6 +13,7 @@ export default async function AdminAboutPage() {
   const content = await getAboutContent();
 
   const journeyData = content.journey || {};
+  const purposeData = content.purpose || {};
   const missionVisionData = content.missionVision || {};
 
   return (
@@ -38,6 +39,7 @@ export default async function AdminAboutPage() {
               <AboutContentManager
                 initialData={{
                   journey: journeyData,
+                  purpose: purposeData,
                   missionVision: missionVisionData,
                 }}
               />
@@ -47,6 +49,7 @@ export default async function AdminAboutPage() {
         <div className="sticky top-0 h-fit">
           <AboutLivePreview
             initialJourneyData={journeyData}
+            initialPurposeData={purposeData}
             initialMissionVisionData={missionVisionData}
           />
         </div>

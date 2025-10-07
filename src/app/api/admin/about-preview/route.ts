@@ -7,6 +7,7 @@ export async function GET() {
 
     return NextResponse.json({
       journey: content.journey || {},
+      purpose: content.purpose || {},
       missionVision: content.missionVision || {},
     });
   } catch (error) {

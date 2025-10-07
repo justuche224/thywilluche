@@ -31,6 +31,35 @@ async function seedAboutContent() {
       valueType: "text",
     },
 
+    // Purpose Section
+    {
+      section: "purpose",
+      key: "title",
+      value: "The Purpose Behind This Platform",
+      valueType: "text",
+    },
+    {
+      section: "purpose",
+      key: "paragraph1",
+      value:
+        "This platform was born from a simple truth — that healing begins when we give our pain a voice and our stories a place to belong.",
+      valueType: "text",
+    },
+    {
+      section: "purpose",
+      key: "paragraph2",
+      value:
+        "Days I Do Not Die was the first spark — a raw, unfiltered reflection of survival, faith, and the human spirit's ability to rise again.",
+      valueType: "text",
+    },
+    {
+      section: "purpose",
+      key: "paragraph3",
+      value:
+        "But it didn't end with the book. It evolved into something greater — a movement. A creative and wellness space built to remind people that strength is not the absence of struggle, but the courage to keep showing up. Through storytelling, poetry, and community, we seek to bridge the gap between art and healing — creating a space where authenticity is celebrated, vulnerability is power, and every voice has the right to be heard.",
+      valueType: "text",
+    },
+
     // Mission & Vision Section - Mission
     {
       section: "missionVision",

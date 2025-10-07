@@ -11,6 +11,10 @@ export async function updateAboutJourneyContent(formData: FormData) {
     const journeyTitle = formData.get("journeyTitle") as string;
     const journeyParagraph1 = formData.get("journeyParagraph1") as string;
     const journeyParagraph2 = formData.get("journeyParagraph2") as string;
+    const purposeTitle = formData.get("purposeTitle") as string;
+    const purposeParagraph1 = formData.get("purposeParagraph1") as string;
+    const purposeParagraph2 = formData.get("purposeParagraph2") as string;
+    const purposeParagraph3 = formData.get("purposeParagraph3") as string;
     const missionTitle = formData.get("missionTitle") as string;
     const missionParagraph1 = formData.get("missionParagraph1") as string;
     const missionParagraph2 = formData.get("missionParagraph2") as string;
@@ -52,6 +56,28 @@ export async function updateAboutJourneyContent(formData: FormData) {
         valueType: "image",
       });
     }
+
+    // Purpose Section
+    if (purposeTitle)
+      updates.push({ section: "purpose", key: "title", value: purposeTitle });
+    if (purposeParagraph1)
+      updates.push({
+        section: "purpose",
+        key: "paragraph1",
+        value: purposeParagraph1,
+      });
+    if (purposeParagraph2)
+      updates.push({
+        section: "purpose",
+        key: "paragraph2",
+        value: purposeParagraph2,
+      });
+    if (purposeParagraph3)
+      updates.push({
+        section: "purpose",
+        key: "paragraph3",
+        value: purposeParagraph3,
+      });
 
     // Mission & Vision Section
     if (missionTitle)

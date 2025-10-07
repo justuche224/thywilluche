@@ -14,6 +14,7 @@ import Image from "next/image";
 interface AboutContentManagerProps {
   initialData: {
     journey: Record<string, string>;
+    purpose: Record<string, string>;
     missionVision: Record<string, string>;
   };
 }
@@ -35,6 +36,20 @@ export default function AboutContentManager({
   );
   const [journeyParagraph2, setJourneyParagraph2] = useState(
     initialData.journey.paragraph2 || ""
+  );
+
+  // Purpose State
+  const [purposeTitle, setPurposeTitle] = useState(
+    initialData.purpose.title || ""
+  );
+  const [purposeParagraph1, setPurposeParagraph1] = useState(
+    initialData.purpose.paragraph1 || ""
+  );
+  const [purposeParagraph2, setPurposeParagraph2] = useState(
+    initialData.purpose.paragraph2 || ""
+  );
+  const [purposeParagraph3, setPurposeParagraph3] = useState(
+    initialData.purpose.paragraph3 || ""
   );
 
   const handleJourneyImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -170,6 +185,61 @@ export default function AboutContentManager({
               onChange={(e) => setJourneyParagraph2(e.target.value)}
               rows={4}
               placeholder="Enter the second paragraph of your journey..."
+            />
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Purpose Section */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Purpose Section</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          <div className="space-y-2">
+            <Label htmlFor="purposeTitle">Section Title</Label>
+            <Input
+              id="purposeTitle"
+              name="purposeTitle"
+              value={purposeTitle}
+              onChange={(e) => setPurposeTitle(e.target.value)}
+              placeholder="The Purpose Behind This Platform"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="purposeParagraph1">First Paragraph</Label>
+            <Textarea
+              id="purposeParagraph1"
+              name="purposeParagraph1"
+              value={purposeParagraph1}
+              onChange={(e) => setPurposeParagraph1(e.target.value)}
+              rows={4}
+              placeholder="Enter the first paragraph of your purpose..."
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="purposeParagraph2">Second Paragraph</Label>
+            <Textarea
+              id="purposeParagraph2"
+              name="purposeParagraph2"
+              value={purposeParagraph2}
+              onChange={(e) => setPurposeParagraph2(e.target.value)}
+              rows={4}
+              placeholder="Enter the second paragraph of your purpose..."
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="purposeParagraph3">Third Paragraph</Label>
+            <Textarea
+              id="purposeParagraph3"
+              name="purposeParagraph3"
+              value={purposeParagraph3}
+              onChange={(e) => setPurposeParagraph3(e.target.value)}
+              rows={4}
+              placeholder="Enter the third paragraph of your purpose..."
             />
           </div>
         </CardContent>
