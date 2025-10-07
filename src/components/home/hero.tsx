@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React from "react";
-import { Facebook, Instagram, X, Youtube, LucideIcon } from "lucide-react";
+import { Facebook, Instagram, X, Youtube, LucideIcon, Linkedin } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Oswald } from "next/font/google";
@@ -83,6 +83,7 @@ const Hero = ({
                   <div className="flex gap-4 max-lg:justify-center">
                     {socials.map((social) => {
                       const IconComponent = iconMap[social.key.toLowerCase()];
+                      
                       return (
                         <Button
                           size="icon"
@@ -101,6 +102,20 @@ const Hero = ({
                         </Button>
                       );
                     })}
+                    <Button
+                          size="icon"
+                          variant="outline"
+                          asChild
+                          className={`h-12 w-12 ${oswald.className}`}
+                        >
+                          <Link
+                            href={"https://www.linkedin.com/in/thywill-uche-551680273?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <Linkedin />
+                          </Link>
+                        </Button>
                   </div>
                 </div>
               )}

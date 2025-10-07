@@ -1,17 +1,21 @@
 import Hero from "@/components/home/hero";
 import WhoIAm from "@/components/home/who-i-am";
 import Featured from "@/components/home/featured";
+import Purpose from "@/components/home/purpose";
 import Community from "@/components/home/community";
 import { getHomeContent } from "@/actions/home-content";
 import { getSocials } from "@/actions/contact-info";
+import { getAboutContent } from "@/actions/about-content";
 
 export default async function Home() {
   const content = await getHomeContent();
+  const aboutContent = await getAboutContent();
   const socials = await getSocials();
 
   const heroData = content.hero || {};
   const whoIAmData = content.whoIAm || {};
   const featuredData = content.featured || {};
+  const purposeData = aboutContent.purpose || {};
 
   return (
     <>
@@ -39,6 +43,12 @@ export default async function Home() {
         description={featuredData.description}
         image1={featuredData.image1}
         image2={featuredData.image2}
+      />
+      <Purpose
+        title={purposeData.title}
+        paragraph1={purposeData.paragraph1}
+        paragraph2={purposeData.paragraph2}
+        paragraph3={purposeData.paragraph3}
       />
       <Community />
     </>

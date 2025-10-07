@@ -166,7 +166,7 @@ const About = ({
 
         <div className="container mx-auto px-6 lg:px-8 max-lg:py-10">
           <div className="max-w-5xl 2xl:max-w-7xl mx-auto">
-            <div className="grid lg:grid-cols-2 max-lg:gap-10 2xl:gap-20 items-center">
+            <div className="grid lg:grid-cols-2 gap-5 max-lg:gap-10 2xl:gap-20 items-center">
               
               {/* Left Column - Journey Narrative */}
               <motion.div
@@ -218,7 +218,7 @@ const About = ({
 
       {/* Purpose Section */}
       <motion.section
-        className="w-full py-20 lg:py-24 bg-gradient-to-br from-gray-50 to-white"
+        className="w-full py-20 lg:py-24 bg-gradient-to-br from-gray-50 to-white hidden"
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}

@@ -51,7 +51,7 @@ const communityGroups = [
   },
   {
     icon: <BookOpen className="w-8 h-8" />,
-    title: "Writers&apos; Corner",
+    title: "Writers' Corner",
     description:
       "Collaborate with fellow writers, exchange feedback, share your work, and grow your craft together.",
     members: "2.7k",
@@ -345,7 +345,7 @@ const CommunityPage = () => {
                   {
                     title: "Growth & Support",
                     description:
-                      "We&apos;re here to lift each other up, celebrate victories, and provide encouragement through challenges.",
+                      "We're here to lift each other up, celebrate victories, and provide encouragement through challenges.",
                   },
                 ].map((value, index) => (
                   <motion.div
