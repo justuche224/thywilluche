@@ -4,6 +4,7 @@ import "./globals.css";
 import Pattern from "@/components/pattern";
 import { Toaster } from "@/components/ui/sonner";
 import { ReactQueryProvider } from "@/providers/react-query-provider";
+import NextTopLoader from 'nextjs-toploader';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,6 +33,7 @@ export default function RootLayout({
       >
         <Pattern />
         <ReactQueryProvider>{children}</ReactQueryProvider>
+        <NextTopLoader color="#800000" />
       <Toaster position={"top-center"} richColors/>
       </body>
     </html>
