@@ -20,10 +20,10 @@ interface ProjectCardProps {
 }
 
 const ProjectCard: React.FC<ProjectCardProps> = ({ project, featured }) => {
+  const reviews = project.reviews || [];
   const averageRating =
-    project.reviews.length > 0
-      ? project.reviews.reduce((acc, r) => acc + r.rating, 0) /
-        project.reviews.length
+    reviews.length > 0
+      ? reviews.reduce((acc, r) => acc + r.rating, 0) / reviews.length
       : 0;
 
   return (
@@ -66,7 +66,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, featured }) => {
             )}
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
 
-            {project.reviews.length > 0 && (
+            {reviews.length > 0 && (
               <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1 flex items-center gap-1">
                 <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
                 <span className={`text-sm font-semibold ${oswald.className}`}>
@@ -124,10 +124,10 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, featured }) => {
               </div>
             </div>
 
-            {project.reviews.length > 0 && (
+            {reviews.length > 0 && (
               <div className={`text-sm text-gray-600 ${oswald.className}`}>
-                {project.reviews.length} review
-                {project.reviews.length !== 1 ? "s" : ""}
+                {reviews.length} review
+                {reviews.length !== 1 ? "s" : ""}
               </div>
             )}
           </div>

@@ -6,3 +6,4 @@ export * from "./blog";
 export * from "./books";
 export * from "./services-content";
 export * from "./media-highlights";
+export * from "./projects";

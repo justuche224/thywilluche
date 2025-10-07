@@ -8,11 +8,11 @@ import {
   Command,
   MessageCircleQuestionMark,
   GalleryVerticalEnd,
-  Map,
-  Play,
+  FolderKanban,
   Settings2,
   Store,
   Star,
+  FileText,
 } from "lucide-react";
 
 import { NavMain } from "@/components/admin/nav-main";
@@ -92,14 +92,18 @@ const data = {
       ],
     },
     {
-      title: "Media",
+      title: "Portfolio",
       url: "#",
-      icon: Star,
+      icon: FolderKanban,
       isActive: true,
       items: [
         {
-          title: "Media Highlights",
-          url: "/admin/media-highlights",
+          title: "Projects",
+          url: "/admin/projects",
+        },
+        {
+          title: "Reviews",
+          url: "/admin/projects/reviews",
         },
       ],
     },
@@ -159,12 +163,12 @@ const data = {
     {
       name: "Media Highlights",
       url: "/admin/media-highlights",
-      icon: Play,
+      icon: Star,
     },
     {
-      name: "Travel",
-      url: "#",
-      icon: Map,
+      name: "Blog",
+      url: "/admin/blog",
+      icon: FileText,
     },
   ],
 };

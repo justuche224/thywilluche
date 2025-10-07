@@ -19,8 +19,6 @@ interface ReviewFormProps {
 }
 
 const ReviewForm: React.FC<ReviewFormProps> = ({ projectId, onClose }) => {
-  // TODO remove
-  console.log(projectId);
   const [rating, setRating] = useState(5);
   const [hoverRating, setHoverRating] = useState(0);
   const [name, setName] = useState("");
@@ -32,14 +30,30 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ projectId, onClose }) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    try {
+      const { submitReview } = await import("@/actions/projects");
 
-    setSubmitted(true);
-    setIsSubmitting(false);
+      const result = await submitReview({
+        projectId,
+        author: name,
+        content: review,
+        rating,
+      });
 
-    setTimeout(() => {
-      onClose();
-    }, 2000);
+      if (result.success) {
+        setSubmitted(true);
+        setTimeout(() => {
+          onClose();
+        }, 2000);
+      } else {
+        alert(result.message || "Failed to submit review");
+      }
+    } catch (error) {
+      console.error("Error submitting review:", error);
+      alert("Failed to submit review. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (submitted) {

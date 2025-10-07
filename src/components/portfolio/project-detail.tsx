@@ -5,7 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { Pacifico, Oswald } from "next/font/google";
 import { motion } from "framer-motion";
-import { projects } from "./data";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -17,6 +16,7 @@ import {
 } from "lucide-react";
 import ReviewForm from "./review-form";
 import ReviewList from "./review-list";
+import { getPublicProjects } from "@/actions/projects";
 
 const pacifico = Pacifico({
   variable: "--font-pacifico",
@@ -30,12 +30,38 @@ const oswald = Oswald({
 });
 
 interface ProjectDetailProps {
-  projectId: string;
+  project: {
+    id: string;
+    title: string;
+    category: string;
+    description: string;
+    longDescription: string | null;
+    mediaType: string;
+    mediaUrl: string;
+    thumbnailUrl: string | null;
+    downloadableExcerpt: string | null;
+    externalLink: string | null;
+    date: Date;
+    featured: boolean | null;
+    reviews: Array<{
+      id: string;
+      author: string;
+      content: string;
+      rating: number;
+      approved: boolean;
+      createdAt: Date;
+    }>;
+  } | null;
 }
 
-const ProjectDetail: React.FC<ProjectDetailProps> = ({ projectId }) => {
+const ProjectDetail: React.FC<ProjectDetailProps> = ({ project }) => {
   const [showReviewForm, setShowReviewForm] = useState(false);
-  const project = projects.find((p) => p.id === projectId);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [allProjects, setAllProjects] = useState<any[]>([]);
+
+  React.useEffect(() => {
+    getPublicProjects().then(setAllProjects);
+  }, []);
 
   if (!project) {
     return (
@@ -53,10 +79,12 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ projectId }) => {
     );
   }
 
+  const approvedReviews = project.reviews.filter((r) => r.approved);
+
   const averageRating =
-    project.reviews.length > 0
-      ? project.reviews.reduce((acc, r) => acc + r.rating, 0) /
-        project.reviews.length
+    approvedReviews.length > 0
+      ? approvedReviews.reduce((acc, r) => acc + r.rating, 0) /
+        approvedReviews.length
       : 0;
 
   return (
@@ -102,11 +130,11 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ projectId }) => {
                         })}
                       </span>
                     </div>
-                    {project.reviews.length > 0 && (
+                    {approvedReviews.length > 0 && (
                       <div className="flex items-center gap-2">
                         <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
                         <span className={`text-sm ${oswald.className}`}>
-                          {averageRating.toFixed(1)} ({project.reviews.length}{" "}
+                          {averageRating.toFixed(1)} ({approvedReviews.length}{" "}
                           reviews)
                         </span>
                       </div>
@@ -204,8 +232,11 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ projectId }) => {
               />
             )}
 
-            {project.reviews.length > 0 ? (
-              <ReviewList reviews={project.reviews} />
+            {approvedReviews.length > 0 ? (
+              <ReviewList reviews={approvedReviews.map(r => ({
+                ...r,
+                date: new Date(r.createdAt).toISOString(),
+              }))} />
             ) : (
               <div className="text-center py-12 bg-white rounded-lg border border-gray-100">
                 <p className={`text-lg text-gray-600 ${oswald.className}`}>
@@ -232,7 +263,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ projectId }) => {
               Related Projects
             </h2>
             <div className="grid md:grid-cols-3 xl:grid-cols-4 gap-8">
-              {projects
+              {allProjects
                 .filter(
                   (p) => p.category === project.category && p.id !== project.id
                 )
@@ -245,7 +276,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ projectId }) => {
                     <div className="group bg-white rounded-lg overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition-all">
                       <div className="relative max-w-md 2xl:max-w-xl mx-auto aspect-[4/3] overflow-hidden">
                         <Image
-                          src={relatedProject.mediaUrl}
+                          src={relatedProject.thumbnailUrl || relatedProject.mediaUrl}
                           alt={relatedProject.title}
                           fill
                           className="object-cover group-hover:scale-105 transition-transform duration-500"
