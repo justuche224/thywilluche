@@ -90,7 +90,7 @@ export function Navbar() {
         </div>
       )}
       {!isMobile && (
-        <div className="flex justify-between items-center max-w-7xl mx-auto z-[999]">
+        <div className="flex justify-between items-center max-w-7xl mx-auto z-[9999]">
           <Image
             src={
               isNGOPage ? "/logos/NGO.png" : "/logos/LANDSCAPE-LOGO-BLACK.png"

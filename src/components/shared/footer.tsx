@@ -41,7 +41,6 @@ const Footer = async () => {
 
   const resources = [
     { name: "Blog", url: "/blog" },
-    { name: "Daily Tips", url: "/tips" },
     { name: "Testimonials", url: "/testimonials" },
     { name: "FAQ", url: "/faq" },
     { name: "Privacy Policy", url: "/privacy" },
