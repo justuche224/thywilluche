@@ -48,66 +48,68 @@ const Welcome = ({
         width: "100%",
         zIndex: 1000,
       }}
-      className="fixed top-0 left-0 w-full h-full gird grid-cols-1 md:grid-cols-2"
+      className="fixed top-0 left-0 w-full h-full"
     >
-      <div className="w-full h-full md:w-1/3 flex-col flex justify-center items-center gap-4">
+      <div className="w-full h-full flex-col flex items-center gap-4">
         <Image
           src="/images/phoenix-bird.png"
           alt="welcome"
           width={100}
           height={100}
+          className="self-start"
         />
-        <div className="text-center">
-          <h1 className={`text-4xl font-bold ${oswald.className} text-primary`}>
-            Thywill Uche
-          </h1>
-          <p className={`${georgiaItalic.className} text-lg`}>
-            Crazy or genius? You be the judge.
-          </p>
-        </div>
-        <Button onClick={() => setShowWelcome(false)}>ENTER SITE</Button>
-        <div className="flex space-x-3">
-          {socials.map((social) => {
-            const IconComponent = iconMap[social.key.toLowerCase()];
-            return (
+        <div className="text-center h-full flex flex-col justify-center items-center gap-4">
+          <div className="p-4 rounded-lg bg-white/30 backdrop-blur-2xl space-y-4">
+            <h1 className={`text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold ${oswald.className}`}>
+              Thywill Uche
+            </h1>
+            <p className={`${georgiaItalic.className} text-lg lg:text-xl xl:text-2xl 2xl:text-3xl`}>
+              Crazy or genius? You be the judge.
+            </p>
+            <Button onClick={() => setShowWelcome(false)}>ENTER SITE</Button>
+            <div className="flex space-x-3 w-full items-center justify-center">
+              {socials.map((social) => {
+                const IconComponent = iconMap[social.key.toLowerCase()];
+                return (
+                  <Button
+                    key={social.key}
+                    size="icon"
+                    asChild
+                    className="h-10 w-10 border-gray-700 hover:border-primary hover:bg-primary/10 bg-[#800000]"
+                  >
+                    <Link
+                      href={social.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {IconComponent ? (
+                        <IconComponent className="w-5 h-5" />
+                      ) : (
+                        <X className="w-5 h-5" />
+                      )}
+                    </Link>
+                  </Button>
+                );
+              })}
               <Button
-                key={social.key}
-                size="icon"
+                size={"icon"}
                 asChild
                 className="h-10 w-10 border-gray-700 hover:border-primary hover:bg-primary/10 bg-[#800000]"
               >
                 <Link
-                  href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
+                  href={
+                    "https://www.linkedin.com/in/thywill-uche-551680273?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+                  }
                 >
-                  {IconComponent ? (
-                    <IconComponent className="w-5 h-5" />
-                  ) : (
-                    <X className="w-5 h-5" />
-                  )}
+                  <Linkedin className="w-5 h-5" />
                 </Link>
               </Button>
-            );
-          })}
-          <Button
-            size={"icon"}
-            asChild
-            className="h-10 w-10 border-gray-700 hover:border-primary hover:bg-primary/10 bg-[#800000]"
-          >
-            <Link
-              target="_blank"
-              rel="noopener noreferrer"
-              href={
-                "https://www.linkedin.com/in/thywill-uche-551680273?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
-              }
-            >
-              <Linkedin className="w-5 h-5" />
-            </Link>
-          </Button>
+            </div>
+          </div>
         </div>
       </div>
-      <div className="w-full h-full md:w-2/3"></div>
     </div>
   );
 };

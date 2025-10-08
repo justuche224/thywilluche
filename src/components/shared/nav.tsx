@@ -90,7 +90,7 @@ export function Navbar() {
         </div>
       )}
       {!isMobile && (
-        <div className="flex justify-between items-center max-w-7xl mx-auto z-[9999]">
+        <div className="flex justify-between items-center max-w-7xl mx-auto z-[999]">
           <Image
             src={
               isNGOPage ? "/logos/NGO.png" : "/logos/LANDSCAPE-LOGO-BLACK.png"
@@ -101,7 +101,7 @@ export function Navbar() {
             className={isNGOPage ? "w-auto h-30" : "w-auto h-20"}
             onClick={() => router.push(isNGOPage ? "/ngo" : "/")}
           />
-          <NavigationMenu viewport={false} className="relative z-[9999]">
+          <NavigationMenu viewport={false} className="relative z-[999]">
             <NavigationMenuList>
               {/* Home */}
               <NavigationMenuItem>
