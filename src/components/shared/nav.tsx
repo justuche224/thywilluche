@@ -76,7 +76,7 @@ export function Navbar() {
             width={200}
             height={100}
             className={isNGOPage ? "w-auto h-30" : "w-auto h-20"}
-            onClick={() => router.push("/")}
+            onClick={() => router.push(isNGOPage ? "/ngo" : "/")}
           />
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>
@@ -99,7 +99,7 @@ export function Navbar() {
             width={200}
             height={100}
             className={isNGOPage ? "w-auto h-30" : "w-auto h-20"}
-            onClick={() => router.push("/")}
+            onClick={() => router.push(isNGOPage ? "/ngo" : "/")}
           />
           <NavigationMenu viewport={false} className="relative z-[9999]">
             <NavigationMenuList>
@@ -208,6 +208,30 @@ export function Navbar() {
                   </ul>
                 </NavigationMenuContent>
               </NavigationMenuItem>
+              {/* More */}
+              <NavigationMenuItem>
+                <NavigationMenuTrigger
+                  className={`bg-transparent font-semibold ${oswald.className} text-[#800000]`}
+                >
+                  More
+                </NavigationMenuTrigger>
+                <NavigationMenuContent className="z-[9999]">
+                  <ul className="grid w-[300px] gap-4">
+                    <ListItem href="/contact" title="Contact Me">
+                      Contact me for any questions or inquiries.
+                    </ListItem>
+                    <ListItem href="/faq" title="FAQ">
+                      Frequently asked questions and answers.
+                    </ListItem>
+                    <ListItem href="/privacy" title="Privacy Policy">
+                      Our privacy policy.
+                    </ListItem>
+                    <ListItem href="/testimonials" title="Testimonials">
+                      What others have to say about me.
+                    </ListItem>
+                  </ul>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
               {/* NGO */}
               <NavigationMenuItem>
                 <NavigationMenuLink
@@ -256,30 +280,6 @@ export function Navbar() {
                   <Link href="/blog">Blog</Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
-              {/* FAQ */}
-              <NavigationMenuItem>
-                <NavigationMenuLink
-                  asChild
-                  className={
-                    navigationMenuTriggerStyle() +
-                    ` bg-transparent font-semibold ${oswald.className} text-[#800000]`
-                  }
-                >
-                  <Link href="/faq">FAQ</Link>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-              {/* Contact Me */}
-              <NavigationMenuItem>
-                <NavigationMenuLink
-                  asChild
-                  className={
-                    navigationMenuTriggerStyle() +
-                    ` bg-transparent font-semibold ${oswald.className} text-[#800000]`
-                  }
-                >
-                  <Link href="/contact">Contact Me</Link>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
         </div>
@@ -296,7 +296,7 @@ function MobileNavContent({ onClose }: { onClose: () => void }) {
   return (
     <SheetContent
       side="left"
-      className="w-[300px] sm:w-[400px] flex flex-col z-[999"
+      className="w-[300px] sm:w-[400px] flex flex-col z-[9999]"
     >
       <SheetHeader className="border-b pb-4">
         <SheetTitle className={`text-2xl ${oswald.className}`}>Menu</SheetTitle>
@@ -495,6 +495,28 @@ function MobileNavContent({ onClose }: { onClose: () => void }) {
           onClick={onClose}
         >
           Contact Me
+        </Link>
+
+        <div className="h-px bg-border my-2" />
+
+        {/* Privacy Policy */}
+        <Link
+          href="/privacy"
+          className={`text-lg font-semibold px-4 py-3 rounded-lg hover:bg-accent hover:text-accent-foreground active:bg-accent/80 transition-all ${oswald.className} text-[#800000]`}
+          onClick={onClose}
+        >
+          Privacy Policy
+        </Link>
+
+        <div className="h-px bg-border my-2" />
+
+        {/* Testimonials */}
+        <Link
+          href="/testimonials"
+          className={`text-lg font-semibold px-4 py-3 rounded-lg hover:bg-accent hover:text-accent-foreground active:bg-accent/80 transition-all ${oswald.className} text-[#800000]`}
+          onClick={onClose}
+        >
+          Testimonials
         </Link>
 
         <div className="h-px bg-border my-2" />
