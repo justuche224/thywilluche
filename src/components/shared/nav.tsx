@@ -69,11 +69,13 @@ export function Navbar() {
       {isMobile && (
         <div className="flex justify-between items-center z-[999]">
           <Image
-            src={isNGOPage ? "/logos/NGO.png" : "/logos/LANDSCAPE-LOGO-BLACK.png"}
+            src={
+              isNGOPage ? "/logos/NGO.png" : "/logos/LANDSCAPE-LOGO-BLACK.png"
+            }
             alt="logo"
             width={200}
             height={100}
-            className={isNGOPage? "w-auto h-30" : "w-auto h-20"}
+            className={isNGOPage ? "w-auto h-30" : "w-auto h-20"}
             onClick={() => router.push("/")}
           />
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -90,11 +92,13 @@ export function Navbar() {
       {!isMobile && (
         <div className="flex justify-between items-center max-w-7xl mx-auto z-[999]">
           <Image
-           src={isNGOPage ? "/logos/NGO.png" : "/logos/LANDSCAPE-LOGO-BLACK.png"}
+            src={
+              isNGOPage ? "/logos/NGO.png" : "/logos/LANDSCAPE-LOGO-BLACK.png"
+            }
             alt="logo"
             width={200}
             height={100}
-            className={isNGOPage? "w-auto h-30" : "w-auto h-20"}
+            className={isNGOPage ? "w-auto h-30" : "w-auto h-20"}
             onClick={() => router.push("/")}
           />
           <NavigationMenu viewport={false} className="relative z-[9999]">
@@ -250,6 +254,18 @@ export function Navbar() {
                   }
                 >
                   <Link href="/blog">Blog</Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+              {/* FAQ */}
+              <NavigationMenuItem>
+                <NavigationMenuLink
+                  asChild
+                  className={
+                    navigationMenuTriggerStyle() +
+                    ` bg-transparent font-semibold ${oswald.className} text-[#800000]`
+                  }
+                >
+                  <Link href="/faq">FAQ</Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
               {/* Contact Me */}
@@ -457,6 +473,17 @@ function MobileNavContent({ onClose }: { onClose: () => void }) {
           onClick={onClose}
         >
           Blog
+        </Link>
+
+        <div className="h-px bg-border my-2" />
+
+        {/* FAQ */}
+        <Link
+          href="/faq"
+          className={`text-lg font-semibold px-4 py-3 rounded-lg hover:bg-accent hover:text-accent-foreground active:bg-accent/80 transition-all ${oswald.className} text-[#800000]`}
+          onClick={onClose}
+        >
+          FAQ
         </Link>
 
         <div className="h-px bg-border my-2" />
