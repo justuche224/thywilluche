@@ -9,6 +9,7 @@ import {
   Mail,
   Phone,
   MapPin,
+  Linkedin,
   LucideIcon,
 } from "lucide-react";
 import { Oswald } from "next/font/google";
@@ -105,6 +106,21 @@ const Footer = async () => {
                   </Button>
                 );
               })}
+              <Button
+                size={"icon"}
+                asChild
+                className="h-10 w-10 border-gray-700 hover:border-primary hover:bg-primary/10"
+              >
+                <Link
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href={
+                    "https://www.linkedin.com/in/thywill-uche-551680273?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+                  }
+                >
+                  <Linkedin className="w-5 h-5" />
+                </Link>
+              </Button>
             </div>
           </div>
 
