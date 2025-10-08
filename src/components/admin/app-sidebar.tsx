@@ -13,6 +13,7 @@ import {
   Store,
   Star,
   FileText,
+  UserRoundCheck
 } from "lucide-react";
 
 import { NavMain } from "@/components/admin/nav-main";
@@ -169,6 +170,11 @@ const data = {
       name: "Blog",
       url: "/admin/blog",
       icon: FileText,
+    },
+    {
+      name: "Testimonials",
+      url: "/admin/testimonials",
+      icon: UserRoundCheck,
     },
   ],
 };
