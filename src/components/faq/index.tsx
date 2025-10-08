@@ -84,7 +84,7 @@ const FAQ = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative py-20 lg:py-32">
+      <section className="relative py-0 lg:py-0 mt-10">
         <div className="max-w-4xl mx-auto px-5 md:px-10 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -170,7 +170,7 @@ const FAQ = () => {
       </section>
 
       {/* Contact CTA Section */}
-      <section className="py-20 mt-10 bg-gray-50">
+      <section className="py-20 mt-10">
         <div className="max-w-4xl mx-auto px-5 md:px-10 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
