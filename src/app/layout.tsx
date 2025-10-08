@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "The Will Uche",
+  title: "Thywill Uche",
   description: "365 TIPS, 365 WINS - EVERY DAY IS VICTORY",
 };
 
