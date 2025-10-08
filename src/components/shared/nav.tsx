@@ -28,7 +28,7 @@ import {
 } from "@/components/ui/collapsible";
 import Image from "next/image";
 import { Oswald } from "next/font/google";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useBreakpoint } from "@/hooks/use-breakpoint";
 
 const oswald = Oswald({
@@ -60,17 +60,20 @@ export function Navbar() {
   const isMobile = useBreakpoint("max-lg");
   const [isOpen, setIsOpen] = React.useState(false);
   const router = useRouter();
+  const pathname = usePathname();
+
+  const isNGOPage = pathname.includes("/ngo");
 
   return (
     <>
       {isMobile && (
         <div className="flex justify-between items-center z-[999]">
           <Image
-            src="/logos/LANDSCAPE-LOGO-BLACK.png"
+            src={isNGOPage ? "/logos/NGO.png" : "/logos/LANDSCAPE-LOGO-BLACK.png"}
             alt="logo"
             width={200}
             height={100}
-            className="w-auto h-20"
+            className={isNGOPage? "w-auto h-30" : "w-auto h-20"}
             onClick={() => router.push("/")}
           />
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -87,11 +90,11 @@ export function Navbar() {
       {!isMobile && (
         <div className="flex justify-between items-center max-w-7xl mx-auto z-[999]">
           <Image
-            src="/logos/LANDSCAPE-LOGO-BLACK.png"
+           src={isNGOPage ? "/logos/NGO.png" : "/logos/LANDSCAPE-LOGO-BLACK.png"}
             alt="logo"
             width={200}
             height={100}
-            className="w-auto h-20"
+            className={isNGOPage? "w-auto h-30" : "w-auto h-20"}
             onClick={() => router.push("/")}
           />
           <NavigationMenu viewport={false} className="relative z-[9999]">
