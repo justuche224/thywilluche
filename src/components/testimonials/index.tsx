@@ -91,6 +91,14 @@ const testimonialsData = [
       "Thywill's coaching is practical, encouraging, and uplifting. I see myself growing every week.",
     rating: 5,
   },
+  {
+    id: 11,
+    name: "Beatrix Holeck",
+    location: "Berkshire, United Kingdom",
+    quote:
+      "I'm so grateful that Thywill has written a special poem for my book. His talent and heart can be felt through every line. I wish him all the best with his own book too. I know how much it all means to him!!! And I know it's going to touch lives.",
+    rating: 5,
+  },
 ];
 
 const Testimonials = () => {
@@ -124,7 +132,7 @@ const Testimonials = () => {
               Hear from those who&apos;ve transformed their lives
             </p>
             <p className="text-lg text-gray-700 leading-relaxed max-w-3xl mx-auto">
-              From Lagos to Cape Town, clients across Africa share their stories
+              From Lagos to London, clients around the world share their stories
               of growth, inspiration, and transformation through coaching and
               creative guidance.
             </p>
@@ -189,7 +197,7 @@ const Testimonials = () => {
             <h2
               className={`text-3xl lg:text-4xl font-bold text-[#800000] mb-6 ${oswald.className}`}
             >
-              Trusted Across Africa
+              Trusted Globally
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Join hundreds of clients who have transformed their lives through
@@ -225,7 +233,7 @@ const Testimonials = () => {
               >
                 10+
               </div>
-              <p className="text-lg text-gray-600">African Countries</p>
+              <p className="text-lg text-gray-600">Countries Served</p>
             </motion.div>
 
             <motion.div
