@@ -1,5 +1,6 @@
 import React from "react";
 import NGO from "@/components/ngo";
+import Head from "next/head";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -12,7 +13,15 @@ export const metadata: Metadata = {
 };
 
 const page = async () => {
-  return <NGO />;
+  return (
+    <>
+      <Head>
+        <title>Thywill Fountain of Hope</title>
+        <link rel="icon" href="/logos/NGO.png" sizes="any" />
+      </Head>
+      <NGO />
+    </>
+  );
 };
 
 export default page;
