@@ -46,8 +46,7 @@ const NGO = () => {
               >
                 We are dedicated to empowering communities through education,
                 healthcare, and sustainable development initiatives. Our mission
-                is to create lasting positive change by addressing the root
-                causes of poverty and inequality.
+                is to create lasting positive change by addressing the root causes of poverty, inequality and mental health challenges.
               </motion.p>
               <motion.div
                 className="flex flex-col sm:flex-row gap-4"
