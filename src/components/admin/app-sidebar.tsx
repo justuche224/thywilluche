@@ -90,6 +90,10 @@ const data = {
           title: "Services",
           url: "/admin/pages/services",
         },
+        {
+          title: "NGO",
+          url: "/admin/pages/ngo",
+        },
       ],
     },
     {

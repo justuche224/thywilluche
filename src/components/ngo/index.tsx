@@ -10,7 +10,95 @@ const oswald = Oswald({
   subsets: ["latin"],
 });
 
-const NGO = () => {
+interface NGOProps {
+  heroTitle?: string;
+  heroSubtitle?: string;
+  heroDescription?: string;
+  heroButton1Text?: string;
+  heroButton2Text?: string;
+  heroImage?: string;
+  missionTitle?: string;
+  missionDescription1?: string;
+  missionDescription2?: string;
+  missionImage?: string;
+  visionTitle?: string;
+  visionDescription1?: string;
+  visionDescription2?: string;
+  visionImage?: string;
+  programsTitle?: string;
+  programsSubtitle?: string;
+  educationTitle?: string;
+  educationDescription?: string;
+  educationImage?: string;
+  healthcareTitle?: string;
+  healthcareDescription?: string;
+  healthcareImage?: string;
+  developmentTitle?: string;
+  developmentDescription?: string;
+  developmentImage?: string;
+  impactTitle?: string;
+  impactSubtitle?: string;
+  livesImpacted?: string;
+  communitiesServed?: string;
+  partnerOrganizations?: string;
+  yearsOfService?: string;
+  successStoriesTitle?: string;
+  successStory1?: string;
+  successStory1Author?: string;
+  successStory2?: string;
+  successStory2Author?: string;
+  impactImage?: string;
+  ctaTitle?: string;
+  ctaDescription?: string;
+  ctaButton1Text?: string;
+  ctaButton2Text?: string;
+  ctaButton3Text?: string;
+}
+
+const NGO = ({
+  heroTitle = "Thywill Fountain of Hope for the Poor Initiative",
+  heroSubtitle = "Building bridges of hope, one community at a time",
+  heroDescription = "We are dedicated to empowering communities through education, healthcare, and sustainable development initiatives. Our mission is to create lasting positive change by addressing the root causes of poverty, inequality and mental health challenges.",
+  heroButton1Text = "Get Involved",
+  heroButton2Text = "Learn More",
+  heroImage = "/images/community.jpg",
+  missionTitle = "Our Mission",
+  missionDescription1 = "To empower underserved communities through comprehensive education programs, accessible healthcare services, and sustainable development initiatives that create lasting positive change.",
+  missionDescription2 = "We believe that every individual deserves the opportunity to reach their full potential, regardless of their circumstances or background.",
+  missionImage = "https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+  visionTitle = "Our Vision",
+  visionDescription1 = "A world where every community has access to quality education, healthcare, and economic opportunities that enable them to thrive and contribute meaningfully to society.",
+  visionDescription2 = "We envision empowered communities that are self-sustainable, resilient, and capable of creating their own pathways to prosperity.",
+  visionImage = "https://images.unsplash.com/photo-1559027615-cd4628902d4a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+  programsTitle = "Our Programs",
+  programsSubtitle = "We implement comprehensive programs designed to address the multifaceted challenges faced by underserved communities.",
+  educationTitle = "Education Initiative",
+  educationDescription = "Providing quality education resources, teacher training, and learning materials to schools in underserved communities.",
+  educationImage = "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+  healthcareTitle = "Healthcare Access",
+  healthcareDescription = "Bringing essential healthcare services directly to communities through mobile clinics and health education programs.",
+  healthcareImage = "https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+  developmentTitle = "Community Development",
+  developmentDescription = "Supporting sustainable community projects that create economic opportunities and improve quality of life.",
+  developmentImage = "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+  impactTitle = "Our Impact",
+  impactSubtitle = "Together, we're making a measurable difference in communities across the region.",
+  livesImpacted = "15,000+",
+  communitiesServed = "50+",
+  partnerOrganizations = "25",
+  yearsOfService = "8",
+  successStoriesTitle = "Success Stories",
+  successStory1 = "Thanks to Thywill Fountain of Hope, our village now has access to clean water and our children can attend school regularly.",
+  successStory1Author = "Sarah M., Community Leader",
+  successStory2 = "The healthcare program saved my daughter's life. We are forever grateful for the support and care we received.",
+  successStory2Author = "John K., Father",
+  impactImage = "https://images.unsplash.com/photo-1593113598332-cd288d649433?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
+  ctaTitle = "Join Us in Making a Difference",
+  ctaDescription = "Your support helps us reach more communities and create lasting change. Together, we can build a brighter future for everyone.",
+  ctaButton1Text = "Donate Now",
+  ctaButton2Text = "Volunteer",
+  ctaButton3Text = "Partner With Us",
+}: NGOProps) => {
   return (
     <div className="min-h-screen">
       <div className="fixed top-0 left-0 bottom-0 right-0 flex justify-center items-center w-full h-screen">
@@ -41,10 +129,10 @@ const NGO = () => {
                 <h1
                   className={`text-4xl lg:text-6xl font-bold text-[#800000] ${oswald.className}`}
                 >
-                  Thywill Fountain of Hope for the Poor Initiative
+                  {heroTitle}
                 </h1>
                 <p className="text-xl lg:text-2xl text-gray-600 font-light">
-                  Building bridges of hope, one community at a time
+                  {heroSubtitle}
                 </p>
               </motion.div>
               <motion.p
@@ -53,10 +141,7 @@ const NGO = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.4 }}
               >
-                We are dedicated to empowering communities through education,
-                healthcare, and sustainable development initiatives. Our mission
-                is to create lasting positive change by addressing the root
-                causes of poverty, inequality and mental health challenges.
+                {heroDescription}
               </motion.p>
               <motion.div
                 className="flex flex-col sm:flex-row gap-4"
@@ -69,14 +154,14 @@ const NGO = () => {
                   whileHover={{ scale: 1.05, y: -2 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  Get Involved
+                  {heroButton1Text}
                 </motion.button>
                 <motion.button
                   className="border-2 border-[#800000] text-[#800000] px-8 py-4 rounded-lg font-semibold hover:bg-[#800000] hover:text-white transition-colors"
                   whileHover={{ scale: 1.05, y: -2 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  Learn More
+                  {heroButton2Text}
                 </motion.button>
               </motion.div>
             </motion.div>
@@ -92,7 +177,7 @@ const NGO = () => {
                 transition={{ duration: 0.3 }}
               >
                 <Image
-                  src="/images/community.jpg"
+                  src={heroImage}
                   alt="Community members working together"
                   fill
                   className="object-cover"
@@ -119,18 +204,13 @@ const NGO = () => {
                 <h2
                   className={`text-3xl lg:text-4xl font-bold text-[#800000] mb-6 ${oswald.className}`}
                 >
-                  Our Mission
+                  {missionTitle}
                 </h2>
                 <p className="text-lg text-gray-700 leading-relaxed mb-6">
-                  To empower underserved communities through comprehensive
-                  education programs, accessible healthcare services, and
-                  sustainable development initiatives that create lasting
-                  positive change.
+                  {missionDescription1}
                 </p>
                 <p className="text-lg text-gray-700 leading-relaxed">
-                  We believe that every individual deserves the opportunity to
-                  reach their full potential, regardless of their circumstances
-                  or background.
+                  {missionDescription2}
                 </p>
               </div>
             </motion.div>
@@ -147,7 +227,7 @@ const NGO = () => {
                 transition={{ duration: 0.3 }}
               >
                 <Image
-                  src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+                  src={missionImage}
                   alt="Children in a classroom learning"
                   fill
                   className="object-cover"
@@ -175,7 +255,7 @@ const NGO = () => {
                 transition={{ duration: 0.3 }}
               >
                 <Image
-                  src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+                  src={visionImage}
                   alt="Community development project"
                   fill
                   className="object-cover"
@@ -193,17 +273,13 @@ const NGO = () => {
                 <h2
                   className={`text-3xl lg:text-4xl font-bold text-[#800000] mb-6 ${oswald.className}`}
                 >
-                  Our Vision
+                  {visionTitle}
                 </h2>
                 <p className="text-lg text-gray-700 leading-relaxed mb-6">
-                  A world where every community has access to quality education,
-                  healthcare, and economic opportunities that enable them to
-                  thrive and contribute meaningfully to society.
+                  {visionDescription1}
                 </p>
                 <p className="text-lg text-gray-700 leading-relaxed">
-                  We envision empowered communities that are self-sustainable,
-                  resilient, and capable of creating their own pathways to
-                  prosperity.
+                  {visionDescription2}
                 </p>
               </div>
             </motion.div>
@@ -224,11 +300,10 @@ const NGO = () => {
             <h2
               className={`text-3xl lg:text-4xl font-bold text-[#800000] mb-6 ${oswald.className}`}
             >
-              Our Programs
+              {programsTitle}
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              We implement comprehensive programs designed to address the
-              multifaceted challenges faced by underserved communities.
+              {programsSubtitle}
             </p>
           </motion.div>
 
@@ -244,7 +319,7 @@ const NGO = () => {
             >
               <div className="relative aspect-video">
                 <Image
-                  src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+                  src={educationImage}
                   alt="Education program"
                   fill
                   className="object-cover"
@@ -254,11 +329,10 @@ const NGO = () => {
                 <h3
                   className={`text-2xl font-bold text-[#800000] mb-4 ${oswald.className}`}
                 >
-                  Education Initiative
+                  {educationTitle}
                 </h3>
                 <p className="text-gray-700 leading-relaxed mb-6">
-                  Providing quality education resources, teacher training, and
-                  learning materials to schools in underserved communities.
+                  {educationDescription}
                 </p>
                 <div className="space-y-2 text-sm text-gray-600">
                   <p>• School supplies distribution</p>
@@ -280,7 +354,7 @@ const NGO = () => {
             >
               <div className="relative aspect-video">
                 <Image
-                  src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+                  src={healthcareImage}
                   alt="Healthcare program"
                   fill
                   className="object-cover"
@@ -290,11 +364,10 @@ const NGO = () => {
                 <h3
                   className={`text-2xl font-bold text-[#800000] mb-4 ${oswald.className}`}
                 >
-                  Healthcare Access
+                  {healthcareTitle}
                 </h3>
                 <p className="text-gray-700 leading-relaxed mb-6">
-                  Bringing essential healthcare services directly to communities
-                  through mobile clinics and health education programs.
+                  {healthcareDescription}
                 </p>
                 <div className="space-y-2 text-sm text-gray-600">
                   <p>• Mobile medical clinics</p>
@@ -316,7 +389,7 @@ const NGO = () => {
             >
               <div className="relative aspect-video">
                 <Image
-                  src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+                  src={developmentImage}
                   alt="Community development"
                   fill
                   className="object-cover"
@@ -326,11 +399,10 @@ const NGO = () => {
                 <h3
                   className={`text-2xl font-bold text-[#800000] mb-4 ${oswald.className}`}
                 >
-                  Community Development
+                  {developmentTitle}
                 </h3>
                 <p className="text-gray-700 leading-relaxed mb-6">
-                  Supporting sustainable community projects that create economic
-                  opportunities and improve quality of life.
+                  {developmentDescription}
                 </p>
                 <div className="space-y-2 text-sm text-gray-600">
                   <p>• Skills training programs</p>
@@ -357,11 +429,10 @@ const NGO = () => {
             <h2
               className={`text-3xl lg:text-4xl font-bold text-[#800000] mb-6 ${oswald.className}`}
             >
-              Our Impact
+              {impactTitle}
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Together, we&apos;re making a measurable difference in communities
-              across the region.
+              {impactSubtitle}
             </p>
           </motion.div>
 
@@ -376,7 +447,7 @@ const NGO = () => {
               <div
                 className={`text-4xl lg:text-5xl font-bold text-[#800000] mb-2 ${oswald.className}`}
               >
-                15,000+
+                {livesImpacted}
               </div>
               <p className="text-lg text-gray-600">Lives Impacted</p>
             </motion.div>
@@ -390,7 +461,7 @@ const NGO = () => {
               <div
                 className={`text-4xl lg:text-5xl font-bold text-[#800000] mb-2 ${oswald.className}`}
               >
-                50+
+                {communitiesServed}
               </div>
               <p className="text-lg text-gray-600">Communities Served</p>
             </motion.div>
@@ -404,7 +475,7 @@ const NGO = () => {
               <div
                 className={`text-4xl lg:text-5xl font-bold text-[#800000] mb-2 ${oswald.className}`}
               >
-                25
+                {partnerOrganizations}
               </div>
               <p className="text-lg text-gray-600">Partner Organizations</p>
             </motion.div>
@@ -418,7 +489,7 @@ const NGO = () => {
               <div
                 className={`text-4xl lg:text-5xl font-bold text-[#800000] mb-2 ${oswald.className}`}
               >
-                8
+                {yearsOfService}
               </div>
               <p className="text-lg text-gray-600">Years of Service</p>
             </motion.div>
@@ -438,7 +509,7 @@ const NGO = () => {
                 transition={{ duration: 0.3 }}
               >
                 <Image
-                  src="https://images.unsplash.com/photo-1593113598332-cd288d649433?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+                  src={impactImage}
                   alt="Success story - community celebration"
                   fill
                   className="object-cover"
@@ -455,7 +526,7 @@ const NGO = () => {
               <h3
                 className={`text-2xl lg:text-3xl font-bold text-[#800000] ${oswald.className}`}
               >
-                Success Stories
+                {successStoriesTitle}
               </h3>
               <div className="space-y-4">
                 <motion.div
@@ -466,12 +537,10 @@ const NGO = () => {
                   transition={{ duration: 0.6, delay: 0.2 }}
                 >
                   <p className="text-gray-700 italic">
-                    &quot;Thanks to Thywill Fountain of Hope, our village now
-                    has access to clean water and our children can attend school
-                    regularly.&quot;
+                    &quot;{successStory1}&quot;
                   </p>
                   <p className="text-sm text-gray-500 mt-2">
-                    - Sarah M., Community Leader
+                    - {successStory1Author}
                   </p>
                 </motion.div>
                 <motion.div
@@ -482,12 +551,10 @@ const NGO = () => {
                   transition={{ duration: 0.6, delay: 0.4 }}
                 >
                   <p className="text-gray-700 italic">
-                    &quot;The healthcare program saved my daughter&apos;s life.
-                    We are forever grateful for the support and care we
-                    received.&quot;
+                    &quot;{successStory2}&quot;
                   </p>
                   <p className="text-sm text-gray-500 mt-2">
-                    - John K., Father
+                    - {successStory2Author}
                   </p>
                 </motion.div>
               </div>
@@ -508,11 +575,10 @@ const NGO = () => {
             <h2
               className={`text-3xl lg:text-4xl font-bold mb-6 ${oswald.className}`}
             >
-              Join Us in Making a Difference
+              {ctaTitle}
             </h2>
             <p className="text-xl text-gray-200 mb-8 max-w-3xl mx-auto">
-              Your support helps us reach more communities and create lasting
-              change. Together, we can build a brighter future for everyone.
+              {ctaDescription}
             </p>
           </motion.div>
           <motion.div
@@ -527,21 +593,21 @@ const NGO = () => {
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
             >
-              Donate Now
+              {ctaButton1Text}
             </motion.button>
             <motion.button
               className="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-[#800000] transition-colors"
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
             >
-              Volunteer
+              {ctaButton2Text}
             </motion.button>
             <motion.button
               className="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-[#800000] transition-colors"
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
             >
-              Partner With Us
+              {ctaButton3Text}
             </motion.button>
           </motion.div>
         </div>
