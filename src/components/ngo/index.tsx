@@ -13,6 +13,15 @@ const oswald = Oswald({
 const NGO = () => {
   return (
     <div className="min-h-screen">
+      <div className="fixed top-0 left-0 bottom-0 right-0 flex justify-center items-center w-full h-screen">
+        <Image
+          src="/images/NGO.jpg"
+          alt="Thywill Fountain of Hope"
+          width={500}
+          height={500}
+          className="object-contain opacity-20"
+        />
+      </div>
       {/* Hero Section */}
       <section className="relative py-20 lg:py-32">
         <div className="max-w-7xl mx-auto px-5 md:px-10">
@@ -32,7 +41,7 @@ const NGO = () => {
                 <h1
                   className={`text-4xl lg:text-6xl font-bold text-[#800000] ${oswald.className}`}
                 >
-                  Thywill Fountain of Hope
+                  Thywill Fountain of Hope for the Poor Initiative
                 </h1>
                 <p className="text-xl lg:text-2xl text-gray-600 font-light">
                   Building bridges of hope, one community at a time
@@ -46,7 +55,8 @@ const NGO = () => {
               >
                 We are dedicated to empowering communities through education,
                 healthcare, and sustainable development initiatives. Our mission
-                is to create lasting positive change by addressing the root causes of poverty, inequality and mental health challenges.
+                is to create lasting positive change by addressing the root
+                causes of poverty, inequality and mental health challenges.
               </motion.p>
               <motion.div
                 className="flex flex-col sm:flex-row gap-4"
