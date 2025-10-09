@@ -25,8 +25,21 @@ const projectsData = [
     category: "poetry",
     description:
       "A collection of poems exploring themes of healing, growth, and self-discovery through life's challenges.",
-    longDescription:
-      "Reflections on Healing is a poetry collection that captures the journey from pain to peace. Each poem serves as a mirror for personal reflection and a companion for those seeking solace in words.",
+    longDescription: `Reflections on Healing is a poetry collection that captures the journey from pain to peace. Each poem serves as a mirror for personal reflection and a companion for those seeking solace in words.
+
+Here's a sample from the collection:
+
+"In the quiet moments,
+when the world feels heavy,
+I find my breath again.
+
+Step by step,
+moment by moment,
+I choose to rise.
+
+Not because it's easy,
+but because I'm worthy
+of my own love."`,
     mediaType: "image",
     mediaUrl: "/images/IMG_20250918_104735[2].jpg",
     thumbnailUrl: "/images/IMG_20250918_104735[2].jpg",

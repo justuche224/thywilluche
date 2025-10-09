@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import {  Oswald } from "next/font/google";
+import { Oswald } from "next/font/google";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -112,7 +112,9 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project }) => {
                   >
                     {project.category.replace("-", " ")}
                   </span>
-                  <h1 className={`text-4xl lg:text-5xl ${georgiaItalic.className}`}>
+                  <h1
+                    className={`text-4xl lg:text-5xl ${georgiaItalic.className}`}
+                  >
                     {project.title}
                   </h1>
                   <div className="flex items-center gap-4 mt-4 text-gray-600">
@@ -146,9 +148,11 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project }) => {
                     {project.description}
                   </p>
                   {project.longDescription && (
-                    <p className={`text-lg ${oswald.className} text-gray-700`}>
+                    <div
+                      className={`text-lg ${oswald.className} text-gray-700 whitespace-pre-wrap leading-relaxed`}
+                    >
                       {project.longDescription}
-                    </p>
+                    </div>
                   )}
                 </div>
 
@@ -228,10 +232,12 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project }) => {
             )}
 
             {approvedReviews.length > 0 ? (
-              <ReviewList reviews={approvedReviews.map(r => ({
-                ...r,
-                date: new Date(r.createdAt).toISOString(),
-              }))} />
+              <ReviewList
+                reviews={approvedReviews.map((r) => ({
+                  ...r,
+                  date: new Date(r.createdAt).toISOString(),
+                }))}
+              />
             ) : (
               <div className="text-center py-12 bg-white rounded-lg border border-gray-100">
                 <p className={`text-lg text-gray-600 ${oswald.className}`}>
@@ -271,7 +277,10 @@ const ProjectDetail: React.FC<ProjectDetailProps> = ({ project }) => {
                     <div className="group bg-white rounded-lg overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition-all">
                       <div className="relative max-w-md 2xl:max-w-xl mx-auto aspect-[4/3] overflow-hidden">
                         <Image
-                          src={relatedProject.thumbnailUrl || relatedProject.mediaUrl}
+                          src={
+                            relatedProject.thumbnailUrl ||
+                            relatedProject.mediaUrl
+                          }
                           alt={relatedProject.title}
                           fill
                           className="object-cover group-hover:scale-105 transition-transform duration-500"
