@@ -22,7 +22,7 @@ interface FeaturedBook {
     id: string;
     variant: string;
     imageUrl: string;
-    price: number;
+    price: string;
     status: string;
   }>;
 }
@@ -88,9 +88,9 @@ export function FeaturedCarousel({ books }: FeaturedCarouselProps) {
           >
             {currentBook.tittle}
           </h2>
-          <p className="text-sm md:text-base text-muted-foreground leading-relaxed line-clamp-4">
+          <div className="text-sm md:text-base text-muted-foreground leading-relaxed line-clamp-4 whitespace-pre-wrap">
             {currentBook.synopsis}
-          </p>
+          </div>
           <div className="flex items-center gap-4">
             {primaryVariant && (
               <>

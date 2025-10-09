@@ -20,7 +20,6 @@ import {
 import AddToCart from "@/components/cart-button";
 import { georgiaItalic } from "@/utils/georgia-italic";
 
-
 const oswald = Oswald({
   variable: "--font-oswald",
   subsets: ["latin"],
@@ -250,13 +249,13 @@ export const BookPage = ({ bookSlug }: { bookSlug: string }) => {
               <div className={"flex flex-wrap items-baseline gap-2"}>
                 <span className={"font-bold text-foreground/80"}>Price:</span>
                 <span className={"text-foreground font-semibold"}>
-                  ${currentVariant.price}
+                  ${Number(currentVariant.price)}
                 </span>
                 {currentVariant.slashedFrom && (
                   <span
                     className={"text-muted-foreground line-through text-sm"}
                   >
-                    ${currentVariant.slashedFrom}
+                    ${Number(currentVariant.slashedFrom)}
                   </span>
                 )}
               </div>
@@ -283,7 +282,7 @@ export const BookPage = ({ bookSlug }: { bookSlug: string }) => {
                   variant={{
                     id: currentVariant.id,
                     variant: currentVariant.variant,
-                    price: currentVariant.price,
+                    price: Number(currentVariant.price),
                     imageUrl: currentVariant.imageUrl,
                     status: currentVariant.status,
                   }}
@@ -297,13 +296,13 @@ export const BookPage = ({ bookSlug }: { bookSlug: string }) => {
               >
                 Synopsis
               </h2>
-              <p
+              <div
                 className={
-                  "text-foreground/90 leading-relaxed text-sm md:text-base text-justify"
+                  "text-foreground/90 leading-relaxed text-sm md:text-base text-justify whitespace-pre-wrap"
                 }
               >
                 {book.synopsis}
-              </p>
+              </div>
             </div>
 
             {book.tags && book.tags.length > 0 && (

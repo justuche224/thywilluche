@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import {  Oswald } from "next/font/google";
+import { Oswald } from "next/font/google";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useQuery } from "@tanstack/react-query";
@@ -13,7 +13,6 @@ import {
 import { FeaturedCarousel } from "./featured-carousel";
 import AddToCart from "@/components/cart-button";
 import { georgiaItalic } from "@/utils/georgia-italic";
-
 
 const oswald = Oswald({
   variable: "--font-oswald",
@@ -107,9 +106,9 @@ const BooksPage = () => {
                       </span>
                     )}
                   </div>
-                  <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-4xl line-clamp-3">
+                  <div className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-4xl line-clamp-3 whitespace-pre-wrap">
                     {book.synopsis}
-                  </p>
+                  </div>
                   {book.tags && book.tags.length > 0 && (
                     <div className="flex flex-wrap gap-2 mt-2">
                       {book.tags.map((tag) => (
@@ -176,7 +175,7 @@ const BooksPage = () => {
                         variant={{
                           id: variant.id,
                           variant: variant.variant,
-                          price: variant.price,
+                          price: Number(variant.price),
                           imageUrl: variant.imageUrl,
                           status: variant.status,
                         }}

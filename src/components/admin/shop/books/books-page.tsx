@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import {  Oswald } from "next/font/google";
+import { Oswald } from "next/font/google";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useQuery } from "@tanstack/react-query";
@@ -14,7 +14,6 @@ import {
 } from "@/actions/shop/books/admin-new";
 import { FeaturedCarousel } from "./featured-carousel";
 import { georgiaItalic } from "@/utils/georgia-italic";
-
 
 const oswald = Oswald({
   variable: "--font-oswald",
@@ -117,9 +116,9 @@ const BooksPage = () => {
                     >
                       {book.tittle}
                     </h2>
-                    <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-4xl mt-2 line-clamp-5">
+                    <div className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-4xl mt-2 line-clamp-5 whitespace-pre-wrap">
                       {book.synopsis}
-                    </p>
+                    </div>
                     {book.tags && book.tags.length > 0 && (
                       <div className="flex flex-wrap gap-2 mt-3">
                         {book.tags.map((tag) => (
