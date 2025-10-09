@@ -49,11 +49,11 @@ const components: { title: string; href: string; description: string }[] = [
     description:
       "Shop our exclusive merchandise including apparel, accessories, and motivational items.",
   },
-  {
-    title: "New Releases",
-    href: "/shop/books/new",
-    description: "Discover our latest book releases and upcoming publications.",
-  },
+  // {
+  //   title: "New Releases",
+  //   href: "/shop/books/new",
+  //   description: "Discover our latest book releases and upcoming publications.",
+  // },
 ];
 
 export function Navbar() {
@@ -154,7 +154,7 @@ export function Navbar() {
                   Shop
                 </NavigationMenuTrigger>
                 <NavigationMenuContent className="z-[9999]">
-                  <ul className="grid w-[400px] gap-2 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                  <ul className="grid w-[300px] gap-4">
                     {components.map((component) => (
                       <ListItem
                         key={component.title}

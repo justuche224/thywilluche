@@ -101,7 +101,7 @@ const NGO = ({
 }: NGOProps) => {
   return (
     <div className="min-h-screen">
-      <div className="fixed top-0 left-0 bottom-0 right-0 flex justify-center items-center w-full h-screen">
+      <div className="fixed top-0 left-0 bottom-0 right-0 flex justify-center items-center w-full h-screen z-[-1]">
         <Image
           src="/images/NGO.jpg"
           alt="Thywill Fountain of Hope"
