@@ -13,7 +13,8 @@ import {
   Store,
   Star,
   FileText,
-  UserRoundCheck
+  UserRoundCheck,
+  LayoutDashboard,
 } from "lucide-react";
 
 import { NavMain } from "@/components/admin/nav-main";
@@ -52,6 +53,12 @@ const data = {
     },
   ],
   navMain: [
+    {
+      title: "Dashboard",
+      url: "/admin",
+      icon: LayoutDashboard,
+      isActive: true,
+    },
     {
       title: "Shop",
       url: "#",
