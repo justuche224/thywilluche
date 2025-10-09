@@ -59,11 +59,20 @@ const Welcome = ({
           className="self-start"
         />
         <div className="text-center h-full flex flex-col justify-center items-center gap-4">
+          <p
+            className={`${georgiaItalic.className} text-lg lg:text-xl xl:text-2xl 2xl:text-3xl font-semibold`}
+          >
+            Dream, create and live it
+          </p>
           <div className="p-4 rounded-lg bg-white/30 backdrop-blur-2xl space-y-4">
-            <h1 className={`text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold ${oswald.className}`}>
+            <h1
+              className={`text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold ${oswald.className}`}
+            >
               Thywill Uche
             </h1>
-            <p className={`${georgiaItalic.className} text-lg lg:text-xl xl:text-2xl 2xl:text-3xl`}>
+            <p
+              className={`${georgiaItalic.className} text-lg lg:text-xl xl:text-2xl 2xl:text-3xl`}
+            >
               Crazy or genius? You be the judge.
             </p>
             <Button onClick={() => setShowWelcome(false)}>ENTER SITE</Button>
