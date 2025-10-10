@@ -27,50 +27,23 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Eye, EyeOff } from "lucide-react";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
-export function SignupForm({
+export function ResetPasswordForm({
   className,
   ...props
 }: React.ComponentProps<"form">) {
   const [isPending, startTransition] = React.useTransition();
   const [showPassword, setShowPassword] = React.useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
-  const [done, setDone] = useState(false);
-
-  const checkUserNameAvailability = async (username: string) => {
-    const { data: response, error } = await authClient.isUsernameAvailable({
-      username,
-    });
-    if (error) {
-      toast.error("Failed to check username availability");
-    }
-    return !!response?.available;
-  };
+  const searchParams = useSearchParams();
+  const token = searchParams.get("token");
+  const invalidToken = searchParams.get("invalidToken") || undefined;
+  const [error, setError] = useState<string | undefined>(invalidToken || undefined);
+  const router = useRouter();
 
   const formSchema = z
     .object({
-      name: z
-        .string()
-        .min(2)
-        .max(50)
-        .regex(/^[a-zA-Z0-9\s-]+$/, {
-          message:
-            "Name can only contain letters, numbers, spaces, and hyphens.",
-        }),
-      email: z.email(),
-      username: z
-        .string()
-        .min(5)
-        .max(20)
-        .refine(
-          async (username) => {
-            if (username === "") return false;
-            return await checkUserNameAvailability(username);
-          },
-          { message: "Username is already taken" }
-        ),
       password: z
         .string()
         .min(8, "Password must be at least 8 characters long")
@@ -93,9 +66,6 @@ export function SignupForm({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
-      email: "",
-      username: "",
       password: "",
       confirmPassword: "",
     },
@@ -103,21 +73,19 @@ export function SignupForm({
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     startTransition(async () => {
-      await authClient.signUp.email(
+      await authClient.resetPassword(
         {
-          name: values.name,
-          email: values.email,
-          password: values.password,
-          username: values.username,
-          callbackURL: "/community/home",
+          newPassword: values.password,
+          token: token || undefined,
         },
         {
           onSuccess: async () => {
-            setDone(true);
-            toast.success("Account created successfully");
+            toast.success("Password reset successfully");
+            router.push("/auth/login");
           },
           onError: (ctx) => {
             toast.error(ctx.error.message);
+            setError(ctx.error.message);
           },
         }
       );
@@ -126,7 +94,6 @@ export function SignupForm({
 
   return (
     <Form {...form}>
-      <Done done={done} setDone={setDone} callbackURL="/community/home" />
       <form
         onSubmit={form.handleSubmit(onSubmit)}
         className={cn("flex flex-col gap-6", className)}
@@ -137,56 +104,13 @@ export function SignupForm({
             <div className="p-6 md:p-8">
               <FieldGroup>
                 <div className="flex flex-col items-center gap-2 text-center">
-                  <h1 className="text-2xl font-bold">Create your account</h1>
+                  <h1 className="text-2xl font-bold">Create new password</h1>
                   <p className="text-muted-foreground text-sm text-balance">
-                    Enter your email below to create your account
+                    Enter your new password below to reset your password
                   </p>
                 </div>
-                <FormField
-                  control={form.control}
-                  name="name"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Full Name</FormLabel>
-                      <FormControl>
-                        <Input type="text" placeholder="John Doe" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="username"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Username</FormLabel>
-                      <FormControl>
-                        <Input type="text" placeholder="johndoe" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Email</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="email"
-                          placeholder="m@example.com"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
                 <Field>
-                  <Field className="grid grid-cols-2 gap-4">
+                  <Field className="grid grid-cols-1 gap-4">
                     <FormField
                       control={form.control}
                       name="password"
@@ -256,14 +180,17 @@ export function SignupForm({
                 </Field>
                 <Field>
                   <Button type="submit" disabled={isPending}>
-                    {isPending ? "Creating Account..." : "Create Account"}
+                    {isPending ? "Resetting Password..." : "Reset Password"}
                   </Button>
+                  <FieldDescription className="text-destructive">
+                    {error}
+                  </FieldDescription>
                 </Field>
                 <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">
-                  Or continue with
+                  Or
                 </FieldSeparator>
                 <FieldDescription className="text-center">
-                  Already have an account?{" "}
+                  Remember your password?{" "}
                   <Link href="/auth/login">Sign in</Link>
                 </FieldDescription>
               </FieldGroup>
@@ -287,43 +214,3 @@ export function SignupForm({
     </Form>
   );
 }
-
-
-const Done = ({
-  done,
-  setDone,
-  callbackURL,
-}: {
-  done: boolean;
-  setDone: (done: boolean) => void;
-  callbackURL: string;
-}) => {
-  const router = useRouter();
-  return (
-    <Dialog open={done} onOpenChange={setDone}>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Account created successfully!</DialogTitle>
-          <DialogDescription>
-            <h1 className="text-lg font-semibold">
-              A link has been sent to your email to verify your account.
-            </h1>
-            <p className="text-sm text-muted-foreground mt-2">
-              Check your email for the verification link. you might need to
-              check your spam folder and mark it as not spam.
-            </p>
-          </DialogDescription>
-        </DialogHeader>
-        <DialogFooter>
-          <Button
-            onClick={() => {
-              router.push(callbackURL);
-            }}
-          >
-            Continue
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
-  );
-};

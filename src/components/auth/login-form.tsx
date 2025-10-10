@@ -70,6 +70,7 @@ export function SigninForm({
           {
             email: values.usernameOrEmail,
             password: values.password,
+            callbackURL: "/community/home",
           },
           {
             onSuccess: async (ctx) => {
@@ -88,8 +89,19 @@ export function SigninForm({
                   break;
               }
             },
-            onError: (ctx) => {
-              toast.error(ctx.error.message);
+            onError: async (ctx) => {
+              if (ctx.error.status === 403) {
+                toast.error("Please verify your email address", {
+                  description:
+                    "Please check your email for a verification link",
+                });
+                await authClient.sendVerificationEmail({
+                  email: values.usernameOrEmail,
+                  callbackURL: "/community/home",
+                });
+              } else {
+                toast.error(ctx.error.message);
+              }
             },
           }
         );
@@ -99,6 +111,7 @@ export function SigninForm({
           {
             username: values.usernameOrEmail,
             password: values.password,
+            callbackURL: "/community/home",
           },
           {
             onSuccess: async (ctx) => {
@@ -117,8 +130,19 @@ export function SigninForm({
                   break;
               }
             },
-            onError: (ctx) => {
-              toast.error(ctx.error.message);
+            onError: async (ctx) => {
+              if (ctx.error.status === 403) {
+                toast.error("Please verify your email address", {
+                  description:
+                    "Please check your email for a verification link",
+                });
+                await authClient.sendVerificationEmail({
+                  email: values.usernameOrEmail,
+                  callbackURL: "/community/home",
+                });
+              } else {
+                toast.error(ctx.error.message);
+              }
             },
           }
         );
