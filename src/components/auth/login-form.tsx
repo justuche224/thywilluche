@@ -28,12 +28,14 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { getUserRole } from "@/actions/user";
+import { Eye, EyeOff } from "lucide-react";
 
 export function SigninForm({
   className,
   ...props
 }: React.ComponentProps<"form">) {
   const [isPending, startTransition] = React.useTransition();
+  const [showPassword, setShowPassword] = React.useState(false);
   const router = useRouter();
 
   const formSchema = z.object({
@@ -165,11 +167,24 @@ export function SigninForm({
                     <FormItem>
                       <FormLabel>Password</FormLabel>
                       <FormControl>
-                        <Input
-                          type="password"
-                          placeholder="********"
-                          {...field}
-                        />
+                        <div className="relative">
+                          <Input
+                            type={showPassword ? "text" : "password"}
+                            placeholder="********"
+                            {...field}
+                          />
+                          <button
+                            type="button"
+                            className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                            onClick={() => setShowPassword(!showPassword)}
+                          >
+                            {showPassword ? (
+                              <EyeOff className="h-4 w-4" />
+                            ) : (
+                              <Eye className="h-4 w-4" />
+                            )}
+                          </button>
+                        </div>
                       </FormControl>
                       <FormMessage />
                     </FormItem>
