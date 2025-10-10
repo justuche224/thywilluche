@@ -41,6 +41,9 @@ export function BlogPostForm({ post }: BlogPostFormProps) {
   const [imagePreview, setImagePreview] = useState<string | null>(
     post?.imageUrl || null
   );
+  const [isFeatured, setIsFeatured] = useState<boolean>(
+    post?.isFeatured ?? false
+  );
   const router = useRouter();
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -170,10 +173,11 @@ export function BlogPostForm({ post }: BlogPostFormProps) {
       </div>
 
       <div className="flex items-center space-x-2">
+        <input type="hidden" name="isFeatured" value={String(isFeatured)} />
         <Switch
           id="isFeatured"
-          name="isFeatured"
-          defaultChecked={post?.isFeatured}
+          checked={isFeatured}
+          onCheckedChange={setIsFeatured}
         />
         <Label htmlFor="isFeatured">Featured Post</Label>
       </div>
