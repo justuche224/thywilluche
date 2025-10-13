@@ -54,7 +54,37 @@ interface Post {
   } | null;
 }
 
-const Posts = ({ groupId }: { groupId?: string }) => {
+type FetchAction = (args: {
+  page: number;
+  limit: number;
+  groupId?: string;
+  authorId?: string;
+  sort?: string;
+  sortBy?: string;
+}) => Promise<{
+  page: number;
+  limit: number;
+  groupId?: string;
+  authorId?: string;
+  sort?: string;
+  sortBy?: string;
+  data: Post[];
+  total: number;
+  success: boolean;
+  message: string;
+}>;
+
+const Posts = ({
+  groupId,
+  userId,
+  fetchAction,
+  showNewButton = true,
+}: {
+  groupId?: string;
+  userId?: string;
+  showNewButton?: boolean;
+  fetchAction?: FetchAction;
+}) => {
   const observerRef = useRef<HTMLDivElement>(null);
 
   const {
@@ -65,12 +95,14 @@ const Posts = ({ groupId }: { groupId?: string }) => {
     isLoading,
     isError,
   } = useInfiniteQuery({
-    queryKey: ["community-posts", groupId],
+    queryKey: ["community-posts", groupId, userId],
     queryFn: async ({ pageParam = 1 }) => {
-      const result = await getFeed({
+      const action = fetchAction || getFeed;
+      const result = await action({
         page: pageParam,
         limit: 10,
         groupId,
+        authorId: userId,
         sort: "desc",
         sortBy: "pinned",
       });
@@ -108,7 +140,7 @@ const Posts = ({ groupId }: { groupId?: string }) => {
   return (
     <div className="w-full p-5 h-full">
       <div className="w-full mt-10">
-        <Top />
+        {showNewButton && <Top />}
         <Separator className="my-5 bg-[#800000]" />
       </div>
 
@@ -116,15 +148,15 @@ const Posts = ({ groupId }: { groupId?: string }) => {
         {isLoading ? (
           <PostsSkeleton />
         ) : isEmpty ? (
-          <EmptyState />
+          <EmptyState userId={userId} />
         ) : (
           <>
             {allPosts.map((post) => (
-            <div key={post.id} className="w-full max-w-2xl mx-auto">
+              <div key={post.id} className="w-full max-w-2xl mx-auto">
                 <PostCard post={post} />
                 <Separator className="my-5 bg-[#800000]" />
-            </div>
-          ))}
+              </div>
+            ))}
 
             {isFetchingNextPage && <PostsSkeleton count={2} />}
 
@@ -173,7 +205,7 @@ const PostsSkeleton = ({ count = 3 }: { count?: number }) => {
   );
 };
 
-const EmptyState = () => {
+const EmptyState = ({ userId }: { userId?: string }) => {
   return (
     <div className="w-full max-w-md mx-auto py-20 text-center">
       <div className="flex flex-col items-center gap-4">
@@ -182,9 +214,11 @@ const EmptyState = () => {
         </div>
         <div className="space-y-2">
           <h3 className="text-2xl font-bold text-gray-900">No posts yet</h3>
-          <p className="text-gray-500">
+         {userId ? <p className="text-gray-500">
             Be the first to share something with the community!
-          </p>
+          </p> : <p className="text-gray-500">
+            No posts yet
+          </p>}
         </div>
         <Button className="mt-4" asChild>
           <Link href="/community/home/posts/new">Create Post</Link>
@@ -325,11 +359,11 @@ const PostCard = ({ post }: { post: Post }) => {
                 {post.group.name}
               </span>
             )}
-          <Button variant={"ghost"} size={"icon"} className="ml-auto">
-            <Ellipsis className="w-4 h-4" />
-          </Button>
+            <Button variant={"ghost"} size={"icon"} className="ml-auto">
+              <Ellipsis className="w-4 h-4" />
+            </Button>
+          </div>
         </div>
-      </div>
       </div>
       {post.images && post.images.length > 0 ? (
         <PostWithImage post={post} />
@@ -339,10 +373,10 @@ const PostCard = ({ post }: { post: Post }) => {
       <div className="w-full flex gap-2 items-center justify-between p-2 px-1">
         <div>
           <Link href={`/community/home/posts/${post.id}`}>
-          <Button variant={"ghost"} size={"icon"}>
+            <Button variant={"ghost"} size={"icon"}>
               <p className="text-sm">{post.commentCount}</p>
-            <MessageSquareIcon className="w-4 h-4" />
-          </Button>
+              <MessageSquareIcon className="w-4 h-4" />
+            </Button>
           </Link>
         </div>
         <div>

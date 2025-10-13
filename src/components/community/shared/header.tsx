@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Navbar } from "./nav";
+import { CommunityNavbar } from "./community-navbar";
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -24,7 +24,7 @@ const Header = () => {
             : "bg-transparent"
         }`}
       >
-        <Navbar />
+        <CommunityNavbar />
       </div>
     </header>
   );

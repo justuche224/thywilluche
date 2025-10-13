@@ -14,17 +14,19 @@ import {
 import { and, desc, eq, ilike, inArray, isNull, or, sql } from "drizzle-orm";
 
 export async function getFeed({
-    page,
-    limit,
-    groupId,
-    search,
+  page,
+  limit,
+  groupId,
+  authorId,
+  search,
   sort = "desc",
   sortBy = "createdAt",
 }: {
-    page: number;
-    limit: number;
-    groupId?: string;
-    search?: string;
+  page: number;
+  limit: number;
+  groupId?: string;
+  authorId?: string;
+  search?: string;
   sort?: string;
   sortBy?: string;
 }) {
@@ -63,6 +65,11 @@ export async function getFeed({
 
     // Build where conditions
     const whereConditions = [eq(communityPosts.status, "approved")];
+
+    // Optional author filter
+    if (authorId) {
+      whereConditions.push(eq(communityPosts.authorId, authorId));
+    }
 
     // If groupId is specified, only show posts from that group
     if (groupId) {
@@ -177,6 +184,7 @@ export async function getFeed({
       page,
       limit,
       groupId,
+      authorId,
       search,
       sort,
       sortBy,
@@ -191,6 +199,7 @@ export async function getFeed({
       page,
       limit,
       groupId,
+      authorId,
       search,
       sort,
       sortBy,
@@ -857,7 +866,7 @@ export async function togglePostLike({ postId }: { postId: string }) {
         message: "Post liked",
       };
     }
-} catch (error) {
+  } catch (error) {
     console.error("Error toggling post like:", error);
     return {
       success: false,
