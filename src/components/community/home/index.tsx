@@ -7,25 +7,8 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { getActiveGroups } from "@/actions/community/posts";
+import { getActiveAnnouncements } from "@/actions/announcements";
 import { Skeleton } from "@/components/ui/skeleton";
-
-const announcements = [
-  {
-    title: "Announcement 1",
-    description: "My new Book is out now!",
-    link: "/",
-  },
-  {
-    title: "Announcement 2",
-    description: "Read our guidelines for posting in the community. ",
-    link: "/",
-  },
-  {
-    title: "Announcement 3",
-    description: "Join our next event!",
-    link: "/",
-  },
-];
 
 const CommunityHome = () => {
   const searchParams = useSearchParams();
@@ -39,7 +22,18 @@ const CommunityHome = () => {
     },
   });
 
+  const { data: announcementsData, isLoading: announcementsLoading } = useQuery(
+    {
+      queryKey: ["active-announcements"],
+      queryFn: async () => {
+        const result = await getActiveAnnouncements();
+        return result;
+      },
+    }
+  );
+
   const groups = groupsData?.data || [];
+  const announcements = announcementsData?.data || [];
 
   return (
     <>
@@ -92,20 +86,38 @@ const CommunityHome = () => {
         <div className="w-full xl:w-1/4 2xl:w-1/4 h-full p-2">
           <p className="text-2xl font-bold">Announcements</p>
           <div className="w-full flex flex-col gap-4">
-            {announcements.map((announcement) => (
-              <div
-                key={announcement.title}
-                className="w-full flex flex-col gap-1"
-              >
-                <p className="text-sm font-bold">{announcement.title}</p>
-                <p className="text-sm">{announcement.description}</p>
-                <Button variant="link" asChild className="w-fit">
-                  <Link href={announcement.link}>
-                    <p className="text-sm">Read More</p>
-                  </Link>
-                </Button>
+            {announcementsLoading ? (
+              <div className="space-y-4">
+                {Array.from({ length: 3 }).map((_, i) => (
+                  <div key={i} className="w-full flex flex-col gap-2">
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-4 w-3/4" />
+                    <Skeleton className="h-6 w-20" />
+                  </div>
+                ))}
               </div>
-            ))}
+            ) : announcements.length > 0 ? (
+              announcements.map((announcement) => (
+                <div
+                  key={announcement.id}
+                  className="w-full flex flex-col gap-1"
+                >
+                  <p className="text-sm font-medium">{announcement.title}</p>
+                  <p className="text-sm">{announcement.content}</p>
+                  {announcement.link && (
+                    <Button variant="link" asChild className="w-fit">
+                      <Link href={announcement.link}>
+                        <p className="text-sm">Read More</p>
+                      </Link>
+                    </Button>
+                  )}
+                </div>
+              ))
+            ) : (
+              <p className="text-sm text-muted-foreground">
+                No announcements available
+              </p>
+            )}
           </div>
         </div>
       </div>

@@ -10,3 +10,4 @@ export * from "./media-highlights";
 export * from "./projects";
 export * from "./testimonials";
 export * from "./community";
+export * from "./announcements";

@@ -148,6 +148,13 @@
       "when": 1760337682545,
       "tag": "0020_abnormal_trauma",
       "breakpoints": true
+    },
+    {
+      "idx": 21,
+      "version": "7",
+      "when": 1760353764198,
+      "tag": "0021_nebulous_karma",
+      "breakpoints": true
     }
   ]
 }

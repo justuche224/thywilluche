@@ -142,6 +142,10 @@ const data = {
           title: "Users",
           url: "/admin/community/users",
         },
+        {
+          title: "Announcements",
+          url: "/admin/community/announcements",
+        },
       ],
     },
     {

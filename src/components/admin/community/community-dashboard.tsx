@@ -198,6 +198,14 @@ export function CommunityDashboard({
       color: "text-purple-600",
       bgColor: "bg-purple-50",
     },
+    {
+      title: "Manage Announcements",
+      description: "Create and manage community announcements",
+      href: "/admin/community/announcements",
+      icon: MessageSquare,
+      color: "text-orange-600",
+      bgColor: "bg-orange-50",
+    },
   ];
 
   return (
@@ -287,7 +295,7 @@ export function CommunityDashboard({
           <h2 className="text-2xl font-bold">Quick Actions</h2>
           <HelpTooltip content="Common tasks you can perform to manage your community" />
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
           {quickActions.map((action) => {
             const Icon = action.icon;
             return (
