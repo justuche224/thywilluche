@@ -134,6 +134,20 @@
       "when": 1759985593743,
       "tag": "0018_cynical_proteus",
       "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "7",
+      "when": 1760262791316,
+      "tag": "0019_curly_shooting_star",
+      "breakpoints": true
+    },
+    {
+      "idx": 20,
+      "version": "7",
+      "when": 1760337682545,
+      "tag": "0020_abnormal_trauma",
+      "breakpoints": true
     }
   ]
 }

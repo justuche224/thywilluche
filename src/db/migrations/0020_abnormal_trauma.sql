@@ -1,0 +1,1 @@
+ALTER TABLE "community_posts" RENAME COLUMN "image_url" TO "images";
