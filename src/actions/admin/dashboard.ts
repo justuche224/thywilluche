@@ -7,6 +7,12 @@ import {
   testimonials,
   book,
   projectReviews,
+  communityPosts,
+  communityGroups,
+  communityComments,
+  communityLikes,
+  communityShares,
+  user,
 } from "@/db/schema";
 import { eq, count } from "drizzle-orm";
 import { serverAuth } from "@/lib/server-auth";
@@ -68,6 +74,33 @@ export async function getDashboardStats() {
       .from(book)
       .where(eq(book.status, "Sold Out"));
 
+    // Get community stats
+    const communityPostsTotal = await db
+      .select({ count: count() })
+      .from(communityPosts);
+    const communityPostsPending = await db
+      .select({ count: count() })
+      .from(communityPosts)
+      .where(eq(communityPosts.status, "pending"));
+    const communityPostsApproved = await db
+      .select({ count: count() })
+      .from(communityPosts)
+      .where(eq(communityPosts.status, "approved"));
+
+    const communityGroupsTotal = await db
+      .select({ count: count() })
+      .from(communityGroups);
+    const communityUsersTotal = await db.select({ count: count() }).from(user);
+    const communityCommentsTotal = await db
+      .select({ count: count() })
+      .from(communityComments);
+    const communityLikesTotal = await db
+      .select({ count: count() })
+      .from(communityLikes);
+    const communitySharesTotal = await db
+      .select({ count: count() })
+      .from(communityShares);
+
     return {
       success: true,
       stats: {
@@ -88,6 +121,24 @@ export async function getDashboardStats() {
         books: {
           total: booksTotal[0]?.count || 0,
           outOfStock: booksSoldOut[0]?.count || 0,
+        },
+        community: {
+          posts: {
+            total: communityPostsTotal[0]?.count || 0,
+            pending: communityPostsPending[0]?.count || 0,
+            approved: communityPostsApproved[0]?.count || 0,
+          },
+          groups: {
+            total: communityGroupsTotal[0]?.count || 0,
+          },
+          users: {
+            total: communityUsersTotal[0]?.count || 0,
+          },
+          engagement: {
+            comments: communityCommentsTotal[0]?.count || 0,
+            likes: communityLikesTotal[0]?.count || 0,
+            shares: communitySharesTotal[0]?.count || 0,
+          },
         },
       },
     };

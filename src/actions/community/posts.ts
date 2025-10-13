@@ -14,17 +14,17 @@ import {
 import { and, desc, eq, ilike, inArray, isNull, or, sql } from "drizzle-orm";
 
 export async function getFeed({
-  page,
-  limit,
-  groupId,
-  search,
+    page,
+    limit,
+    groupId,
+    search,
   sort = "desc",
   sortBy = "createdAt",
 }: {
-  page: number;
-  limit: number;
-  groupId?: string;
-  search?: string;
+    page: number;
+    limit: number;
+    groupId?: string;
+    search?: string;
   sort?: string;
   sortBy?: string;
 }) {
@@ -857,7 +857,7 @@ export async function togglePostLike({ postId }: { postId: string }) {
         message: "Post liked",
       };
     }
-  } catch (error) {
+} catch (error) {
     console.error("Error toggling post like:", error);
     return {
       success: false,

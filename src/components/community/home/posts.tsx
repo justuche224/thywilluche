@@ -120,11 +120,11 @@ const Posts = ({ groupId }: { groupId?: string }) => {
         ) : (
           <>
             {allPosts.map((post) => (
-              <div key={post.id} className="w-full max-w-2xl mx-auto">
+            <div key={post.id} className="w-full max-w-2xl mx-auto">
                 <PostCard post={post} />
                 <Separator className="my-5 bg-[#800000]" />
-              </div>
-            ))}
+            </div>
+          ))}
 
             {isFetchingNextPage && <PostsSkeleton count={2} />}
 
@@ -325,11 +325,11 @@ const PostCard = ({ post }: { post: Post }) => {
                 {post.group.name}
               </span>
             )}
-            <Button variant={"ghost"} size={"icon"} className="ml-auto">
-              <Ellipsis className="w-4 h-4" />
-            </Button>
-          </div>
+          <Button variant={"ghost"} size={"icon"} className="ml-auto">
+            <Ellipsis className="w-4 h-4" />
+          </Button>
         </div>
+      </div>
       </div>
       {post.images && post.images.length > 0 ? (
         <PostWithImage post={post} />
@@ -339,10 +339,10 @@ const PostCard = ({ post }: { post: Post }) => {
       <div className="w-full flex gap-2 items-center justify-between p-2 px-1">
         <div>
           <Link href={`/community/home/posts/${post.id}`}>
-            <Button variant={"ghost"} size={"icon"}>
+          <Button variant={"ghost"} size={"icon"}>
               <p className="text-sm">{post.commentCount}</p>
-              <MessageSquareIcon className="w-4 h-4" />
-            </Button>
+            <MessageSquareIcon className="w-4 h-4" />
+          </Button>
           </Link>
         </div>
         <div>

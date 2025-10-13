@@ -15,6 +15,7 @@ import {
   FileText,
   UserRoundCheck,
   LayoutDashboard,
+  Users,
 } from "lucide-react";
 
 import { NavMain } from "@/components/admin/nav-main";
@@ -116,6 +117,30 @@ const data = {
         {
           title: "Reviews",
           url: "/admin/projects/reviews",
+        },
+      ],
+    },
+    {
+      title: "Community",
+      url: "#",
+      icon: Users,
+      isActive: true,
+      items: [
+        {
+          title: "Dashboard",
+          url: "/admin/community",
+        },
+        {
+          title: "Posts",
+          url: "/admin/community/posts",
+        },
+        {
+          title: "Groups",
+          url: "/admin/community/groups",
+        },
+        {
+          title: "Users",
+          url: "/admin/community/users",
         },
       ],
     },

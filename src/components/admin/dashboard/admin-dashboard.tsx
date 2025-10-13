@@ -33,6 +33,11 @@ import {
   Plus,
   Eye,
   Settings2,
+  Users,
+  MessageSquare,
+  Heart,
+  Share2,
+  Hash,
 } from "lucide-react";
 
 interface DashboardStats {
@@ -54,6 +59,24 @@ interface DashboardStats {
     total: number;
     outOfStock: number;
   };
+  community: {
+    posts: {
+      total: number;
+      pending: number;
+      approved: number;
+    };
+    groups: {
+      total: number;
+    };
+    users: {
+      total: number;
+    };
+    engagement: {
+      comments: number;
+      likes: number;
+      shares: number;
+    };
+  };
 }
 
 interface AdminDashboardProps {
@@ -63,25 +86,30 @@ interface AdminDashboardProps {
 export function AdminDashboard({ stats }: AdminDashboardProps) {
   const quickActions = [
     {
+      label: "Review Posts",
+      href: "/admin/community/posts?status=pending",
+      icon: MessageSquare,
+      variant:
+        stats.community.posts.pending > 0
+          ? ("default" as const)
+          : ("outline" as const),
+      description: "Review pending community posts",
+      urgent: stats.community.posts.pending > 0,
+      count: stats.community.posts.pending,
+    },
+    {
       label: "New Blog Post",
       href: "/admin/blog/new",
       icon: FileText,
-      variant: "default" as const,
+      variant: "outline" as const,
       description: "Write and publish a new article",
     },
     {
-      label: "New Project",
-      href: "/admin/projects/new",
-      icon: FolderKanban,
+      label: "Manage Community",
+      href: "/admin/community",
+      icon: Users,
       variant: "outline" as const,
-      description: "Add a new project to your portfolio",
-    },
-    {
-      label: "Add Book",
-      href: "/admin/shop/books/add",
-      icon: BookOpen,
-      variant: "outline" as const,
-      description: "Add a new book to your shop",
+      description: "Manage community posts, groups, and users",
     },
     {
       label: "View Site",
@@ -93,6 +121,15 @@ export function AdminDashboard({ stats }: AdminDashboardProps) {
   ];
 
   const tasksNeedingAttention = [
+    {
+      title: "Community Posts Pending",
+      count: stats.community.posts.pending,
+      href: "/admin/community/posts?status=pending",
+      icon: MessageSquare,
+      show: stats.community.posts.pending > 0,
+      description: "Review and approve community posts",
+      urgency: "high" as const,
+    },
     {
       title: "Testimonials Pending Approval",
       count: stats.testimonials.pending,
@@ -132,6 +169,49 @@ export function AdminDashboard({ stats }: AdminDashboardProps) {
   ].filter((task) => task.show);
 
   const contentSections = [
+    {
+      title: "Community",
+      description: "Manage your community posts, groups, and users",
+      icon: Users,
+      stats: [
+        {
+          label: "Posts",
+          value: stats.community.posts.total,
+          icon: MessageSquare,
+          color: "text-blue-600",
+        },
+        {
+          label: "Pending",
+          value: stats.community.posts.pending,
+          icon: Clock,
+          color: "text-amber-600",
+        },
+        {
+          label: "Users",
+          value: stats.community.users.total,
+          icon: Users,
+          color: "text-green-600",
+        },
+        {
+          label: "Groups",
+          value: stats.community.groups.total,
+          icon: Hash,
+          color: "text-purple-600",
+        },
+      ],
+      actions: [
+        {
+          label: "Manage Community",
+          href: "/admin/community",
+          icon: Settings2,
+        },
+        {
+          label: "Review Posts",
+          href: "/admin/community/posts?status=pending",
+          icon: Eye,
+        },
+      ],
+    },
     {
       title: "Blog",
       description: "Write and publish articles to share your expertise",
@@ -363,10 +443,24 @@ export function AdminDashboard({ stats }: AdminDashboardProps) {
                   <Button
                     variant={action.variant}
                     asChild
-                    className="gap-2 h-auto p-4 flex-col"
+                    className={`gap-2 h-auto p-4 flex-col relative ${
+                      action.urgent
+                        ? "border-yellow-200 bg-yellow-50 hover:bg-yellow-100"
+                        : ""
+                    }`}
                   >
                     <Link href={action.href} className="text-center">
-                      <action.icon className="h-5 w-5" />
+                      <div className="relative">
+                        <action.icon className="h-5 w-5" />
+                        {action.count !== undefined && action.count > 0 && (
+                          <Badge
+                            variant="secondary"
+                            className="absolute -top-2 -right-2 h-5 w-5 p-0 flex items-center justify-center text-xs bg-yellow-100 text-yellow-800"
+                          >
+                            {action.count}
+                          </Badge>
+                        )}
+                      </div>
                       <span className="font-medium">{action.label}</span>
                       <span className="text-xs text-muted-foreground">
                         {action.description}
@@ -487,7 +581,11 @@ export function AdminDashboard({ stats }: AdminDashboardProps) {
                   </div>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <div className="grid grid-cols-2 gap-4">
+                  <div
+                    className={`grid gap-4 ${
+                      section.stats.length > 2 ? "grid-cols-2" : "grid-cols-2"
+                    }`}
+                  >
                     {section.stats.map((stat) => (
                       <div key={stat.label} className="space-y-2">
                         <div className="flex items-center gap-2">
@@ -522,6 +620,64 @@ export function AdminDashboard({ stats }: AdminDashboardProps) {
             ))}
           </div>
         </div>
+
+        {/* Community Engagement Overview */}
+        {stats.community.posts.total > 0 && (
+          <div className="space-y-4">
+            <div className="flex items-center gap-2">
+              <h2 className="text-lg font-medium">💬 Community Engagement</h2>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <HelpCircle className="h-4 w-4 text-muted-foreground" />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>How your community is engaging with posts</p>
+                </TooltipContent>
+              </Tooltip>
+            </div>
+            <div className="grid gap-4 md:grid-cols-3">
+              <Card className="hover:shadow-md transition-shadow">
+                <CardContent className="p-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm text-muted-foreground">Comments</p>
+                      <p className="text-2xl font-bold">
+                        {stats.community.engagement.comments}
+                      </p>
+                    </div>
+                    <MessageSquare className="h-8 w-8 text-blue-600" />
+                  </div>
+                </CardContent>
+              </Card>
+              <Card className="hover:shadow-md transition-shadow">
+                <CardContent className="p-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm text-muted-foreground">Likes</p>
+                      <p className="text-2xl font-bold">
+                        {stats.community.engagement.likes}
+                      </p>
+                    </div>
+                    <Heart className="h-8 w-8 text-red-600" />
+                  </div>
+                </CardContent>
+              </Card>
+              <Card className="hover:shadow-md transition-shadow">
+                <CardContent className="p-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm text-muted-foreground">Shares</p>
+                      <p className="text-2xl font-bold">
+                        {stats.community.engagement.shares}
+                      </p>
+                    </div>
+                    <Share2 className="h-8 w-8 text-green-600" />
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        )}
 
         {/* Website Pages and Settings */}
         <div className="grid gap-6 md:grid-cols-2">
