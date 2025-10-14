@@ -51,7 +51,7 @@ const UserMenu = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="relative h-10 w-10 rounded-full">
+        <Button variant="ghost" className="relative h-10 w-10 rounded-full cursor-pointer">
           <Avatar className="h-10 w-10">
             <AvatarImage src={user?.image || ""} alt={user?.name || ""} />
             <AvatarFallback className="bg-[#800000] text-white">

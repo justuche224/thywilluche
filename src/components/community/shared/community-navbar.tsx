@@ -134,8 +134,33 @@ export function CommunityNavbar() {
           />
           <NavigationMenu viewport={false} className="relative z-[999]">
             <NavigationMenuList>
-              {/* Home - Community Home */}
+          
+              {/* More */}
               <NavigationMenuItem>
+                <NavigationMenuTrigger
+                  className={
+                    navigationMenuTriggerStyle() +
+                    ` bg-transparent ${oswald.className} text-[#800000]`
+                  }
+                >
+                  Menu
+                </NavigationMenuTrigger>
+                <NavigationMenuContent className="z-[9999]">
+                  <ul className="grid w-[300px] gap-4">
+                    {moreItems.map((item) => (
+                      <ListItem
+                        key={item.title}
+                        title={item.title}
+                        href={item.href}
+                      >
+                        {item.description}
+                      </ListItem>
+                    ))}
+                  </ul>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+              {/* Home - Community Home */}
+              <NavigationMenuItem className="mb-5">
                 <NavigationMenuLink
                   asChild
                   className={
@@ -154,7 +179,7 @@ export function CommunityNavbar() {
               </NavigationMenuItem>
 
               {/* Groups */}
-              <NavigationMenuItem>
+              <NavigationMenuItem className="mb-5">
                 <NavigationMenuLink
                   asChild
                   className={
@@ -173,7 +198,7 @@ export function CommunityNavbar() {
               </NavigationMenuItem>
 
               {/* Profile */}
-              <NavigationMenuItem>
+              <NavigationMenuItem className="mb-5">
                 <NavigationMenuLink
                   asChild
                   className={
@@ -191,30 +216,6 @@ export function CommunityNavbar() {
                 </NavigationMenuLink>
               </NavigationMenuItem>
 
-              {/* More */}
-              <NavigationMenuItem>
-                <NavigationMenuTrigger
-                  className={
-                    navigationMenuTriggerStyle() +
-                    ` bg-transparent ${oswald.className} text-[#800000]`
-                  }
-                >
-                  More
-                </NavigationMenuTrigger>
-                <NavigationMenuContent className="z-[9999]">
-                  <ul className="grid w-[300px] gap-4">
-                    {moreItems.map((item) => (
-                      <ListItem
-                        key={item.title}
-                        title={item.title}
-                        href={item.href}
-                      >
-                        {item.description}
-                      </ListItem>
-                    ))}
-                  </ul>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
           <UserMenu />
@@ -303,9 +304,9 @@ function MobileNavContent({ onClose }: { onClose: () => void }) {
         <div className="h-px bg-border my-2" />
 
         {/* User Menu Section */}
-        <div className="px-4 py-3">
+        {/* <div className="px-4 py-3">
           <UserMenu />
-        </div>
+        </div> */}
       </nav>
     </SheetContent>
   );
