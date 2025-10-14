@@ -26,13 +26,7 @@ const profileSchema = z.object({
   username: z
     .string()
     .min(3, "Username must be at least 3 characters")
-    .max(20, "Username must be less than 20 characters")
-    .regex(
-      /^[a-zA-Z0-9_.-]+$/,
-      "Username can contain letters, numbers, underscores, dots, and hyphens"
-    )
-    .optional()
-    .or(z.literal("")),
+    .max(20, "Username must be less than 20 characters"),
   displayUsername: z.string().optional(),
   bio: z.string().max(500, "Bio must be less than 500 characters").optional(),
 });
