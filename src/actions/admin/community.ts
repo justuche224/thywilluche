@@ -542,6 +542,46 @@ export async function getRecentActivity() {
   }
 }
 
+// Delete post
+export async function deletePost({ postId }: { postId: string }) {
+  const session = await serverAuth();
+
+  if (!session?.user || session.user.role !== "ADMIN") {
+    return {
+      success: false,
+      message: "Unauthorized",
+    };
+  }
+
+  try {
+    const post = await db
+      .select({ id: communityPosts.id })
+      .from(communityPosts)
+      .where(eq(communityPosts.id, postId))
+      .limit(1);
+
+    if (post.length === 0) {
+      return {
+        success: false,
+        message: "Post not found",
+      };
+    }
+
+    await db.delete(communityPosts).where(eq(communityPosts.id, postId));
+
+    return {
+      success: true,
+      message: "Post deleted successfully",
+    };
+  } catch (error) {
+    console.error("Error deleting post:", error);
+    return {
+      success: false,
+      message: "Failed to delete post",
+    };
+  }
+}
+
 // Get community statistics
 export async function getCommunityStats() {
   const session = await serverAuth();

@@ -15,8 +15,23 @@ import {
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
-import { getPostsForAdmin, updatePostStatus } from "@/actions/admin/community";
+import {
+  getPostsForAdmin,
+  updatePostStatus,
+  deletePost,
+} from "@/actions/admin/community";
 import {
   CheckCircle,
   XCircle,
@@ -28,6 +43,7 @@ import {
   Share2,
   Calendar,
   Hash,
+  Trash2,
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
@@ -85,6 +101,21 @@ export function PostsManagement() {
     },
   });
 
+  const deleteMutation = useMutation({
+    mutationFn: deletePost,
+    onSuccess: (data) => {
+      if (data.success) {
+        toast.success(data.message);
+        queryClient.invalidateQueries({ queryKey: ["admin-posts"] });
+      } else {
+        toast.error(data.message);
+      }
+    },
+    onError: () => {
+      toast.error("Failed to delete post");
+    },
+  });
+
   const handleSearch = () => {
     setSearch(searchInput);
     setPage(1);
@@ -100,6 +131,10 @@ export function PostsManagement() {
     newStatus: "approved" | "rejected"
   ) => {
     updateStatusMutation.mutate({ postId, status: newStatus });
+  };
+
+  const handleDeletePost = (postId: string) => {
+    deleteMutation.mutate({ postId });
   };
 
   const getStatusBadge = (status: string) => {
@@ -258,7 +293,7 @@ export function PostsManagement() {
                         </p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center flex-col md:flex-row gap-2">
                       {getStatusBadge(post.status)}
                       <Link href={`/community/home/posts/${post.id}`}>
                         <Button variant="outline" size="sm">
@@ -266,6 +301,37 @@ export function PostsManagement() {
                           View
                         </Button>
                       </Link>
+                      <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                          <Button variant="destructive" size="sm">
+                            <Trash2 className="w-4 h-4 mr-2" />
+                            Delete
+                          </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>Delete Post</AlertDialogTitle>
+                            <AlertDialogDescription>
+                              Are you sure you want to delete this post? This
+                              action cannot be undone and will permanently
+                              remove the post and all associated comments,
+                              likes, and shares.
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction
+                              onClick={() => handleDeletePost(post.id)}
+                              disabled={deleteMutation.isPending}
+                              className="bg-red-600 hover:bg-red-700"
+                            >
+                              {deleteMutation.isPending
+                                ? "Deleting..."
+                                : "Delete Post"}
+                            </AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
                     </div>
                   </div>
 
