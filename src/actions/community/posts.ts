@@ -12,6 +12,7 @@ import {
   user,
 } from "@/db/schema";
 import { and, desc, eq, ilike, inArray, isNull, or, sql } from "drizzle-orm";
+import { notifyNewPost } from "@/mailer/handlers/community/posts";
 
 export async function getFeed({
   page,
@@ -554,6 +555,45 @@ export async function createPost({
         status: "pending",
       })
       .returning();
+
+    // Send notification email to admin
+    try {
+      // Get author information
+      const [author] = await db
+        .select({
+          name: user.name,
+          username: user.username,
+        })
+        .from(user)
+        .where(eq(user.id, session.user.id))
+        .limit(1);
+
+      // Get group information if groupId is provided
+      let groupName: string | undefined;
+      if (groupId) {
+        const [group] = await db
+          .select({ name: communityGroups.name })
+          .from(communityGroups)
+          .where(eq(communityGroups.id, groupId))
+          .limit(1);
+        groupName = group?.name;
+      }
+
+      // TODO: fire off scheduled job to send notification email
+
+      if (author) {
+        await notifyNewPost({
+          postId: newPost.id,
+          content,
+          excerpt: newPost.excerpt || "",
+          authorName: author.name || "Unknown User",
+          authorUsername: author.username || "unknown",
+          groupName,
+        });
+      }
+    } catch (emailError) {
+      console.error("Failed to send notification email:", emailError);
+    }
 
     return {
       success: true,
