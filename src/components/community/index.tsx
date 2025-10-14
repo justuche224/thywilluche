@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import {  Oswald } from "next/font/google";
+import { Oswald } from "next/font/google";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,11 +13,10 @@ import {
   BookOpen,
   Sparkles,
   Shield,
-  ArrowRight,
   CheckCircle,
 } from "lucide-react";
 import { georgiaItalic } from "@/utils/georgia-italic";
-
+import Link from "next/link";
 
 const oswald = Oswald({
   variable: "--font-oswald",
@@ -119,7 +118,9 @@ const CommunityPage = () => {
               transition={{ duration: 0.8, delay: 0.2 }}
             >
               <div>
-                <h1 className={`text-5xl lg:text-6xl ${georgiaItalic.className}`}>
+                <h1
+                  className={`text-5xl lg:text-6xl ${georgiaItalic.className}`}
+                >
                   Join Our Community
                 </h1>
                 <div className="w-24 h-1 bg-primary rounded-full mt-6"></div>
@@ -132,13 +133,15 @@ const CommunityPage = () => {
                 who understand your journey.
               </p>
               <div className="flex flex-wrap gap-4">
-                <Button size="lg" className="gap-2">
-                  <Users size={20} />
-                  Join Community
+                <Button size="lg" asChild className="gap-2">
+                  <Link href="/community/home">
+                    Join Community
+                  </Link>
                 </Button>
-                <Button size="lg" variant="outline" className="gap-2">
-                  Learn More
-                  <ArrowRight size={20} />
+                <Button size="lg" variant="outline" asChild className="gap-2">
+                  <Link href="/community/home">
+                    Learn More
+                  </Link>
                 </Button>
               </div>
               <div className="flex items-center gap-8 pt-4">
@@ -267,7 +270,7 @@ const CommunityPage = () => {
         <div className="container mx-auto px-6 lg:px-8">
           <div className="max-w-6xl mx-auto space-y-16">
             <div className="text-center space-y-4">
-                <h2 className={`text-4xl lg:text-5xl ${georgiaItalic.className}`}>
+              <h2 className={`text-4xl lg:text-5xl ${georgiaItalic.className}`}>
                 Community Features
               </h2>
               <p
@@ -385,7 +388,9 @@ const CommunityPage = () => {
         <div className="container mx-auto px-6 lg:px-8">
           <div className="max-w-4xl mx-auto text-center space-y-8">
             <div>
-              <h2 className={`text-4xl lg:text-5xl ${georgiaItalic.className} mb-6`}>
+              <h2
+                className={`text-4xl lg:text-5xl ${georgiaItalic.className} mb-6`}
+              >
                 Ready to Connect?
               </h2>
               <p
@@ -398,13 +403,11 @@ const CommunityPage = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="gap-2 text-base">
-                <Users size={20} />
-                Join the Community
+              <Button size="lg" asChild className="gap-2 text-base">
+                <Link href="/community/home">Join the Community</Link>
               </Button>
-              <Button size="lg" variant="outline" className="gap-2 text-base">
-                <MessageCircle size={20} />
-                Explore Groups
+              <Button size="lg" variant="outline" asChild className="gap-2 text-base">
+                <Link href="/community/groups">Explore Groups</Link>
               </Button>
             </div>
 

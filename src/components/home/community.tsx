@@ -161,7 +161,7 @@ const Community = () => {
                   size="lg"
                   className={`px-8 py-6 text-lg ${oswald.className} bg-primary hover:bg-primary/90`}
                 >
-                  <Link href="#">Join Community</Link>
+                  <Link href="/community/home">Join Community</Link>
                 </Button>
               </motion.div>
               <motion.div
@@ -175,7 +175,7 @@ const Community = () => {
                   size="lg"
                   className={`px-8 py-6 text-lg ${oswald.className} border-2 text-black`}
                 >
-                  <Link href="#">Learn More</Link>
+                  <Link href="/community/home">Learn More</Link>
                 </Button>
               </motion.div>
             </div>

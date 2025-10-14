@@ -4,6 +4,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Oswald } from "next/font/google";
 import { Star } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const oswald = Oswald({
   variable: "--font-oswald",
@@ -20,6 +21,7 @@ type Testimonial = {
 };
 
 const Testimonials = ({ testimonials }: { testimonials: Testimonial[] }) => {
+  const router = useRouter();
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, i) => (
       <Star
@@ -216,10 +218,12 @@ const Testimonials = ({ testimonials }: { testimonials: Testimonial[] }) => {
                 className="bg-white text-[#800000] px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
+                onClick={() => router.push("/contact")}
               >
                 Book a Session
               </motion.button>
               <motion.button
+                onClick={() => router.push("/community/home")}
                 className="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-[#800000] transition-colors"
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}

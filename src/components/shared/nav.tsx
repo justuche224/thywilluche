@@ -280,6 +280,18 @@ export function Navbar() {
                   <Link href="/blog">Blog</Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
+              {/* Community Home */}
+              <NavigationMenuItem>
+                <NavigationMenuLink
+                  asChild
+                  className={
+                    navigationMenuTriggerStyle() +
+                    ` bg-primary font-semibold ${oswald.className} text-white hover:bg-primary/80 hover:text-white/80`
+                  }
+                >
+                  <Link href="/community/home">Login</Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
         </div>
