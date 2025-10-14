@@ -314,6 +314,13 @@ function MobileNavContent({ onClose }: { onClose: () => void }) {
         <SheetTitle className={`text-2xl ${oswald.className}`}>Menu</SheetTitle>
       </SheetHeader>
       <nav className="flex flex-col gap-1 mt-4 overflow-y-auto flex-1">
+        <Link
+          href="/community/home"
+          className={`text-lg font-semibold px-4 bg-primary py-3 rounded-lg hover:bg-accent hover:text-accent-foreground active:bg-accent/80 transition-all ${oswald.className} text-[#800000]`}
+          onClick={onClose}
+        >
+          Login
+        </Link>
         {/* Home */}
         <Link
           href="/"

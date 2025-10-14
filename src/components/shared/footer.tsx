@@ -67,7 +67,7 @@ const Footer = async () => {
                 <p
                   className={`text-sm text-gray-400 ${oswald.className} italic`}
                 >
-                  Founder, Creator, and Life Coach
+                  Writer, Poet, Storyteller
                 </p>
                 <p
                   className={`text-sm text-gray-400 ${oswald.className} italic`}

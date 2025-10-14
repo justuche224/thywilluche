@@ -346,7 +346,7 @@ const PostCard = ({ post }: { post: Post }) => {
   };
 
   return (
-    <div className="w-full cursor-pointer" onClick={handlePostClick}>
+    <div className="w-full" onClick={handlePostClick}>
       <div className="w-full flex gap-2 items-center">
         <Image
           src={authorImage}
@@ -432,7 +432,7 @@ const PostWithImage = ({ post }: { post: Post }) => {
   const remainingCount = images.length - 4;
 
   return (
-    <div className="w-full flex flex-col sm:flex-row gap-3 py-3">
+    <div className="w-full flex flex-col-reverse sm:flex-row gap-3 py-3">
       <div className="w-full sm:w-1/3">
         {images.length === 1 ? (
           <Image
