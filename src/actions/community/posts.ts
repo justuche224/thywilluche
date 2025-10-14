@@ -1095,6 +1095,60 @@ export async function leaveGroup(groupId: string) {
   }
 }
 
+export async function deletePost({ postId }: { postId: string }) {
+  const session = await serverAuth();
+
+  if (!session) {
+    return {
+      success: false,
+      message: "Unauthorized",
+    };
+  }
+
+  const userId = session.user.id;
+  const userRole = session.user.role;
+
+  try {
+    const post = await db
+      .select({
+        id: communityPosts.id,
+        authorId: communityPosts.authorId,
+      })
+      .from(communityPosts)
+      .where(eq(communityPosts.id, postId))
+      .limit(1);
+
+    if (post.length === 0) {
+      return {
+        success: false,
+        message: "Post not found",
+      };
+    }
+
+    const postData = post[0];
+
+    if (postData.authorId !== userId && userRole !== "ADMIN") {
+      return {
+        success: false,
+        message: "Failed to delete post",
+      };
+    }
+
+    await db.delete(communityPosts).where(eq(communityPosts.id, postId));
+
+    return {
+      success: true,
+      message: "Post deleted successfully",
+    };
+  } catch (error) {
+    console.error("Error deleting post:", error);
+    return {
+      success: false,
+      message: "Failed to delete post",
+    };
+  }
+}
+
 export async function getUserGroupMemberships(userId?: string) {
   const session = await serverAuth();
 

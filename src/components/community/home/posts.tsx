@@ -6,11 +6,31 @@ import { Skeleton } from "@/components/ui/skeleton";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import {
   Ellipsis,
   HeartIcon,
   MessageSquareIcon,
   Share2Icon,
   Inbox,
+  Flag,
+  Bookmark,
+  Trash2,
 } from "lucide-react";
 import { Top } from "./top";
 import Link from "next/link";
@@ -26,8 +46,10 @@ import {
   togglePostLike,
   checkPostLikeStatus,
   createShare,
+  deletePost,
 } from "@/actions/community/posts";
 import { toast } from "sonner";
+import { authClient } from "@/lib/auth-client";
 
 interface Post {
   id: string;
@@ -237,16 +259,149 @@ const EmptyState = ({ userId }: { userId?: string }) => {
   );
 };
 
+const PostMenu = ({
+  onShare,
+  onDelete,
+  isOwner,
+  isAdmin,
+  isDeleting,
+}: {
+  onShare: (e: React.MouseEvent) => void;
+  onDelete: () => void;
+  isOwner: boolean;
+  isAdmin: boolean;
+  isDeleting: boolean;
+}) => {
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+
+  const handleReport = () => {
+    toast.info("Report functionality coming soon!");
+  };
+
+  const handleSave = () => {
+    toast.info("Save functionality coming soon!");
+  };
+
+  const handleMenuShare = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    onShare(e);
+  };
+
+  const handleDeleteClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setShowDeleteDialog(true);
+  };
+
+  const handleDeleteConfirm = () => {
+    onDelete();
+    setShowDeleteDialog(false);
+  };
+
+  return (
+    <>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="ml-auto"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+            }}
+          >
+            <Ellipsis className="w-4 h-4" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end" className="w-48">
+          <DropdownMenuItem
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              handleReport();
+            }}
+          >
+            <Flag className="w-4 h-4 mr-2" />
+            Report
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              handleSave();
+            }}
+          >
+            <Bookmark className="w-4 h-4 mr-2" />
+            Save
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              handleMenuShare(e);
+            }}
+          >
+            <Share2Icon className="w-4 h-4 mr-2" />
+            Share
+          </DropdownMenuItem>
+          {(isOwner || isAdmin) && (
+            <>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                onClick={handleDeleteClick}
+                className="text-red-600 focus:text-red-600"
+              >
+                <Trash2 className="w-4 h-4 mr-2" />
+                Delete
+              </DropdownMenuItem>
+            </>
+          )}
+        </DropdownMenuContent>
+      </DropdownMenu>
+
+      <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete Post</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to delete this post? This action cannot be
+              undone and will permanently remove the post and all associated
+              comments, likes, and shares.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleDeleteConfirm}
+              disabled={isDeleting}
+              className="bg-red-600 hover:bg-red-700"
+            >
+              {isDeleting ? "Deleting..." : "Delete Post"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
+  );
+};
+
 const PostCard = ({ post }: { post: Post }) => {
   const [localLikeCount, setLocalLikeCount] = useState(post.likeCount);
   const [localShareCount, setLocalShareCount] = useState(post.shareCount);
   const queryClient = useQueryClient();
   const router = useRouter();
+  const { data: session } = authClient.useSession();
 
   const displayUsername =
     post.author?.displayUsername || post.author?.username || "user";
   const authorImage = post.author?.image || "/images/welcome.png";
   const authorName = post.author?.name || "Unknown User";
+  const currentUserId = session?.user?.id;
+  const userRole = session?.user?.role;
+  const isOwner = post.author?.id === currentUserId;
+  const isAdmin = userRole === "ADMIN";
 
   const handlePostClick = (e: React.MouseEvent) => {
     // Don't navigate if clicking on interactive elements
@@ -302,6 +457,21 @@ const PostCard = ({ post }: { post: Post }) => {
     onError: () => {
       // Revert optimistic update
       setLocalShareCount(post.shareCount);
+    },
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: async () => deletePost({ postId: post.id }),
+    onSuccess: (result) => {
+      if (result.success) {
+        toast.success(result.message);
+        queryClient.invalidateQueries({ queryKey: ["community-posts"] });
+      } else {
+        toast.error(result.message);
+      }
+    },
+    onError: () => {
+      toast.error("Failed to delete post");
     },
   });
 
@@ -368,9 +538,13 @@ const PostCard = ({ post }: { post: Post }) => {
                 {post.group.name}
               </span>
             )}
-            <Button variant={"ghost"} size={"icon"} className="ml-auto">
-              <Ellipsis className="w-4 h-4" />
-            </Button>
+            <PostMenu
+              onShare={handleShare}
+              onDelete={() => deleteMutation.mutate()}
+              isOwner={isOwner}
+              isAdmin={isAdmin}
+              isDeleting={deleteMutation.isPending}
+            />
           </div>
         </div>
       </div>

@@ -6,6 +6,17 @@ import { Skeleton } from "@/components/ui/skeleton";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import {
   Ellipsis,
   HeartIcon,
   MessageSquareIcon,
@@ -13,6 +24,7 @@ import {
   ArrowLeft,
   BookmarkIcon,
   FlagIcon,
+  Trash2,
 } from "lucide-react";
 import Link from "next/link";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
@@ -21,10 +33,13 @@ import {
   togglePostLike,
   checkPostLikeStatus,
   createShare,
+  deletePost,
 } from "@/actions/community/posts";
 import PostComments from "./post-comments";
 import ImageModal from "./image-modal";
 import { toast } from "sonner";
+import { authClient } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
 
 interface PostData {
   id: string;
@@ -120,6 +135,14 @@ const PostContent = ({ postId, post }: { postId: string; post: PostData }) => {
   const [localLikeCount, setLocalLikeCount] = useState(post.likeCount);
   const [localShareCount, setLocalShareCount] = useState(post.shareCount);
   const queryClient = useQueryClient();
+  const router = useRouter();
+  const { data: session } = authClient.useSession();
+
+  const currentUserId = session?.user?.id;
+  const userRole = session?.user?.role;
+  const isOwner = post.author?.id === currentUserId;
+  const isAdmin = userRole === "ADMIN";
+  const canDelete = isOwner || isAdmin;
 
   const authorName = post.author?.name || "Unknown User";
   const authorImage = post.author?.image || "/images/welcome.png";
@@ -173,6 +196,21 @@ const PostContent = ({ postId, post }: { postId: string; post: PostData }) => {
     onError: () => {
       // Revert optimistic update
       setLocalShareCount(post.shareCount);
+    },
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: async () => deletePost({ postId }),
+    onSuccess: (result) => {
+      if (result.success) {
+        toast.success(result.message);
+        router.push("/community/home");
+      } else {
+        toast.error(result.message);
+      }
+    },
+    onError: () => {
+      toast.error("Failed to delete post");
     },
   });
 
@@ -271,9 +309,46 @@ const PostContent = ({ postId, post }: { postId: string; post: PostData }) => {
                   <Button variant="ghost" size="icon">
                     <FlagIcon className="w-4 h-4" />
                   </Button>
-                  <Button variant="ghost" size="icon">
-                    <Ellipsis className="w-4 h-4" />
-                  </Button>
+                  {canDelete ? (
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="text-red-600 hover:text-red-700"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>Delete Post</AlertDialogTitle>
+                          <AlertDialogDescription>
+                            Are you sure you want to delete this post? This
+                            action cannot be undone and will permanently remove
+                            the post and all associated comments, likes, and
+                            shares.
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>Cancel</AlertDialogCancel>
+                          <AlertDialogAction
+                            onClick={() => deleteMutation.mutate()}
+                            disabled={deleteMutation.isPending}
+                            className="bg-red-600 hover:bg-red-700"
+                          >
+                            {deleteMutation.isPending
+                              ? "Deleting..."
+                              : "Delete Post"}
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
+                  ) : (
+                    <Button variant="ghost" size="icon">
+                      <Ellipsis className="w-4 h-4" />
+                    </Button>
+                  )}
                 </div>
               </div>
             </div>
