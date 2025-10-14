@@ -27,7 +27,7 @@ const profileSchema = z.object({
     .string()
     .min(3, "Username must be at least 3 characters")
     .max(20, "Username must be less than 20 characters"),
-  displayUsername: z.string().optional(),
+  displayUsername: z.string(),
   bio: z.string().max(500, "Bio must be less than 500 characters").optional(),
 });
 
@@ -282,6 +282,7 @@ export default function ProfileEditForm({
           />
 
           <FormField
+            disabled={true}
             control={form.control}
             name="displayUsername"
             render={({ field }) => (
