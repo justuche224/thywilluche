@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 export default async function ProfilePage() {
   const session = await serverAuth();
   if (!session) {
-    redirect("/auth/login?callbackUrl=/community/home");
+    redirect("/auth/login?callbackUrl=/community/profile");
   }
 
   const profileResult = await getUserProfile(session.user.id);

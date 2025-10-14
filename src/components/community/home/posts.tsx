@@ -356,12 +356,12 @@ const PostCard = ({ post }: { post: Post }) => {
           className="rounded-full aspect-square object-cover"
         />
         <div className="w-full flex items-center justify-between">
-          <div>
+          <Link href={`/community/profile/${displayUsername}`}>
             <p className="font-semibold text-lg">{authorName}</p>
             <p className="text-sm text-muted-foreground italic">
               @{displayUsername}
             </p>
-          </div>
+          </Link>
           <div className="flex items-center gap-2">
             {post.group && (
               <span className="text-xs bg-[#800000] text-white px-2 py-1 rounded-full">
