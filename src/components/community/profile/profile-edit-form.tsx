@@ -17,7 +17,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { toast } from "sonner";
-import { updateUserProfile, checkUsernameAvailability } from "@/actions/user";
+import { updateUserProfile } from "@/actions/user";
+import { authClient } from "@/lib/auth-client";
 import { Loader2, Upload, X } from "lucide-react";
 
 const profileSchema = z.object({
@@ -27,8 +28,8 @@ const profileSchema = z.object({
     .min(3, "Username must be at least 3 characters")
     .max(20, "Username must be less than 20 characters")
     .regex(
-      /^[a-zA-Z0-9_]+$/,
-      "Username can only contain letters, numbers, and underscores"
+      /^[a-zA-Z0-9_.-]+$/,
+      "Username can contain letters, numbers, underscores, dots, and hyphens"
     )
     .optional()
     .or(z.literal("")),
@@ -75,32 +76,31 @@ export default function ProfileEditForm({
 
   useEffect(() => {
     const checkUsername = async () => {
-      if (watchedUsername && watchedUsername.length >= 3) {
-        setIsCheckingUsername(true);
-        try {
-          const result = await checkUsernameAvailability(
-            watchedUsername,
-            userId
-          );
-          if (!result.success || !result.available) {
-            form.setError("username", {
-              type: "manual",
-              message: result.message,
-            });
-          } else {
-            form.clearErrors("username");
-          }
-        } catch (error) {
-          console.error("Error checking username:", error);
-        } finally {
-          setIsCheckingUsername(false);
+      const current = watchedUsername?.trim() ?? "";
+      if (!current || current.length < 3) return;
+      if (current === (initialData.username || "")) return;
+      setIsCheckingUsername(true);
+      try {
+        const { data, error } = await authClient.isUsernameAvailable({
+          username: current,
+        });
+        if (error || !data?.available) {
+          form.setError("username", {
+            type: "manual",
+            message: error?.message || "Username is already taken",
+          });
+        } else {
+          form.clearErrors("username");
         }
+      } catch {
+      } finally {
+        setIsCheckingUsername(false);
       }
     };
 
     const timeoutId = setTimeout(checkUsername, 500);
     return () => clearTimeout(timeoutId);
-  }, [watchedUsername, userId, form]);
+  }, [watchedUsername, initialData.username, form]);
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -147,8 +147,8 @@ export default function ProfileEditForm({
 
       if (imageFile) {
         const formData = new FormData();
-        formData.append("file", imageFile);
-        formData.append("folder", "profiles");
+        formData.append("images", imageFile);
+        formData.append("path", "profiles");
 
         try {
           const response = await fetch("/api/upload", {
@@ -158,7 +158,9 @@ export default function ProfileEditForm({
 
           if (response.ok) {
             const result = await response.json();
-            updateData.image = result.url;
+            if (Array.isArray(result.imageUrls) && result.imageUrls[0]) {
+              updateData.image = result.imageUrls[0];
+            }
           }
         } catch (error) {
           console.error("Error uploading image:", error);
@@ -258,6 +260,7 @@ export default function ProfileEditForm({
           />
 
           <FormField
+            disabled={true}
             control={form.control}
             name="username"
             render={({ field }) => (
@@ -277,8 +280,8 @@ export default function ProfileEditForm({
                 </FormControl>
                 <FormMessage />
                 <p className="text-xs text-gray-500">
-                  Choose a unique username. Only letters, numbers, and
-                  underscores allowed.
+                  Choose a unique username. Letters, numbers, underscores, dots,
+                  and hyphens are allowed.
                 </p>
               </FormItem>
             )}

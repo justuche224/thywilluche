@@ -77,11 +77,13 @@ type FetchAction = (args: {
 const Posts = ({
   groupId,
   userId,
+  displayName,
   fetchAction,
   showNewButton = true,
 }: {
   groupId?: string;
   userId?: string;
+  displayName?: string;
   showNewButton?: boolean;
   fetchAction?: FetchAction;
 }) => {
@@ -141,6 +143,11 @@ const Posts = ({
     <div className="w-full p-5 h-full">
       <div className="w-full mt-10">
         {showNewButton && <Top />}
+        {displayName && (
+          <h3 className="text-2xl font-bold text-center mt-10">
+            Posts by {displayName}
+          </h3>
+        )}
         <Separator className="my-5 bg-[#800000]" />
       </div>
 
@@ -214,11 +221,13 @@ const EmptyState = ({ userId }: { userId?: string }) => {
         </div>
         <div className="space-y-2">
           <h3 className="text-2xl font-bold text-gray-900">No posts yet</h3>
-         {userId ? <p className="text-gray-500">
-            Be the first to share something with the community!
-          </p> : <p className="text-gray-500">
-            No posts yet
-          </p>}
+          {userId ? (
+            <p className="text-gray-500">
+              Be the first to share something with the community!
+            </p>
+          ) : (
+            <p className="text-gray-500">No posts yet</p>
+          )}
         </div>
         <Button className="mt-4" asChild>
           <Link href="/community/home/posts/new">Create Post</Link>

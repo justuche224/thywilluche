@@ -36,7 +36,7 @@ export default async function ProfilePage() {
   const bio = userProfile?.bio || "No bio available";
 
   return (
-    <div className="container mx-auto px-4 py-8 w-full">
+    <div className="container max-w-6xl bg-white rounded-xl mx-auto px-4 py-8 w-full">
       <div className="w-full max-w-2xl mx-auto flex flex-col items-center justify-center gap-5">
         <Avatar className="h-30 w-30">
           <AvatarImage
@@ -56,7 +56,7 @@ export default async function ProfilePage() {
           <EditProfile userId={session?.user?.id} />
         </div>
       </div>
-      <Posts showNewButton={false} userId={session?.user?.id} />
+      <Posts displayName={displayName} showNewButton={false} userId={session?.user?.id} />
     </div>
   );
 }

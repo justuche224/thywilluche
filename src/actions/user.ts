@@ -2,6 +2,7 @@
 
 import db from "@/db";
 import { serverAuth } from "@/lib/server-auth";
+import { auth } from "@/lib/auth";
 import { user } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
@@ -57,8 +58,12 @@ export async function getUserProfile(userId: string) {
 }
 
 export const getUserRole = async (userId: string) => {
-    const userData = await db.select({role: user.role}).from(user).where(eq(user.id, userId)).limit(1);
-    return userData[0].role;
+  const userData = await db
+    .select({ role: user.role })
+    .from(user)
+    .where(eq(user.id, userId))
+    .limit(1);
+  return userData[0].role;
 };
 
 export async function updateUserProfile(
@@ -83,8 +88,7 @@ export async function updateUserProfile(
   try {
     const updateData: {
       name?: string;
-      username?: string | null;
-      displayUsername?: string | null;
+      // username and displayUsername are managed by Better Auth
       bio?: string | null;
       image?: string;
       updatedAt: Date;
@@ -93,9 +97,19 @@ export async function updateUserProfile(
     };
 
     if (data.name !== undefined) updateData.name = data.name;
-    if (data.username !== undefined) updateData.username = data.username;
-    if (data.displayUsername !== undefined)
-      updateData.displayUsername = data.displayUsername;
+    // Delegate username updates to Better Auth
+    if (data.username !== undefined && data.username !== null) {
+      const response = await auth.api.updateUser({
+        body: { username: data.username as string },
+      });
+      if (!response?.status) {
+        return {
+          success: false,
+          message: "Failed to update username",
+        };
+      }
+    }
+    // displayUsername will be handled by plugin normalization
     if (data.bio !== undefined) updateData.bio = data.bio;
     if (data.image !== undefined) updateData.image = data.image;
 
