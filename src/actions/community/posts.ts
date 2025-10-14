@@ -957,3 +957,155 @@ export async function createShare({ postId }: { postId: string }) {
     };
   }
 }
+
+export async function joinGroup(groupId: string) {
+  const session = await serverAuth();
+
+  if (!session) {
+    return {
+      success: false,
+      message: "Unauthorized",
+    };
+  }
+
+  const userId = session.user.id;
+
+  try {
+    const existingMembership = await db
+      .select()
+      .from(communityGroupMemberships)
+      .where(
+        and(
+          eq(communityGroupMemberships.userId, userId),
+          eq(communityGroupMemberships.groupId, groupId)
+        )
+      );
+
+    if (existingMembership.length > 0) {
+      if (existingMembership[0].isActive) {
+        return {
+          success: false,
+          message: "You are already a member of this group",
+        };
+      } else {
+        await db
+          .update(communityGroupMemberships)
+          .set({ isActive: true, joinedAt: new Date() })
+          .where(
+            and(
+              eq(communityGroupMemberships.userId, userId),
+              eq(communityGroupMemberships.groupId, groupId)
+            )
+          );
+      }
+    } else {
+      await db.insert(communityGroupMemberships).values({
+        userId,
+        groupId,
+        isActive: true,
+      });
+    }
+
+    return {
+      success: true,
+      message: "Successfully joined the group",
+    };
+  } catch (error) {
+    console.error("Error joining group:", error);
+    return {
+      success: false,
+      message: "Failed to join group",
+    };
+  }
+}
+
+export async function leaveGroup(groupId: string) {
+  const session = await serverAuth();
+
+  if (!session) {
+    return {
+      success: false,
+      message: "Unauthorized",
+    };
+  }
+
+  const userId = session.user.id;
+
+  try {
+    await db
+      .update(communityGroupMemberships)
+      .set({ isActive: false })
+      .where(
+        and(
+          eq(communityGroupMemberships.userId, userId),
+          eq(communityGroupMemberships.groupId, groupId)
+        )
+      );
+
+    return {
+      success: true,
+      message: "Successfully left the group",
+    };
+  } catch (error) {
+    console.error("Error leaving group:", error);
+    return {
+      success: false,
+      message: "Failed to leave group",
+    };
+  }
+}
+
+export async function getUserGroupMemberships(userId?: string) {
+  const session = await serverAuth();
+
+  if (!session) {
+    return {
+      success: false,
+      data: [],
+      message: "Unauthorized",
+    };
+  }
+
+  const targetUserId = userId || session.user.id;
+
+  try {
+    const memberships = await db
+      .select({
+        id: communityGroupMemberships.id,
+        groupId: communityGroupMemberships.groupId,
+        joinedAt: communityGroupMemberships.joinedAt,
+        isActive: communityGroupMemberships.isActive,
+        group: {
+          id: communityGroups.id,
+          name: communityGroups.name,
+          slug: communityGroups.slug,
+          description: communityGroups.description,
+          type: communityGroups.type,
+          imageUrl: communityGroups.imageUrl,
+        },
+      })
+      .from(communityGroupMemberships)
+      .innerJoin(
+        communityGroups,
+        eq(communityGroupMemberships.groupId, communityGroups.id)
+      )
+      .where(
+        and(
+          eq(communityGroupMemberships.userId, targetUserId),
+          eq(communityGroupMemberships.isActive, true)
+        )
+      );
+
+    return {
+      success: true,
+      data: memberships,
+    };
+  } catch (error) {
+    console.error("Error fetching user group memberships:", error);
+    return {
+      success: false,
+      data: [],
+      message: "Failed to fetch group memberships",
+    };
+  }
+}
