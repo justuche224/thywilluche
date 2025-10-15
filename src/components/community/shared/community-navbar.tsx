@@ -216,6 +216,25 @@ export function CommunityNavbar() {
                 </NavigationMenuLink>
               </NavigationMenuItem>
 
+              {/* Games */}
+              <NavigationMenuItem className="mb-5">
+                <NavigationMenuLink
+                  asChild
+                  className={
+                    navigationMenuTriggerStyle() +
+                    ` bg-transparent ${oswald.className} text-[#800000]`
+                  }
+                >
+                  <Link
+                    href="/community/games"
+                    className="flex items-center gap-2"
+                  >
+                    <User className="w-4 h-4" />
+                    Games
+                  </Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+
             </NavigationMenuList>
           </NavigationMenu>
           <UserMenu />
@@ -271,6 +290,16 @@ function MobileNavContent({ onClose }: { onClose: () => void }) {
         >
           <User className="w-5 h-5" />
           Profile
+        </Link>
+
+        {/* Games */}
+        <Link
+          href="/community/games"
+          className={`text-lg font-semibold px-4 py-3 rounded-lg hover:bg-accent hover:text-accent-foreground active:bg-accent/80 transition-all ${oswald.className} text-[#800000] flex items-center gap-2`}
+          onClick={onClose}
+        >
+          <User className="w-5 h-5" />
+          Games
         </Link>
 
         <div className="h-px bg-border my-2" />
