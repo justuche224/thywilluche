@@ -133,3 +133,39 @@ export const communityShares = pgTable("community_shares", {
     .references(() => communityPosts.id, { onDelete: "cascade" }),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
+
+export const reportStatus = [
+  "pending",
+  "reviewed",
+  "resolved",
+  "dismissed",
+] as const;
+
+export const communityReports = pgTable("community_reports", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  postId: text("post_id").references(() => communityPosts.id, {
+    onDelete: "cascade",
+  }),
+  commentId: text("comment_id").references(() => communityComments.id, {
+    onDelete: "cascade",
+  }),
+  reporterId: text("reporter_id")
+    .notNull()
+    .references(() => user.id, { onDelete: "cascade" }),
+  reason: text("reason").notNull(),
+  description: text("description"),
+  status: text("status")
+    .$type<(typeof reportStatus)[number]>()
+    .default("pending")
+    .notNull(),
+  reviewedBy: text("reviewed_by").references(() => user.id),
+  reviewedAt: timestamp("reviewed_at"),
+  resolution: text("resolution"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at")
+    .defaultNow()
+    .$onUpdate(() => new Date())
+    .notNull(),
+});

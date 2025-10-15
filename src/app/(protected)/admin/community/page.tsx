@@ -34,7 +34,7 @@ export default async function CommunityAdminPage() {
     <div className="p-6 max-w-7xl mx-auto">
       <CommunityDashboard
         stats={statsResult.data}
-        // @ts-expect-error doesn't work break anything
+        //@ts-expect-error doesn't work break anything
         recentActivity={activityResult.success ? activityResult.data : null}
       />
     </div>

@@ -23,6 +23,23 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import {
   Ellipsis,
   HeartIcon,
   MessageSquareIcon,
@@ -47,6 +64,7 @@ import {
   checkPostLikeStatus,
   createShare,
   deletePost,
+  reportPost,
 } from "@/actions/community/posts";
 import { toast } from "sonner";
 import { authClient } from "@/lib/auth-client";
@@ -260,12 +278,14 @@ const EmptyState = ({ userId }: { userId?: string }) => {
 };
 
 const PostMenu = ({
+  postId,
   onShare,
   onDelete,
   isOwner,
   isAdmin,
   isDeleting,
 }: {
+  postId: string;
   onShare: (e: React.MouseEvent) => void;
   onDelete: () => void;
   isOwner: boolean;
@@ -273,9 +293,44 @@ const PostMenu = ({
   isDeleting: boolean;
 }) => {
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [showReportDialog, setShowReportDialog] = useState(false);
+  const [reportReason, setReportReason] = useState("");
+  const [reportDescription, setReportDescription] = useState("");
+  const [isSubmittingReport, setIsSubmittingReport] = useState(false);
 
-  const handleReport = () => {
-    toast.info("Report functionality coming soon!");
+  const handleReportClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setShowReportDialog(true);
+  };
+
+  const handleReportSubmit = async () => {
+    if (!reportReason) {
+      toast.error("Please select a reason for reporting");
+      return;
+    }
+
+    setIsSubmittingReport(true);
+    try {
+      const result = await reportPost({
+        postId,
+        reason: reportReason,
+        description: reportDescription,
+      });
+
+      if (result.success) {
+        toast.success(result.message);
+        setShowReportDialog(false);
+        setReportReason("");
+        setReportDescription("");
+      } else {
+        toast.error(result.message);
+      }
+    } catch {
+      toast.error("Failed to submit report");
+    } finally {
+      setIsSubmittingReport(false);
+    }
   };
 
   const handleSave = () => {
@@ -320,7 +375,7 @@ const PostMenu = ({
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
-              handleReport();
+              handleReportClick(e);
             }}
           >
             <Flag className="w-4 h-4 mr-2" />
@@ -360,6 +415,69 @@ const PostMenu = ({
           )}
         </DropdownMenuContent>
       </DropdownMenu>
+
+      <Dialog open={showReportDialog} onOpenChange={setShowReportDialog}>
+        <DialogContent
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+        >
+          <DialogHeader>
+            <DialogTitle>Report Post</DialogTitle>
+            <DialogDescription>
+              Help us understand what&apos;s wrong with this post.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="reason">Reason *</Label>
+              <Select value={reportReason} onValueChange={setReportReason}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select a reason" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="spam">Spam or misleading</SelectItem>
+                  <SelectItem value="harassment">
+                    Harassment or hate speech
+                  </SelectItem>
+                  <SelectItem value="inappropriate">
+                    Inappropriate content
+                  </SelectItem>
+                  <SelectItem value="violence">
+                    Violence or dangerous content
+                  </SelectItem>
+                  <SelectItem value="other">Other</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="description">Additional details (optional)</Label>
+              <Textarea
+                id="description"
+                placeholder="Provide more context about why you're reporting this post..."
+                value={reportDescription}
+                onChange={(e) => setReportDescription(e.target.value)}
+                rows={4}
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setShowReportDialog(false)}
+              disabled={isSubmittingReport}
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={handleReportSubmit}
+              disabled={isSubmittingReport || !reportReason}
+            >
+              {isSubmittingReport ? "Submitting..." : "Submit Report"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
       <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
         <AlertDialogContent>
@@ -539,6 +657,7 @@ const PostCard = ({ post }: { post: Post }) => {
               </span>
             )}
             <PostMenu
+              postId={post.id}
               onShare={handleShare}
               onDelete={() => deleteMutation.mutate()}
               isOwner={isOwner}

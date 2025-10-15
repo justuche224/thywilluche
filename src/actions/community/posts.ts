@@ -9,6 +9,7 @@ import {
   communityComments,
   communityLikes,
   communityShares,
+  communityReports,
   user,
 } from "@/db/schema";
 import { and, desc, eq, ilike, inArray, isNull, or, sql } from "drizzle-orm";
@@ -1200,6 +1201,150 @@ export async function getUserGroupMemberships(userId?: string) {
       success: false,
       data: [],
       message: "Failed to fetch group memberships",
+    };
+  }
+}
+
+export async function reportPost({
+  postId,
+  reason,
+  description,
+}: {
+  postId: string;
+  reason: string;
+  description?: string;
+}) {
+  const session = await serverAuth();
+
+  if (!session) {
+    return {
+      success: false,
+      message: "Unauthorized",
+    };
+  }
+
+  try {
+    const post = await db
+      .select({ id: communityPosts.id })
+      .from(communityPosts)
+      .where(eq(communityPosts.id, postId))
+      .limit(1);
+
+    if (post.length === 0) {
+      return {
+        success: false,
+        message: "Post not found",
+      };
+    }
+
+    const existingReport = await db
+      .select({ id: communityReports.id })
+      .from(communityReports)
+      .where(
+        and(
+          eq(communityReports.postId, postId),
+          eq(communityReports.reporterId, session.user.id),
+          eq(communityReports.status, "pending")
+        )
+      )
+      .limit(1);
+
+    if (existingReport.length > 0) {
+      return {
+        success: false,
+        message: "You have already reported this post",
+      };
+    }
+
+    await db.insert(communityReports).values({
+      postId,
+      reporterId: session.user.id,
+      reason,
+      description: description || null,
+      status: "pending",
+    });
+
+    return {
+      success: true,
+      message: "Report submitted successfully",
+    };
+  } catch (error) {
+    console.error("Error reporting post:", error);
+    return {
+      success: false,
+      message: "Failed to submit report",
+    };
+  }
+}
+
+export async function reportComment({
+  commentId,
+  reason,
+  description,
+}: {
+  commentId: string;
+  reason: string;
+  description?: string;
+}) {
+  const session = await serverAuth();
+
+  if (!session) {
+    return {
+      success: false,
+      message: "Unauthorized",
+    };
+  }
+
+  try {
+    const comment = await db
+      .select({ id: communityComments.id })
+      .from(communityComments)
+      .where(eq(communityComments.id, commentId))
+      .limit(1);
+
+    if (comment.length === 0) {
+      return {
+        success: false,
+        message: "Comment not found",
+      };
+    }
+
+    const existingReport = await db
+      .select({ id: communityReports.id })
+      .from(communityReports)
+      .where(
+        and(
+          eq(communityReports.commentId, commentId),
+          eq(communityReports.reporterId, session.user.id),
+          eq(communityReports.status, "pending")
+        )
+      )
+      .limit(1);
+
+    if (existingReport.length > 0) {
+      return {
+        success: false,
+        message: "You have already reported this comment",
+      };
+    }
+
+    await db.insert(communityReports).values({
+      commentId,
+      reporterId: session.user.id,
+      reason,
+      description: description || null,
+      status: "pending",
+    });
+
+    return {
+      success: true,
+      message: "Report submitted successfully",
+    };
+  } catch (error) {
+    console.error("Error reporting comment:", error);
+    return {
+      success: false,
+      message: "Failed to submit report",
     };
   }
 }

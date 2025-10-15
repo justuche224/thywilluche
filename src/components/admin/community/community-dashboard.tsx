@@ -31,6 +31,8 @@ interface CommunityStats {
   totalShares: number;
   totalUsers: number;
   totalGroups: number;
+  totalReports?: number;
+  pendingReports?: number;
 }
 
 interface RecentActivity {
@@ -163,6 +165,19 @@ export function CommunityDashboard({
     },
   ];
 
+  if (stats.totalReports !== undefined) {
+    statCards.push({
+      title: "Total Reports",
+      value: stats.totalReports,
+      icon: AlertTriangle,
+      color: "text-orange-600",
+      bgColor: "bg-orange-50",
+      description: "Content reports submitted",
+      helpText: "All reports submitted by users about posts or comments",
+      urgent: stats.pendingReports ? stats.pendingReports > 0 : false,
+    });
+  }
+
   const quickActions = [
     {
       title: "Review Pending Posts",
@@ -207,6 +222,28 @@ export function CommunityDashboard({
       bgColor: "bg-orange-50",
     },
   ];
+
+  if (stats.pendingReports && stats.pendingReports > 0) {
+    quickActions.push({
+      title: "Review Reports",
+      description: "Handle reported content from users",
+      href: "/admin/community/reports?status=pending",
+      icon: AlertTriangle,
+      color: "text-red-600",
+      bgColor: "bg-red-50",
+      urgent: true,
+      count: stats.pendingReports,
+    });
+  } else {
+    quickActions.push({
+      title: "View Reports",
+      description: "Review all content reports",
+      href: "/admin/community/reports",
+      icon: AlertTriangle,
+      color: "text-orange-600",
+      bgColor: "bg-orange-50",
+    });
+  }
 
   return (
     <div className="space-y-6">
