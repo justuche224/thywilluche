@@ -21,6 +21,17 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Thywill Uche",
   description: "365 TIPS, 365 WINS - EVERY DAY IS VICTORY",
+  openGraph: {
+    title: "Thywill Uche",
+    description: "365 TIPS, 365 WINS - EVERY DAY IS VICTORY",
+    images: "/images/main.jpg",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Thywill Uche",
+    description: "365 TIPS, 365 WINS - EVERY DAY IS VICTORY",
+    images: "/images/main.jpg",
+  },
 };
 
 export default function RootLayout({
