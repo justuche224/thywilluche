@@ -4,7 +4,7 @@ import React from "react";
 import Image from "next/image";
 import { Oswald } from "next/font/google";
 import { motion } from "framer-motion";
-import { Quote, TrendingUp, Star } from "lucide-react";
+import { Quote, Star } from "lucide-react";
 import { MediaHighlight } from "@/db/schema/media-highlights";
 import { georgiaItalic } from "@/utils/georgia-italic";
   
@@ -169,7 +169,7 @@ const MediaGallery = ({ mediaHighlights }: MediaGalleryProps) => {
           </div>
 
           {/* Call to Action */}
-          <motion.div
+          {/* <motion.div
             className="text-center mt-16"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -196,7 +196,6 @@ const MediaGallery = ({ mediaHighlights }: MediaGalleryProps) => {
                 path forward.
               </p>
 
-              {/* Stats Row */}
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
                 {[
                   { number: "50+", label: "Media Features" },
@@ -226,7 +225,7 @@ const MediaGallery = ({ mediaHighlights }: MediaGalleryProps) => {
                 ))}
               </div>
             </div>
-          </motion.div>
+          </motion.div> */}
         </div>
       </div>
     </motion.section>

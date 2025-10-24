@@ -56,7 +56,7 @@ const Featured = ({
                 {quote}
               </p>
             </div>
-            <div className="p-1 bg-primary/50 rounded-lg">
+            <div className="p-1 rounded-lg">
               <Image
                 src={image1}
                 width={200}
@@ -67,7 +67,7 @@ const Featured = ({
             </div>
           </div>
           <div className="space-y-2">
-            <div className="p-1 bg-secondary/50 rounded-lg">
+            <div className="p-1 rounded-lg">
               <Image
                 src={image2}
                 width={200}
