@@ -11,3 +11,4 @@ export * from "./projects";
 export * from "./testimonials";
 export * from "./community";
 export * from "./announcements";
+export * from "./games";

@@ -146,6 +146,14 @@ const data = {
           title: "Announcements",
           url: "/admin/community/announcements",
         },
+        {
+          title: "Games",
+          url: "/admin/community/games",
+        },
+        {
+          title: "Badges",
+          url: "/admin/community/badges",
+        },
       ],
     },
     {

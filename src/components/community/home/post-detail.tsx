@@ -58,6 +58,8 @@ import ImageModal from "./image-modal";
 import { toast } from "sonner";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
+import { getUserBadges } from "@/actions/community/games";
+import BadgeDisplay from "@/components/shared/badge-display";
 
 interface PostData {
   id: string;
@@ -160,6 +162,12 @@ const PostContent = ({ postId, post }: { postId: string; post: PostData }) => {
   const router = useRouter();
   const { data: session } = authClient.useSession();
 
+  const { data: authorBadges } = useQuery({
+    queryKey: ["user-badges", post.author?.id],
+    queryFn: () => getUserBadges({ userId: post.author?.id || "" }),
+    enabled: !!post.author?.id,
+  });
+
   const currentUserId = session?.user?.id;
   const userRole = session?.user?.role;
   const isOwner = post.author?.id === currentUserId;
@@ -184,7 +192,6 @@ const PostContent = ({ postId, post }: { postId: string; post: PostData }) => {
   const likeMutation = useMutation({
     mutationFn: async () => togglePostLike({ postId }),
     onMutate: async () => {
-      // Optimistic update
       setLocalLikeCount((prev) => (isLiked ? prev - 1 : prev + 1));
     },
     onSuccess: (result) => {
@@ -197,7 +204,6 @@ const PostContent = ({ postId, post }: { postId: string; post: PostData }) => {
       }
     },
     onError: () => {
-      // Revert optimistic update
       setLocalLikeCount(post.likeCount);
       toast.error("Failed to like post");
     },
@@ -206,7 +212,6 @@ const PostContent = ({ postId, post }: { postId: string; post: PostData }) => {
   const shareMutation = useMutation({
     mutationFn: async () => createShare({ postId }),
     onMutate: async () => {
-      // Optimistic update
       setLocalShareCount((prev) => prev + 1);
     },
     onSuccess: (result) => {
@@ -216,7 +221,6 @@ const PostContent = ({ postId, post }: { postId: string; post: PostData }) => {
       }
     },
     onError: () => {
-      // Revert optimistic update
       setLocalShareCount(post.shareCount);
     },
   });
@@ -239,7 +243,6 @@ const PostContent = ({ postId, post }: { postId: string; post: PostData }) => {
   const handleShare = async () => {
     const postUrl = `${window.location.origin}/community/home/posts/${postId}`;
 
-    // Try to use native share API first
     if (navigator.share) {
       try {
         await navigator.share({
@@ -247,20 +250,16 @@ const PostContent = ({ postId, post }: { postId: string; post: PostData }) => {
           text: content.substring(0, 100),
           url: postUrl,
         });
-        // Log share to database
         shareMutation.mutate();
         toast.success("Post shared successfully!");
       } catch (err) {
-        // User cancelled share
         if ((err as Error).name !== "AbortError") {
           console.error("Share failed:", err);
         }
       }
     } else {
-      // Fallback to copy link
       try {
         await navigator.clipboard.writeText(postUrl);
-        // Log share to database
         shareMutation.mutate();
         toast.success("Link copied to clipboard!");
       } catch (err) {
@@ -331,16 +330,48 @@ const PostContent = ({ postId, post }: { postId: string; post: PostData }) => {
               alt={authorName}
               width={48}
               height={48}
-              className="rounded-full aspect-square object-cover"
+              className="rounded-full aspect-square object-cover cursor-pointer"
+              onClick={() =>
+                router.push(`/community/profile/${displayUsername}`)
+              }
             />
             <div className="flex-1">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="font-semibold text-lg">{authorName}</p>
-                  <p className="text-sm text-muted-foreground italic">
+                  <div className="flex items-center gap-2">
+                    <p
+                      className="font-semibold text-lg cursor-pointer"
+                      onClick={() =>
+                        router.push(`/community/profile/${displayUsername}`)
+                      }
+                    >
+                      {authorName}
+                    </p>
+                    {authorBadges?.data && authorBadges.data.length > 0 && (
+                      <BadgeDisplay
+                        // @ts-expect-error nothing
+                        badges={
+                          authorBadges.data.map((badge) => badge.badge) || []
+                        }
+                        maxDisplay={2}
+                        size="sm"
+                      />
+                    )}
+                  </div>
+                  <p
+                    className="text-sm text-muted-foreground italic cursor-pointer"
+                    onClick={() =>
+                      router.push(`/community/profile/${displayUsername}`)
+                    }
+                  >
                     @{displayUsername}
                   </p>
-                  <p className="text-xs text-muted-foreground">
+                  <p
+                    className="text-xs text-muted-foreground cursor-pointer"
+                    onClick={() =>
+                      router.push(`/community/profile/${displayUsername}`)
+                    }
+                  >
                     {formattedDate}
                     {post.group && ` · ${post.group.name}`}
                   </p>

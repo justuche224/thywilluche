@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { Menu, ChevronDown, Home, Users, User } from "lucide-react";
+import { Menu, ChevronDown, Home, Users, User, Gamepad2, Trophy } from "lucide-react";
 
 import {
   NavigationMenu,
@@ -134,7 +134,6 @@ export function CommunityNavbar() {
           />
           <NavigationMenu viewport={false} className="relative z-[999]">
             <NavigationMenuList>
-          
               {/* More */}
               <NavigationMenuItem>
                 <NavigationMenuTrigger
@@ -229,12 +228,30 @@ export function CommunityNavbar() {
                     href="/community/games"
                     className="flex items-center gap-2"
                   >
-                    <User className="w-4 h-4" />
+                    <Gamepad2 className="w-4 h-4" />
                     Games
                   </Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
 
+              {/* Leaderboard */}
+              <NavigationMenuItem className="mb-5">
+                <NavigationMenuLink
+                  asChild
+                  className={
+                    navigationMenuTriggerStyle() +
+                    ` bg-transparent ${oswald.className} text-[#800000]`
+                  }
+                >
+                  <Link
+                    href="/community/games/leaderboard"
+                    className="flex items-center gap-2"
+                  >
+                    <Trophy className="w-4 h-4" />
+                    Leaderboard
+                  </Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
           <UserMenu />
@@ -298,8 +315,20 @@ function MobileNavContent({ onClose }: { onClose: () => void }) {
           className={`text-lg font-semibold px-4 py-3 rounded-lg hover:bg-accent hover:text-accent-foreground active:bg-accent/80 transition-all ${oswald.className} text-[#800000] flex items-center gap-2`}
           onClick={onClose}
         >
-          <User className="w-5 h-5" />
+          <Gamepad2 className="w-5 h-5" />
           Games
+        </Link>
+
+        <div className="h-px bg-border my-2" />
+
+        {/* Leaderboard */}
+        <Link
+          href="/community/games/leaderboard"
+          className={`text-lg font-semibold px-4 py-3 rounded-lg hover:bg-accent hover:text-accent-foreground active:bg-accent/80 transition-all ${oswald.className} text-[#800000] flex items-center gap-2`}
+          onClick={onClose}
+        >
+          <Trophy className="w-5 h-5" />
+          Leaderboard
         </Link>
 
         <div className="h-px bg-border my-2" />

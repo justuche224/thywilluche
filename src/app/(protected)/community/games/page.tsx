@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { serverAuth } from "@/lib/server-auth";
 import { redirect } from "next/navigation";
+import GamesListing from "@/components/community/games/games-listing";
 
 export const metadata: Metadata = {
   title: "Games & Quizzes | Community | Thywill Uche",
@@ -19,11 +20,12 @@ export default async function GamesPage() {
         <div className="mb-8">
           <h1 className="text-3xl font-bold mb-2">Games & Quizzes</h1>
           <p className="text-muted-foreground">
-            Discover and join games and quizzes that interest you. Connect with
-            like-minded people and participate in discussions.
+            Play interactive games, quizzes, and writing challenges to test your
+            skills and earn rewards. Compete with others and climb the
+            leaderboard!
           </p>
         </div>
-        <div>Games page</div>
+        <GamesListing />
       </div>
     </div>
   );

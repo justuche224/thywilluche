@@ -68,6 +68,8 @@ import {
 } from "@/actions/community/posts";
 import { toast } from "sonner";
 import { authClient } from "@/lib/auth-client";
+import { getUserBadges } from "@/actions/community/games";
+import BadgeDisplay from "@/components/shared/badge-display";
 
 interface Post {
   id: string;
@@ -512,6 +514,12 @@ const PostCard = ({ post }: { post: Post }) => {
   const router = useRouter();
   const { data: session } = authClient.useSession();
 
+  const { data: authorBadges } = useQuery({
+    queryKey: ["user-badges", post.author?.id],
+    queryFn: () => getUserBadges({ userId: post.author?.id || "" }),
+    enabled: !!post.author?.id,
+  });
+
   const displayUsername =
     post.author?.displayUsername || post.author?.username || "user";
   const authorImage = post.author?.image || "/images/welcome.png";
@@ -522,7 +530,6 @@ const PostCard = ({ post }: { post: Post }) => {
   const isAdmin = userRole === "ADMIN";
 
   const handlePostClick = (e: React.MouseEvent) => {
-    // Don't navigate if clicking on interactive elements
     if (
       (e.target as HTMLElement).closest("button") ||
       (e.target as HTMLElement).closest("a")
@@ -542,7 +549,6 @@ const PostCard = ({ post }: { post: Post }) => {
   const likeMutation = useMutation({
     mutationFn: async () => togglePostLike({ postId: post.id }),
     onMutate: async () => {
-      // Optimistic update
       setLocalLikeCount((prev) => (isLiked ? prev - 1 : prev + 1));
     },
     onSuccess: (result) => {
@@ -554,7 +560,6 @@ const PostCard = ({ post }: { post: Post }) => {
       }
     },
     onError: () => {
-      // Revert optimistic update
       setLocalLikeCount(post.likeCount);
       toast.error("Failed to like post");
     },
@@ -563,7 +568,6 @@ const PostCard = ({ post }: { post: Post }) => {
   const shareMutation = useMutation({
     mutationFn: async () => createShare({ postId: post.id }),
     onMutate: async () => {
-      // Optimistic update
       setLocalShareCount((prev) => prev + 1);
     },
     onSuccess: (result) => {
@@ -573,7 +577,6 @@ const PostCard = ({ post }: { post: Post }) => {
       }
     },
     onError: () => {
-      // Revert optimistic update
       setLocalShareCount(post.shareCount);
     },
   });
@@ -599,7 +602,6 @@ const PostCard = ({ post }: { post: Post }) => {
 
     const postUrl = `${window.location.origin}/community/home/posts/${post.id}`;
 
-    // Try to use native share API first
     if (navigator.share) {
       try {
         await navigator.share({
@@ -610,20 +612,16 @@ const PostCard = ({ post }: { post: Post }) => {
               : post.excerpt || "",
           url: postUrl,
         });
-        // Log share to database
         shareMutation.mutate();
         toast.success("Post shared successfully!");
       } catch (err) {
-        // User cancelled share
         if ((err as Error).name !== "AbortError") {
           console.error("Share failed:", err);
         }
       }
     } else {
-      // Fallback to copy link
       try {
         await navigator.clipboard.writeText(postUrl);
-        // Log share to database
         shareMutation.mutate();
         toast.success("Link copied to clipboard!");
       } catch (err) {
@@ -644,11 +642,26 @@ const PostCard = ({ post }: { post: Post }) => {
           className="rounded-full aspect-square object-cover"
         />
         <div className="w-full flex items-center justify-between">
-          <Link href={`/community/profile/${displayUsername}`}>
-            <p className="font-semibold text-lg">{authorName}</p>
-            <p className="text-sm text-muted-foreground italic">
-              @{displayUsername}
-            </p>
+          <Link
+            href={`/community/profile/${displayUsername}`}
+            className="flex items-center gap-2"
+          >
+            <div>
+              <div className="flex items-center gap-2">
+                <p className="font-semibold text-lg">{authorName}</p>
+                {authorBadges?.data && authorBadges.data.length > 0 && (
+                  <BadgeDisplay
+                    // @ts-expect-error nothing
+                    badges={authorBadges.data.map((badge) => badge.badge) || []}
+                    maxDisplay={2}
+                    size="sm"
+                  />
+                )}
+              </div>
+              <p className="text-sm text-muted-foreground italic">
+                @{displayUsername}
+              </p>
+            </div>
           </Link>
           <div className="flex items-center gap-2">
             {post.group && (
