@@ -16,6 +16,7 @@ import {
   UserRoundCheck,
   LayoutDashboard,
   Users,
+  Headphones,
 } from "lucide-react";
 
 import { NavMain } from "@/components/admin/nav-main";
@@ -119,6 +120,12 @@ const data = {
           url: "/admin/projects/reviews",
         },
       ],
+    },
+    {
+      title: "Support",
+      url: "/admin/support",
+      icon: Headphones,
+      isActive: true,
     },
     {
       title: "Community",

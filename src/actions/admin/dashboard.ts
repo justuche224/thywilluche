@@ -13,6 +13,7 @@ import {
   communityLikes,
   communityShares,
   user,
+  supportTicket,
 } from "@/db/schema";
 import { eq, count } from "drizzle-orm";
 import { serverAuth } from "@/lib/server-auth";
@@ -101,6 +102,27 @@ export async function getDashboardStats() {
       .select({ count: count() })
       .from(communityShares);
 
+    // Get support ticket stats
+    const supportTotal = await db
+      .select({ count: count() })
+      .from(supportTicket);
+    const supportOpen = await db
+      .select({ count: count() })
+      .from(supportTicket)
+      .where(eq(supportTicket.status, "OPEN"));
+    const supportInProgress = await db
+      .select({ count: count() })
+      .from(supportTicket)
+      .where(eq(supportTicket.status, "IN_PROGRESS"));
+    const supportResolved = await db
+      .select({ count: count() })
+      .from(supportTicket)
+      .where(eq(supportTicket.status, "RESOLVED"));
+    const supportClosed = await db
+      .select({ count: count() })
+      .from(supportTicket)
+      .where(eq(supportTicket.status, "CLOSED"));
+
     return {
       success: true,
       stats: {
@@ -121,6 +143,13 @@ export async function getDashboardStats() {
         books: {
           total: booksTotal[0]?.count || 0,
           outOfStock: booksSoldOut[0]?.count || 0,
+        },
+        support: {
+          total: supportTotal[0]?.count || 0,
+          open: supportOpen[0]?.count || 0,
+          inProgress: supportInProgress[0]?.count || 0,
+          resolved: supportResolved[0]?.count || 0,
+          closed: supportClosed[0]?.count || 0,
         },
         community: {
           posts: {

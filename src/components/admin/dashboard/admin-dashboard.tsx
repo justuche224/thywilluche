@@ -38,6 +38,7 @@ import {
   Heart,
   Share2,
   Hash,
+  Headphones,
 } from "lucide-react";
 
 interface DashboardStats {
@@ -58,6 +59,13 @@ interface DashboardStats {
   books: {
     total: number;
     outOfStock: number;
+  };
+  support: {
+    total: number;
+    open: number;
+    inProgress: number;
+    resolved: number;
+    closed: number;
   };
   community: {
     posts: {
@@ -86,6 +94,16 @@ interface AdminDashboardProps {
 export function AdminDashboard({ stats }: AdminDashboardProps) {
   const quickActions = [
     {
+      label: "Support Tickets",
+      href: "/admin/support",
+      icon: Headphones,
+      variant:
+        stats.support.open > 0 ? ("default" as const) : ("outline" as const),
+      description: "Manage support tickets and help users",
+      urgent: stats.support.open > 0,
+      count: stats.support.open,
+    },
+    {
       label: "Review Posts",
       href: "/admin/community/posts?status=pending",
       icon: MessageSquare,
@@ -105,13 +123,6 @@ export function AdminDashboard({ stats }: AdminDashboardProps) {
       description: "Write and publish a new article",
     },
     {
-      label: "Manage Community",
-      href: "/admin/community",
-      icon: Users,
-      variant: "outline" as const,
-      description: "Manage community posts, groups, and users",
-    },
-    {
       label: "View Site",
       href: "/",
       icon: Eye,
@@ -121,6 +132,15 @@ export function AdminDashboard({ stats }: AdminDashboardProps) {
   ];
 
   const tasksNeedingAttention = [
+    {
+      title: "Open Support Tickets",
+      count: stats.support.open,
+      href: "/admin/support",
+      icon: Headphones,
+      show: stats.support.open > 0,
+      description: "Respond to user support requests",
+      urgency: "high" as const,
+    },
     {
       title: "Community Posts Pending",
       count: stats.community.posts.pending,
@@ -169,6 +189,49 @@ export function AdminDashboard({ stats }: AdminDashboardProps) {
   ].filter((task) => task.show);
 
   const contentSections = [
+    {
+      title: "Support",
+      description: "Help users with their questions and issues",
+      icon: Headphones,
+      stats: [
+        {
+          label: "Open",
+          value: stats.support.open,
+          icon: AlertTriangle,
+          color: "text-red-600",
+        },
+        {
+          label: "In Progress",
+          value: stats.support.inProgress,
+          icon: Clock,
+          color: "text-amber-600",
+        },
+        {
+          label: "Resolved",
+          value: stats.support.resolved,
+          icon: CheckCircle,
+          color: "text-green-600",
+        },
+        {
+          label: "Total",
+          value: stats.support.total,
+          icon: Headphones,
+          color: "text-blue-600",
+        },
+      ],
+      actions: [
+        {
+          label: "Manage Support",
+          href: "/admin/support",
+          icon: Settings2,
+        },
+        {
+          label: "View Open Tickets",
+          href: "/admin/support?status=OPEN",
+          icon: Eye,
+        },
+      ],
+    },
     {
       title: "Community",
       description: "Manage your community posts, groups, and users",

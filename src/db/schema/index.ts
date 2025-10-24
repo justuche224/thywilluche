@@ -12,3 +12,4 @@ export * from "./testimonials";
 export * from "./community";
 export * from "./announcements";
 export * from "./games";
+export * from "./support";

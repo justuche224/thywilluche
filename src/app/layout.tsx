@@ -4,7 +4,9 @@ import "./globals.css";
 import Pattern from "@/components/pattern";
 import { Toaster } from "@/components/ui/sonner";
 import { ReactQueryProvider } from "@/providers/react-query-provider";
-import NextTopLoader from 'nextjs-toploader';
+import NextTopLoader from "nextjs-toploader";
+import { MessageCircle } from "lucide-react";
+import Link from "next/link";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,7 +36,13 @@ export default function RootLayout({
         <Pattern />
         <ReactQueryProvider>{children}</ReactQueryProvider>
         <NextTopLoader color="#800000" />
-      <Toaster position={"top-center"} richColors/>
+        <Toaster position={"top-center"} richColors />
+        <Link
+          href="/support"
+          className="fixed bottom-4 right-4 z-50 w-10 h-10 text-wtite bg-primary rounded-full p-2 flex items-center justify-center"
+        >
+          <MessageCircle className="w-10 h-10" />
+        </Link>
       </body>
     </html>
   );
