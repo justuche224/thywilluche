@@ -83,10 +83,10 @@ const NGO = ({
   developmentImage = "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
   impactTitle = "Our Impact",
   impactSubtitle = "Together, we're making a measurable difference in communities across the region.",
-  livesImpacted = "15,000+",
-  communitiesServed = "50+",
-  partnerOrganizations = "25",
-  yearsOfService = "8",
+  livesImpacted = "0",
+  communitiesServed = "0",
+  partnerOrganizations = "0",
+  yearsOfService = "1",
   successStoriesTitle = "Success Stories",
   successStory1 = "Thanks to Thywill Fountain of Hope, our village now has access to clean water and our children can attend school regularly.",
   successStory1Author = "Sarah M., Community Leader",
@@ -420,7 +420,7 @@ const NGO = ({
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-5 md:px-10">
           <motion.div
-            className="text-center mb-16"
+            className="text-center mb-16 hidden"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -436,7 +436,7 @@ const NGO = ({
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+          <div className=" md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16 hidden">
             <motion.div
               className="text-center"
               initial={{ opacity: 0, scale: 0.8 }}
