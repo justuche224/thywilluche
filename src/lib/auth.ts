@@ -4,6 +4,8 @@ import { username } from "better-auth/plugins";
 import db from "@/db";
 import { sendVerificationEmail } from "@/mailer/handlers/auth/verification";
 import { sendForgotPasswordEmail } from "@/mailer/handlers/auth/forgot-password";
+import { sendWelcomeEmail } from "@/mailer/handlers/auth/welcome";
+import { notifyAdminNewSignup } from "@/mailer/handlers/auth/new-signup";
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
@@ -13,18 +15,17 @@ export const auth = betterAuth({
     enabled: true,
     autoSignIn: false,
     minPasswordLength: 8,
-    // requireEmailVerification: true,
     sendResetPassword: async ({ user, url, token }, request) => {
-        console.log("sendResetPassword", user, url, token, request);
-        await sendForgotPasswordEmail(user.email, url);
-      },
+      console.log("sendResetPassword", user, url, token, request);
+      await sendForgotPasswordEmail(user.email, url);
+    },
   },
   emailVerification: {
     enabled: true,
     sendOnSignUp: true,
     autoSignInAfterVerification: true,
     sendVerificationEmail: async ({ user, url }) => {
-        console.log('sendVerificationEmail', user, url);
+      console.log("sendVerificationEmail", user, url);
       await sendVerificationEmail(user.email, url);
     },
   },
@@ -33,6 +34,32 @@ export const auth = betterAuth({
       role: {
         type: "string",
         default: "USER",
+      },
+    },
+  },
+  databaseHooks: {
+    user: {
+      create: {
+        after: async (user) => {
+          try {
+            if (!user?.email) return;
+            await sendWelcomeEmail(user.email, user.name);
+          } catch (err) {
+            console.error("Failed to send welcome email:", err);
+          }
+
+          try {
+            await notifyAdminNewSignup(
+              user.email,
+              user.name,
+              (user.username as string) || null,
+              user.id,
+              user.createdAt
+            );
+          } catch (err) {
+            console.error("Failed to send admin notification:", err);
+          }
+        },
       },
     },
   },

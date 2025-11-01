@@ -11,6 +11,11 @@ import {
 } from "@/db/schema";
 import { eq, and, desc, isNull, sql } from "drizzle-orm";
 import { serverAuth } from "@/lib/server-auth";
+import {
+  notifyNewLike,
+  notifyNewComment,
+  notifyNewShare,
+} from "@/mailer/handlers/blog/posts";
 
 type BlogCategory = (typeof blogCategories)[number];
 
@@ -394,6 +399,42 @@ export async function createBlogComment({
       })
       .returning();
 
+    try {
+      const [post] = await db
+        .select({
+          id: blogPosts.id,
+          slug: blogPosts.slug,
+          title: blogPosts.title,
+        })
+        .from(blogPosts)
+        .where(eq(blogPosts.id, postId))
+        .limit(1);
+
+      if (post) {
+        const [commentAuthor] = await db
+          .select({
+            name: user.name,
+            username: user.username,
+          })
+          .from(user)
+          .where(eq(user.id, userId))
+          .limit(1);
+
+        if (commentAuthor) {
+          await notifyNewComment({
+            postId: post.id,
+            postSlug: post.slug,
+            postTitle: post.title,
+            commentAuthorName: commentAuthor.name || "Unknown User",
+            commentAuthorUsername: commentAuthor.username || "unknown",
+            commentContent: content.trim(),
+          });
+        }
+      }
+    } catch (emailError) {
+      console.error("Failed to send comment notification email:", emailError);
+    }
+
     return {
       success: true,
       message: parentId
@@ -589,6 +630,41 @@ export async function toggleBlogPostLike({ postId }: { postId: string }) {
         postId,
       });
 
+      try {
+        const [post] = await db
+          .select({
+            id: blogPosts.id,
+            slug: blogPosts.slug,
+            title: blogPosts.title,
+          })
+          .from(blogPosts)
+          .where(eq(blogPosts.id, postId))
+          .limit(1);
+
+        if (post) {
+          const [liker] = await db
+            .select({
+              name: user.name,
+              username: user.username,
+            })
+            .from(user)
+            .where(eq(user.id, userId))
+            .limit(1);
+
+          if (liker) {
+            await notifyNewLike({
+              postId: post.id,
+              postSlug: post.slug,
+              postTitle: post.title,
+              likerName: liker.name || "Unknown User",
+              likerUsername: liker.username || "unknown",
+            });
+          }
+        }
+      } catch (emailError) {
+        console.error("Failed to send like notification email:", emailError);
+      }
+
       return {
         success: true,
         liked: true,
@@ -638,13 +714,17 @@ export async function checkBlogPostLikeStatus({ postId }: { postId: string }) {
 
 export async function createBlogShare({ postId }: { postId: string }) {
   try {
-    const post = await db
-      .select({ id: blogPosts.id })
+    const [post] = await db
+      .select({
+        id: blogPosts.id,
+        slug: blogPosts.slug,
+        title: blogPosts.title,
+      })
       .from(blogPosts)
       .where(eq(blogPosts.id, postId))
       .limit(1);
 
-    if (post.length === 0) {
+    if (!post) {
       return {
         success: false,
         message: "Blog post not found",
@@ -654,6 +734,16 @@ export async function createBlogShare({ postId }: { postId: string }) {
     await db.insert(blogShares).values({
       postId,
     });
+
+    try {
+      await notifyNewShare({
+        postId: post.id,
+        postSlug: post.slug,
+        postTitle: post.title,
+      });
+    } catch (emailError) {
+      console.error("Failed to send share notification email:", emailError);
+    }
 
     return {
       success: true,

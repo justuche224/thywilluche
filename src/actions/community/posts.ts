@@ -13,7 +13,12 @@ import {
   user,
 } from "@/db/schema";
 import { and, desc, eq, ilike, inArray, isNull, or, sql } from "drizzle-orm";
-import { notifyNewPost } from "@/mailer/handlers/community/posts";
+import {
+  notifyNewPost,
+  notifyNewLike,
+  notifyNewComment,
+  notifyNewShare,
+} from "@/mailer/handlers/community/posts";
 
 export async function getFeed({
   page,
@@ -621,6 +626,8 @@ export async function createComment({
 }) {
   const session = await serverAuth();
 
+  console.log('Comment');
+
   if (!session) {
     return {
       success: false,
@@ -686,6 +693,54 @@ export async function createComment({
         parentId: parentId || null,
       })
       .returning();
+
+    try {
+      const [post] = await db
+        .select({
+          authorId: communityPosts.authorId,
+        })
+        .from(communityPosts)
+        .where(eq(communityPosts.id, postId))
+        .limit(1);
+
+      if (post && post.authorId !== userId) {
+        const [postAuthor] = await db
+          .select({
+            name: user.name,
+            username: user.username,
+          })
+          .from(user)
+          .where(eq(user.id, post.authorId))
+          .limit(1);
+
+        const [commentAuthor] = await db
+          .select({
+            name: user.name,
+            username: user.username,
+          })
+          .from(user)
+          .where(eq(user.id, userId))
+          .limit(1);
+
+          console.log('postAuthor', postAuthor);
+          console.log('commentAuthor', commentAuthor);
+
+        if (postAuthor && commentAuthor) {
+          console.log("Sending comment notification email");
+          await notifyNewComment({
+            postId,
+            commentId: newComment.id,
+            postAuthorName: postAuthor.name || "Unknown User",
+            postAuthorUsername: postAuthor.username || "unknown",
+            commentAuthorName: commentAuthor.name || "Unknown User",
+            commentAuthorUsername: commentAuthor.username || "unknown",
+            commentContent: content.trim(),
+          });
+        }
+      }
+    } catch (emailError) {
+      console.error("Failed to send comment notification email:", emailError);
+    }
 
     return {
       success: true,
@@ -861,6 +916,8 @@ export async function checkCommentLikeStatus({
 export async function togglePostLike({ postId }: { postId: string }) {
   const session = await serverAuth();
 
+  console.log('like');
+
   if (!session) {
     return {
       success: false,
@@ -900,6 +957,48 @@ export async function togglePostLike({ postId }: { postId: string }) {
         userId,
         postId,
       });
+
+      try {
+        const [post] = await db
+          .select({
+            authorId: communityPosts.authorId,
+          })
+          .from(communityPosts)
+          .where(eq(communityPosts.id, postId))
+          .limit(1);
+
+        if (post && post.authorId !== userId) {
+          const [postAuthor] = await db
+            .select({
+              name: user.name,
+              username: user.username,
+            })
+            .from(user)
+            .where(eq(user.id, post.authorId))
+            .limit(1);
+
+          const [liker] = await db
+            .select({
+              name: user.name,
+              username: user.username,
+            })
+            .from(user)
+            .where(eq(user.id, userId))
+            .limit(1);
+
+          if (postAuthor && liker) {
+            await notifyNewLike({
+              postId,
+              authorName: postAuthor.name || "Unknown User",
+              authorUsername: postAuthor.username || "unknown",
+              likerName: liker.name || "Unknown User",
+              likerUsername: liker.username || "unknown",
+            });
+          }
+        }
+      } catch (emailError) {
+        console.error("Failed to send like notification email:", emailError);
+      }
 
       return {
         success: true,
@@ -985,6 +1084,48 @@ export async function createShare({ postId }: { postId: string }) {
       postId,
       userId,
     });
+
+    try {
+      const [post] = await db
+        .select({
+          authorId: communityPosts.authorId,
+        })
+        .from(communityPosts)
+        .where(eq(communityPosts.id, postId))
+        .limit(1);
+
+      if (post && post.authorId !== userId) {
+        const [postAuthor] = await db
+          .select({
+            name: user.name,
+            username: user.username,
+          })
+          .from(user)
+          .where(eq(user.id, post.authorId))
+          .limit(1);
+
+        const [sharer] = await db
+          .select({
+            name: user.name,
+            username: user.username,
+          })
+          .from(user)
+          .where(eq(user.id, userId))
+          .limit(1);
+
+        if (postAuthor && sharer) {
+          await notifyNewShare({
+            postId,
+            authorName: postAuthor.name || "Unknown User",
+            authorUsername: postAuthor.username || "unknown",
+            sharerName: sharer.name || "Unknown User",
+            sharerUsername: sharer.username || "unknown",
+          });
+        }
+      }
+    } catch (emailError) {
+      console.error("Failed to send share notification email:", emailError);
+    }
 
     return {
       success: true,
