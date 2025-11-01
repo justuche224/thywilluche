@@ -1,4 +1,5 @@
 import { boolean, jsonb, pgTable, text, timestamp } from "drizzle-orm/pg-core";
+import { user } from "./auth";
 
 export const blogCategories = [
   "Poetry",
@@ -32,4 +33,51 @@ export const blogPosts = pgTable("blog_posts", {
     .defaultNow()
     .$onUpdate(() => new Date())
     .notNull(),
+});
+
+export const blogComments = pgTable("blog_comments", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  content: text("content").notNull(),
+  authorId: text("author_id")
+    .notNull()
+    .references(() => user.id, { onDelete: "cascade" }),
+  postId: text("post_id")
+    .notNull()
+    .references(() => blogPosts.id, { onDelete: "cascade" }),
+  parentId: text("parent_id"),
+  isEdited: boolean("is_edited").default(false).notNull(),
+  isDeleted: boolean("is_deleted").default(false).notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at")
+    .defaultNow()
+    .$onUpdate(() => new Date())
+    .notNull(),
+});
+
+export const blogLikes = pgTable("blog_likes", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  userId: text("user_id")
+    .notNull()
+    .references(() => user.id, { onDelete: "cascade" }),
+  postId: text("post_id").references(() => blogPosts.id, {
+    onDelete: "cascade",
+  }),
+  commentId: text("comment_id").references(() => blogComments.id, {
+    onDelete: "cascade",
+  }),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const blogShares = pgTable("blog_shares", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  postId: text("post_id")
+    .notNull()
+    .references(() => blogPosts.id, { onDelete: "cascade" }),
+  sharedAt: timestamp("shared_at").defaultNow().notNull(),
 });

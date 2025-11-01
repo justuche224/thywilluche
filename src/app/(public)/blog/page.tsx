@@ -1,8 +1,8 @@
 import { getPublishedBlogPosts } from "@/actions/blog";
-import Image from "next/image";
 import Link from "next/link";
 import { Oswald } from "next/font/google";
 import { georgiaItalic } from "@/utils/georgia-italic";
+import BlogPostCard from "@/components/blog/blog-post-card";
 
 const oswald = Oswald({
   variable: "--font-oswald",
@@ -19,6 +19,9 @@ interface BlogPost {
   imageUrl: string | null;
   isFeatured: boolean;
   publishedAt: Date | null;
+  likeCount: number;
+  shareCount: number;
+  commentCount: number;
 }
 
 const categories = [
@@ -44,7 +47,9 @@ export default async function BlogListingPage({
       <div className="container mx-auto px-6 lg:px-8 py-16 lg:py-20">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h1 className={`text-5xl lg:text-6xl ${georgiaItalic.className} mb-6`}>
+            <h1
+              className={`text-5xl lg:text-6xl ${georgiaItalic.className} mb-6`}
+            >
               Words & Wisdom
             </h1>
             <div className="w-24 h-1 bg-primary rounded-full mx-auto mb-8"></div>
@@ -113,147 +118,7 @@ export default async function BlogListingPage({
           ) : (
             <div className="space-y-16">
               {posts.map((post: BlogPost, index: number) => (
-                <Link
-                  key={post.id}
-                  href={`/blog/${post.slug}`}
-                  className="group block"
-                >
-                  <article className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center py-8 border-b border-gray-200 last:border-b-0">
-                    {index % 2 === 0 ? (
-                      <>
-                        <div className="lg:col-span-5 space-y-6">
-                          <div className="space-y-4">
-                            <div className="flex items-center gap-4">
-                              <span
-                                className={`text-sm text-primary font-semibold ${oswald.className}`}
-                              >
-                                {post.category}
-                              </span>
-                              {post.isFeatured && (
-                                <span
-                                  className={`text-xs bg-primary/10 text-primary px-3 py-1 rounded-full ${oswald.className}`}
-                                >
-                                  Featured
-                                </span>
-                              )}
-                            </div>
-                            <h2
-                              className={`text-3xl lg:text-4xl font-bold leading-tight group-hover:text-primary transition-colors ${oswald.className}`}
-                            >
-                              {post.title}
-                            </h2>
-                            <p
-                              className={`text-lg text-gray-700 leading-relaxed ${oswald.className}`}
-                            >
-                              {post.excerpt}
-                            </p>
-                          </div>
-
-                          <div className="flex items-center gap-4 text-sm text-gray-500">
-                            {post.publishedAt && (
-                              <time dateTime={post.publishedAt.toString()}>
-                                {new Date(post.publishedAt!).toLocaleDateString(
-                                  "en-US",
-                                  {
-                                    year: "numeric",
-                                    month: "long",
-                                    day: "numeric",
-                                  }
-                                )}
-                              </time>
-                            )}
-                            {post.tags && post.tags.length > 0 && (
-                              <span className="text-gray-400">•</span>
-                            )}
-                            {post.tags && post.tags.length > 0 && (
-                              <span>{post.tags.slice(0, 2).join(", ")}</span>
-                            )}
-                          </div>
-                        </div>
-
-                        {post.imageUrl && (
-                          <div className="lg:col-span-7">
-                            <div className="relative aspect-video rounded-2xl overflow-hidden">
-                              <Image
-                                src={post.imageUrl}
-                                alt={post.title}
-                                fill
-                                className="object-cover group-hover:scale-105 transition-transform duration-500"
-                              />
-                              <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent"></div>
-                            </div>
-                          </div>
-                        )}
-                      </>
-                    ) : (
-                      <>
-                        {post.imageUrl && (
-                          <div className="lg:col-span-7">
-                            <div className="relative aspect-video rounded-2xl overflow-hidden">
-                              <Image
-                                src={post.imageUrl}
-                                alt={post.title}
-                                fill
-                                className="object-cover group-hover:scale-105 transition-transform duration-500"
-                              />
-                              <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent"></div>
-                            </div>
-                          </div>
-                        )}
-
-                        <div className="lg:col-span-5 space-y-6">
-                          <div className="space-y-4">
-                            <div className="flex items-center gap-4">
-                              <span
-                                className={`text-sm text-primary font-semibold ${oswald.className}`}
-                              >
-                                {post.category}
-                              </span>
-                              {post.isFeatured && (
-                                <span
-                                  className={`text-xs bg-primary/10 text-primary px-3 py-1 rounded-full ${oswald.className}`}
-                                >
-                                  Featured
-                                </span>
-                              )}
-                            </div>
-                            <h2
-                              className={`text-3xl lg:text-4xl font-bold leading-tight group-hover:text-primary transition-colors ${oswald.className}`}
-                            >
-                              {post.title}
-                            </h2>
-                            <p
-                              className={`text-lg text-gray-700 leading-relaxed ${oswald.className}`}
-                            >
-                              {post.excerpt}
-                            </p>
-                          </div>
-
-                          <div className="flex items-center gap-4 text-sm text-gray-500">
-                            {post.publishedAt && (
-                              <time dateTime={post.publishedAt.toString()}>
-                                {new Date(post.publishedAt!).toLocaleDateString(
-                                  "en-US",
-                                  {
-                                    year: "numeric",
-                                    month: "long",
-                                    day: "numeric",
-                                  }
-                                )}
-                              </time>
-                            )}
-                            {post.tags && post.tags.length > 0 && (
-                              <span className="text-gray-400">•</span>
-                            )}
-                            {post.tags && post.tags.length > 0 && (
-                              <span>{post.tags.slice(0, 2).join(", ")}</span>
-                            )}
-                          </div>
-                        </div>
-                      </>
-                    )}
-                  </article>
-                </Link>
+                <BlogPostCard key={post.id} post={post} index={index} />
               ))}
             </div>
           )}

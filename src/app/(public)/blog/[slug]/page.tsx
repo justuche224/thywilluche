@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Oswald } from "next/font/google";
 import { georgiaItalic } from "@/utils/georgia-italic";
 import React from "react";
+import BlogInteractions from "@/components/blog/blog-interactions";
+import BlogComments from "@/components/blog/blog-comments";
 
 const oswald = Oswald({
   variable: "--font-oswald",
@@ -289,6 +291,15 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               {renderContent(post.content as ContentNode)}
             </div>
 
+            <BlogInteractions
+              postId={post.id}
+              initialLikeCount={post.likeCount}
+              initialShareCount={post.shareCount}
+              commentCount={post.commentCount}
+              slug={post.slug}
+              title={post.title}
+            />
+
             {post.tags && post.tags.length > 0 && (
               <footer className="border-t border-gray-200 pt-12">
                 <h3
@@ -309,6 +320,10 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               </footer>
             )}
           </article>
+
+          <div className="mt-16">
+            <BlogComments postId={post.id} />
+          </div>
         </div>
       </div>
     </div>
