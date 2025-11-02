@@ -1,6 +1,6 @@
 "use server";
 
-import { eq, desc, and } from "drizzle-orm";
+import { eq, desc, and, asc } from "drizzle-orm";
 import { baseBook, bookVariant, trope, bookReview } from "@/db/schema/books";
 import { logger } from "@/utils/logger";
 import db from "@/db";
@@ -349,7 +349,7 @@ export const getHomePageReviews = async () => {
       .select()
       .from(bookReview)
       .where(eq(bookReview.showOnHomePage, true))
-      .orderBy(desc(bookReview.createdAt))
+      .orderBy(asc(bookReview.createdAt))
       .limit(5);
 
       // console.log(homeReviews[0]);
