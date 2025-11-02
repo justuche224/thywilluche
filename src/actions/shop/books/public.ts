@@ -343,7 +343,7 @@ export const getPublicBookReviewStats = async (baseBookId: string) => {
 };
 
 export const getHomePageReviews = async () => {
-  console.log("getHomePageReviews");
+  // console.log("getHomePageReviews");
   try {
     const homeReviews = await db
       .select()
@@ -352,7 +352,7 @@ export const getHomePageReviews = async () => {
       .orderBy(desc(bookReview.createdAt))
       .limit(5);
 
-      console.log(homeReviews[0]);
+      // console.log(homeReviews[0]);
     return {
       reviews: homeReviews.map((review) => ({
         ...review,
