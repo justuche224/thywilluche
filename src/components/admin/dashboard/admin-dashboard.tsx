@@ -506,13 +506,13 @@ export function AdminDashboard({ stats }: AdminDashboardProps) {
                   <Button
                     variant={action.variant}
                     asChild
-                    className={`gap-2 h-auto p-4 flex-col relative ${
+                    className={`gap-2 h-auto p-4 flex-col relative overflow-hidden ${
                       action.urgent
                         ? "border-yellow-200 bg-yellow-50 hover:bg-yellow-100"
                         : ""
                     }`}
                   >
-                    <Link href={action.href} className="text-center">
+                    <Link href={action.href} className="text-center w-full">
                       <div className="relative">
                         <action.icon className="h-5 w-5" />
                         {action.count !== undefined && action.count > 0 && (
@@ -524,8 +524,10 @@ export function AdminDashboard({ stats }: AdminDashboardProps) {
                           </Badge>
                         )}
                       </div>
-                      <span className="font-medium">{action.label}</span>
-                      <span className="text-xs text-muted-foreground">
+                      <span className="font-medium break-words">
+                        {action.label}
+                      </span>
+                      <span className="text-xs text-muted-foreground break-words line-clamp-2">
                         {action.description}
                       </span>
                     </Link>
