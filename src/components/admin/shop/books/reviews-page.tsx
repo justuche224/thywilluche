@@ -52,6 +52,7 @@ export const ReviewsPage = ({ bookId }: ReviewsPageProps) => {
   const [editingReview, setEditingReview] = useState<string | null>(null);
   const [reviewToDelete, setReviewToDelete] = useState<string | null>(null);
   const [reviewerName, setReviewerName] = useState("");
+  const [work, setWork] = useState("");
   const [rating, setRating] = useState("");
   const [content, setContent] = useState("");
   const [showOnHomePage, setShowOnHomePage] = useState(false);
@@ -108,6 +109,7 @@ export const ReviewsPage = ({ bookId }: ReviewsPageProps) => {
 
   const resetForm = () => {
     setReviewerName("");
+    setWork("");
     setRating("");
     setContent("");
     setShowOnHomePage(false);
@@ -134,6 +136,7 @@ export const ReviewsPage = ({ bookId }: ReviewsPageProps) => {
   const handleEdit = (review: (typeof reviews)[0]) => {
     setEditingReview(review.id);
     setReviewerName(review.reviewerName);
+    setWork(review.work || "");
     setRating(review.rating.toString());
     setContent(review.content);
     setShowOnHomePage(review.showOnHomePage || false);
@@ -158,6 +161,7 @@ export const ReviewsPage = ({ bookId }: ReviewsPageProps) => {
     if (editingReview) {
       formData.append("id", editingReview);
       formData.append("reviewerName", reviewerName);
+      if (work) formData.append("work", work);
       formData.append("rating", rating);
       formData.append("content", content);
       formData.append("showOnHomePage", showOnHomePage.toString());
@@ -165,6 +169,7 @@ export const ReviewsPage = ({ bookId }: ReviewsPageProps) => {
     } else {
       formData.append("baseBookId", bookId);
       formData.append("reviewerName", reviewerName);
+      if (work) formData.append("work", work);
       formData.append("rating", rating);
       formData.append("content", content);
       formData.append("showOnHomePage", showOnHomePage.toString());
@@ -235,6 +240,15 @@ export const ReviewsPage = ({ bookId }: ReviewsPageProps) => {
                     onChange={(e) => setReviewerName(e.target.value)}
                     placeholder="Enter reviewer name"
                     required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="work">Work (Optional)</Label>
+                  <Input
+                    id="work"
+                    value={work}
+                    onChange={(e) => setWork(e.target.value)}
+                    placeholder="e.g., Author of Half of a Yellow Sun, CEO of Opay"
                   />
                 </div>
                 <div className="space-y-2">
@@ -329,11 +343,20 @@ export const ReviewsPage = ({ bookId }: ReviewsPageProps) => {
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-2">
-                      <h3
-                        className={`text-xl font-semibold ${oswald.className}`}
-                      >
-                        {review.reviewerName}
-                      </h3>
+                      <div className="flex-1">
+                        <h3
+                          className={`text-xl font-semibold ${oswald.className}`}
+                        >
+                          {review.reviewerName}
+                        </h3>
+                        {review.work && (
+                          <p
+                            className={`text-sm text-muted-foreground ${oswald.className}`}
+                          >
+                            {review.work}
+                          </p>
+                        )}
+                      </div>
                       <div className="flex items-center gap-1">
                         <Star className="w-5 h-5 fill-yellow-400 text-yellow-400" />
                         <span className="font-medium">{review.rating}</span>

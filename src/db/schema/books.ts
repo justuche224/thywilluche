@@ -123,6 +123,7 @@ export const bookReview = pgTable("book_reviews", {
     .notNull()
     .references(() => baseBook.id, { onDelete: "cascade" }),
   reviewerName: text("reviewer_name").notNull(),
+  work: text("work"),
   rating: decimal("rating", { precision: 2, scale: 1 }).notNull(),
   content: text("content").notNull(),
   showOnHomePage: boolean("show_on_home_page").default(false).notNull(),

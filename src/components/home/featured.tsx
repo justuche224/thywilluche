@@ -14,6 +14,7 @@ const oswald = Oswald({
 interface BookReview {
   id: string;
   reviewerName: string;
+  work?: string | null;
   rating: number;
   content: string;
   createdAt: Date;
@@ -125,6 +126,13 @@ const Featured = ({
                         >
                           {review.reviewerName}
                         </h4>
+                        {review.work && (
+                          <p
+                            className={`text-xs text-muted-foreground ${oswald.className}`}
+                          >
+                            {review.work}
+                          </p>
+                        )}
                       </div>
                     </div>
                     <div className="flex gap-1">

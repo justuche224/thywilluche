@@ -10,6 +10,7 @@ import db from "@/db";
 const addReviewSchema = z.object({
   baseBookId: z.string().min(1),
   reviewerName: z.string().min(1),
+  work: z.string().optional(),
   rating: z.number().min(1).max(5),
   content: z.string().min(1),
   showOnHomePage: z.boolean().optional(),
@@ -18,6 +19,7 @@ const addReviewSchema = z.object({
 const updateReviewSchema = z.object({
   id: z.string().min(1),
   reviewerName: z.string().min(1).optional(),
+  work: z.string().optional(),
   rating: z.number().min(1).max(5).optional(),
   content: z.string().min(1).optional(),
   showOnHomePage: z.boolean().optional(),
@@ -36,6 +38,7 @@ export const addBookReview = async (formData: FormData) => {
   const validatedFields = addReviewSchema.safeParse({
     baseBookId: formData.get("baseBookId"),
     reviewerName: formData.get("reviewerName"),
+    work: formData.get("work") || undefined,
     rating: formData.get("rating")
       ? parseFloat(formData.get("rating") as string)
       : undefined,
@@ -50,7 +53,7 @@ export const addBookReview = async (formData: FormData) => {
     };
   }
 
-  const { baseBookId, reviewerName, rating, content, showOnHomePage } =
+  const { baseBookId, reviewerName, work, rating, content, showOnHomePage } =
     validatedFields.data;
 
   try {
@@ -70,6 +73,7 @@ export const addBookReview = async (formData: FormData) => {
     await db.insert(bookReview).values({
       baseBookId,
       reviewerName,
+      work: work || null,
       rating: rating.toString(),
       content,
       showOnHomePage: showOnHomePage || false,
@@ -140,6 +144,7 @@ export const updateBookReview = async (formData: FormData) => {
   const validatedFields = updateReviewSchema.safeParse({
     id: formData.get("id"),
     reviewerName: formData.get("reviewerName"),
+    work: formData.get("work") || undefined,
     rating: formData.get("rating")
       ? parseFloat(formData.get("rating") as string)
       : undefined,
@@ -154,7 +159,7 @@ export const updateBookReview = async (formData: FormData) => {
     };
   }
 
-  const { id, reviewerName, rating, content, showOnHomePage } =
+  const { id, reviewerName, work, rating, content, showOnHomePage } =
     validatedFields.data;
 
   try {
@@ -173,6 +178,7 @@ export const updateBookReview = async (formData: FormData) => {
 
     const updateData: Partial<typeof bookReview.$inferInsert> = {};
     if (reviewerName !== undefined) updateData.reviewerName = reviewerName;
+    if (work !== undefined) updateData.work = work || null;
     if (rating !== undefined) updateData.rating = rating.toString();
     if (content !== undefined) updateData.content = content;
     if (showOnHomePage !== undefined)

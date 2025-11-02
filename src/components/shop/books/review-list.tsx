@@ -12,6 +12,7 @@ const oswald = Oswald({
 interface BookReview {
   id: string;
   reviewerName: string;
+  work?: string | null;
   rating: number;
   content: string;
   createdAt: Date;
@@ -48,6 +49,13 @@ const ReviewList: React.FC<ReviewListProps> = ({ reviews }) => {
                 <h4 className={`font-semibold ${oswald.className}`}>
                   {review.reviewerName}
                 </h4>
+                {review.work && (
+                  <p
+                    className={`text-sm text-muted-foreground ${oswald.className}`}
+                  >
+                    {review.work}
+                  </p>
+                )}
                 <p className={`text-sm text-gray-600 ${oswald.className}`}>
                   {new Date(review.createdAt).toLocaleDateString("en-US", {
                     year: "numeric",
