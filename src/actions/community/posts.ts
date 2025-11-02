@@ -626,7 +626,7 @@ export async function createComment({
 }) {
   const session = await serverAuth();
 
-  console.log('Comment');
+  console.log("Comment");
 
   if (!session) {
     return {
@@ -722,8 +722,8 @@ export async function createComment({
           .where(eq(user.id, userId))
           .limit(1);
 
-          console.log('postAuthor', postAuthor);
-          console.log('commentAuthor', commentAuthor);
+        console.log("postAuthor", postAuthor);
+        console.log("commentAuthor", commentAuthor);
 
         if (postAuthor && commentAuthor) {
           console.log("Sending comment notification email");
@@ -916,7 +916,7 @@ export async function checkCommentLikeStatus({
 export async function togglePostLike({ postId }: { postId: string }) {
   const session = await serverAuth();
 
-  console.log('like');
+  console.log("like");
 
   if (!session) {
     return {
@@ -1287,6 +1287,65 @@ export async function deletePost({ postId }: { postId: string }) {
     return {
       success: false,
       message: "Failed to delete post",
+    };
+  }
+}
+
+export async function togglePostPin({ postId }: { postId: string }) {
+  const session = await serverAuth();
+
+  if (!session) {
+    return {
+      success: false,
+      message: "Unauthorized",
+    };
+  }
+
+  const userRole = session.user.role;
+
+  if (userRole !== "ADMIN") {
+    return {
+      success: false,
+      message: "Only admins can pin/unpin posts",
+    };
+  }
+
+  try {
+    const post = await db
+      .select({
+        id: communityPosts.id,
+        isPinned: communityPosts.isPinned,
+      })
+      .from(communityPosts)
+      .where(eq(communityPosts.id, postId))
+      .limit(1);
+
+    if (post.length === 0) {
+      return {
+        success: false,
+        message: "Post not found",
+      };
+    }
+
+    const newPinStatus = !post[0].isPinned;
+
+    await db
+      .update(communityPosts)
+      .set({ isPinned: newPinStatus })
+      .where(eq(communityPosts.id, postId));
+
+    return {
+      success: true,
+      message: newPinStatus
+        ? "Post pinned successfully"
+        : "Post unpinned successfully",
+      isPinned: newPinStatus,
+    };
+  } catch (error) {
+    console.error("Error toggling post pin:", error);
+    return {
+      success: false,
+      message: "Failed to pin/unpin post",
     };
   }
 }

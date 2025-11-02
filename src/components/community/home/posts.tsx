@@ -48,6 +48,7 @@ import {
   Flag,
   Bookmark,
   Trash2,
+  Pin,
 } from "lucide-react";
 import { Top } from "./top";
 import Link from "next/link";
@@ -65,6 +66,7 @@ import {
   createShare,
   deletePost,
   reportPost,
+  togglePostPin,
 } from "@/actions/community/posts";
 import { toast } from "sonner";
 import { authClient } from "@/lib/auth-client";
@@ -78,6 +80,7 @@ interface Post {
   images: string[];
   createdAt: Date;
   publishedAt: Date | null;
+  isPinned: boolean;
   likeCount: number;
   shareCount: number;
   commentCount: number;
@@ -283,16 +286,22 @@ const PostMenu = ({
   postId,
   onShare,
   onDelete,
+  onPin,
   isOwner,
   isAdmin,
   isDeleting,
+  isPinning,
+  isPinned,
 }: {
   postId: string;
   onShare: (e: React.MouseEvent) => void;
   onDelete: () => void;
+  onPin: () => void;
   isOwner: boolean;
   isAdmin: boolean;
   isDeleting: boolean;
+  isPinning: boolean;
+  isPinned: boolean;
 }) => {
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [showReportDialog, setShowReportDialog] = useState(false);
@@ -406,6 +415,19 @@ const PostMenu = ({
           {(isOwner || isAdmin) && (
             <>
               <DropdownMenuSeparator />
+              {isAdmin && (
+                <DropdownMenuItem
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    onPin();
+                  }}
+                  disabled={isPinning}
+                >
+                  <Pin className="w-4 h-4 mr-2" />
+                  {isPinned ? "Unpin" : "Pin"}
+                </DropdownMenuItem>
+              )}
               <DropdownMenuItem
                 onClick={handleDeleteClick}
                 className="text-red-600 focus:text-red-600"
@@ -510,6 +532,7 @@ const PostMenu = ({
 const PostCard = ({ post }: { post: Post }) => {
   const [localLikeCount, setLocalLikeCount] = useState(post.likeCount);
   const [localShareCount, setLocalShareCount] = useState(post.shareCount);
+  const [localIsPinned, setLocalIsPinned] = useState(post.isPinned);
   const queryClient = useQueryClient();
   const router = useRouter();
   const { data: session } = authClient.useSession();
@@ -596,6 +619,26 @@ const PostCard = ({ post }: { post: Post }) => {
     },
   });
 
+  const pinMutation = useMutation({
+    mutationFn: async () => togglePostPin({ postId: post.id }),
+    onMutate: async () => {
+      setLocalIsPinned((prev) => !prev);
+    },
+    onSuccess: (result) => {
+      if (result.success) {
+        toast.success(result.message);
+        queryClient.invalidateQueries({ queryKey: ["community-posts"] });
+      } else {
+        setLocalIsPinned(post.isPinned);
+        toast.error(result.message);
+      }
+    },
+    onError: () => {
+      setLocalIsPinned(post.isPinned);
+      toast.error("Failed to pin/unpin post");
+    },
+  });
+
   const handleShare = async (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -673,9 +716,12 @@ const PostCard = ({ post }: { post: Post }) => {
               postId={post.id}
               onShare={handleShare}
               onDelete={() => deleteMutation.mutate()}
+              onPin={() => pinMutation.mutate()}
               isOwner={isOwner}
               isAdmin={isAdmin}
               isDeleting={deleteMutation.isPending}
+              isPinning={pinMutation.isPending}
+              isPinned={localIsPinned}
             />
           </div>
         </div>
