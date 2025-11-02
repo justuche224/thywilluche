@@ -350,7 +350,7 @@ export const getHomePageReviews = async () => {
       .from(bookReview)
       .where(eq(bookReview.showOnHomePage, true))
       .orderBy(asc(bookReview.createdAt))
-      .limit(5);
+      .limit(10);
 
       // console.log(homeReviews[0]);
     return {
