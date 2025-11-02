@@ -6,33 +6,33 @@ export const sendWelcomeEmail = async (email: string, name: string | null) => {
 
     await sendMail({
       to: email,
-      subject: "Welcome to Thywilluche!",
+      subject: "Welcome to Thywilluche.com!",
       text: `
-Hi ${greetingName},
+Welcome to Thywilluche.com!
 
-Welcome to Thywilluche! We're excited to have you on board.
+Hey ${greetingName},
 
-Your account has been successfully created. You can now explore our community, share your thoughts, and connect with others.
+We're thrilled to have you join the circle. Your account is ready --- your voice, your story, your journey all have a home here. Step in, explore, create, and connect with a community that understands passion, purpose, and persistence.
 
-If you have any questions, feel free to reach out to our support team.
+If you ever need support, we're always here to listen and help. Contact us at support@thywilluche.com.
 
 Best regards,
-Thywilluche Team
+Team Thywill
       `.trim(),
       html: `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-      <h2 style="color: #333;">Welcome to Thywilluche!</h2>
+      <h2 style="color: #333;">Welcome to Thywilluche.com!</h2>
       
-      <p>Hi ${greetingName},</p>
+      <p>Hey ${greetingName},</p>
       
-      <p>We're excited to have you on board. Your account has been successfully created. You can now explore our community, share your thoughts, and connect with others.</p>
+      <p>We're thrilled to have you join the circle. Your account is ready --- your voice, your story, your journey all have a home here. Step in, explore, create, and connect with a community that understands passion, purpose, and persistence.</p>
       
-      <p>If you have any questions, feel free to reach out to our support team.</p>
+      <p>If you ever need support, we're always here to listen and help. Contact us at <a href="mailto:support@thywilluche.com">support@thywilluche.com</a>.</p>
       
       <hr style="margin: 30px 0; border: none; border-top: 1px solid #eee;">
       <p style="color: #666; font-size: 14px;">
         Best regards,<br>
-        Thywilluche Team
+        Team Thywill
       </p>
     </div>
       `.trim(),
