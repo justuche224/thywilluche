@@ -190,6 +190,20 @@
       "when": 1762004182158,
       "tag": "0026_confused_terrax",
       "breakpoints": true
+    },
+    {
+      "idx": 27,
+      "version": "7",
+      "when": 1762076193147,
+      "tag": "0027_eager_exiles",
+      "breakpoints": true
+    },
+    {
+      "idx": 28,
+      "version": "7",
+      "when": 1762076583357,
+      "tag": "0028_rich_vulcan",
+      "breakpoints": true
     }
   ]
 }

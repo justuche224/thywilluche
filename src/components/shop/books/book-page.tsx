@@ -5,7 +5,12 @@ import { Oswald } from "next/font/google";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
-import { getBookBySlug } from "@/actions/shop/books/public";
+import {
+  getBookBySlug,
+  getPublicBookReviews,
+} from "@/actions/shop/books/public";
+import ReviewList from "./review-list";
+import { Separator } from "@/components/ui/separator";
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -34,6 +39,15 @@ export const BookPage = ({ bookSlug }: { bookSlug: string }) => {
   const { data, isLoading, error } = useQuery({
     queryKey: ["book", bookSlug],
     queryFn: () => getBookBySlug(bookSlug),
+  });
+
+  const { data: reviewsData, isLoading: reviewsLoading } = useQuery({
+    queryKey: ["book-reviews", data?.book?.id],
+    queryFn: () => {
+      if (!data?.book?.id) throw new Error("Book ID is required");
+      return getPublicBookReviews(data.book.id);
+    },
+    enabled: !!data?.book?.id,
   });
 
   useEffect(() => {
@@ -317,6 +331,49 @@ export const BookPage = ({ bookSlug }: { bookSlug: string }) => {
           </div>
         </div>
       </div>
+
+      {reviewsLoading ? (
+        <div className="w-full py-16 lg:py-20">
+          <div className="container mx-auto px-6 lg:px-8">
+            <div className="max-w-4xl mx-auto space-y-8">
+              <Skeleton className="h-10 w-32" />
+              <Separator />
+              <div className="space-y-6">
+                {[1, 2, 3].map((i) => (
+                  <div
+                    key={i}
+                    className="bg-white rounded-lg border border-gray-100 p-6 space-y-4"
+                  >
+                    <div className="flex items-start justify-between">
+                      <div className="flex items-center gap-3">
+                        <Skeleton className="w-12 h-12 rounded-full" />
+                        <div className="space-y-2">
+                          <Skeleton className="h-4 w-32" />
+                          <Skeleton className="h-3 w-24" />
+                        </div>
+                      </div>
+                      <Skeleton className="h-5 w-20" />
+                    </div>
+                    <Skeleton className="h-20 w-full" />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : reviewsData?.reviews && reviewsData.reviews.length > 0 ? (
+        <div className="w-full py-16 lg:py-20">
+          <div className="container mx-auto px-6 lg:px-8">
+            <div className="max-w-4xl mx-auto space-y-8">
+              <h2 className={`text-3xl lg:text-4xl ${georgiaItalic.className}`}>
+                Reviews
+              </h2>
+              <Separator />
+              <ReviewList reviews={reviewsData.reviews} />
+            </div>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 };

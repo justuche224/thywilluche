@@ -114,3 +114,21 @@ export const trope = pgTable("tropes", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at"),
 });
+
+export const bookReview = pgTable("book_reviews", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  baseBookId: text("base_book_id")
+    .notNull()
+    .references(() => baseBook.id, { onDelete: "cascade" }),
+  reviewerName: text("reviewer_name").notNull(),
+  rating: decimal("rating", { precision: 2, scale: 1 }).notNull(),
+  content: text("content").notNull(),
+  showOnHomePage: boolean("show_on_home_page").default(false).notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at")
+    .defaultNow()
+    .$onUpdate(() => new Date())
+    .notNull(),
+});

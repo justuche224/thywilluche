@@ -6,6 +6,7 @@ import { Oswald } from "next/font/google";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useQuery } from "@tanstack/react-query";
+import { Star } from "lucide-react";
 import {
   getPublicBooksWithVariants,
   getPublicFeaturedBooks,
@@ -104,6 +105,17 @@ const BooksPage = () => {
                       <span className="px-3 py-1 text-xs font-semibold rounded-full bg-primary text-primary-foreground">
                         {book.badge}
                       </span>
+                    )}
+                    {book.reviewStats && book.reviewStats.count > 0 && (
+                      <div className="flex items-center gap-2">
+                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                        <span className="text-sm font-medium">
+                          {book.reviewStats.averageRating.toFixed(1)}
+                        </span>
+                        <span className="text-sm text-muted-foreground">
+                          ({book.reviewStats.count})
+                        </span>
+                      </div>
                     )}
                   </div>
                   <div className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-4xl line-clamp-3 whitespace-pre-wrap">

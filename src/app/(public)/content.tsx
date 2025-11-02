@@ -14,6 +14,7 @@ const HomeContent = ({
   featuredData,
   purposeData,
   socials,
+  featuredBookReviews,
 }: {
   heroData: Record<string, string>;
   whoIAmData: Record<string, string>;
@@ -24,6 +25,13 @@ const HomeContent = ({
     label: string;
     url: string;
   }[];
+  featuredBookReviews?: Array<{
+    id: string;
+    reviewerName: string;
+    rating: number;
+    content: string;
+    createdAt: Date;
+  }>;
 }) => {
   const [showWelcome, setShowWelcome] = useState(true);
 
@@ -57,6 +65,7 @@ const HomeContent = ({
             description={featuredData.description}
             image1={featuredData.image1}
             image2={featuredData.image2}
+            reviews={featuredBookReviews || []}
           />
           <Purpose
             title={purposeData.title}

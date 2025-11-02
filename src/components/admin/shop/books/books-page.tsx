@@ -109,7 +109,7 @@ const BooksPage = () => {
           <div className="space-y-10">
             {data.books.map((book, index) => (
               <div key={book.id} className="space-y-6">
-                <div className="space-y-2 flex items-start justify-between">
+                <div className="space-y-2 flex max-md:flex-col items-start justify-between">
                   <div className="flex-1">
                     <h2
                       className={`text-2xl md:text-3xl font-bold ${oswald.className} text-gray-900`}
@@ -136,6 +136,11 @@ const BooksPage = () => {
                     <Link href={`/admin/shop/books/${book.id}/edit`}>
                       <Button variant="outline" size="sm">
                         Edit Book
+                      </Button>
+                    </Link>
+                    <Link href={`/admin/shop/books/${book.id}/reviews`}>
+                      <Button variant="outline" size="sm">
+                        Reviews
                       </Button>
                     </Link>
                     <Link href={`/admin/shop/books/${book.id}/add-variant`}>

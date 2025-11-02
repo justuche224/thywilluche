@@ -1,7 +1,7 @@
 "use server";
 
 import { eq, desc, and } from "drizzle-orm";
-import { baseBook, bookVariant, trope } from "@/db/schema/books";
+import { baseBook, bookVariant, trope, bookReview } from "@/db/schema/books";
 import { logger } from "@/utils/logger";
 import db from "@/db";
 
@@ -31,9 +31,31 @@ export const getPublicBooksWithVariants = async (
             )
           );
 
+        const reviews = await db
+          .select()
+          .from(bookReview)
+          .where(eq(bookReview.baseBookId, book.id));
+
+        const reviewStats =
+          reviews.length > 0
+            ? {
+                count: reviews.length,
+                averageRating:
+                  Math.round(
+                    (reviews.reduce(
+                      (sum, review) => sum + parseFloat(review.rating),
+                      0
+                    ) /
+                      reviews.length) *
+                      10
+                  ) / 10,
+              }
+            : { count: 0, averageRating: 0 };
+
         return {
           ...book,
           variants,
+          reviewStats,
         };
       })
     );
@@ -101,9 +123,31 @@ export const getPublicFeaturedBooks = async () => {
             )
           );
 
+        const reviews = await db
+          .select()
+          .from(bookReview)
+          .where(eq(bookReview.baseBookId, book.id));
+
+        const reviewStats =
+          reviews.length > 0
+            ? {
+                count: reviews.length,
+                averageRating:
+                  Math.round(
+                    (reviews.reduce(
+                      (sum, review) => sum + parseFloat(review.rating),
+                      0
+                    ) /
+                      reviews.length) *
+                      10
+                  ) / 10,
+              }
+            : { count: 0, averageRating: 0 };
+
         return {
           ...book,
           variants,
+          reviewStats,
         };
       })
     );
@@ -231,6 +275,96 @@ export const getBookBySlug = async (slug: string) => {
     return {
       error: "Internal server error",
       message: "An error occurred while fetching the book.",
+    };
+  }
+};
+
+export const getPublicBookReviews = async (baseBookId: string) => {
+  try {
+    const reviews = await db
+      .select()
+      .from(bookReview)
+      .where(eq(bookReview.baseBookId, baseBookId))
+      .orderBy(desc(bookReview.createdAt));
+
+    return {
+      reviews: reviews.map((review) => ({
+        ...review,
+        rating: parseFloat(review.rating),
+      })),
+    };
+  } catch (error) {
+    logger(
+      error instanceof Error ? error.message : "Unknown error",
+      "error",
+      "actions/shop/books/public.ts"
+    );
+    return {
+      error: "Internal server error",
+      message: "An error occurred while fetching reviews.",
+      reviews: [],
+    };
+  }
+};
+
+export const getPublicBookReviewStats = async (baseBookId: string) => {
+  try {
+    const reviews = await db
+      .select()
+      .from(bookReview)
+      .where(eq(bookReview.baseBookId, baseBookId));
+
+    if (reviews.length === 0) {
+      return {
+        count: 0,
+        averageRating: 0,
+      };
+    }
+
+    const ratings = reviews.map((review) => parseFloat(review.rating));
+    const averageRating =
+      ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length;
+
+    return {
+      count: reviews.length,
+      averageRating: Math.round(averageRating * 10) / 10,
+    };
+  } catch (error) {
+    logger(
+      error instanceof Error ? error.message : "Unknown error",
+      "error",
+      "actions/shop/books/public.ts"
+    );
+    return {
+      count: 0,
+      averageRating: 0,
+    };
+  }
+};
+
+export const getHomePageReviews = async () => {
+  try {
+    const homeReviews = await db
+      .select()
+      .from(bookReview)
+      .where(eq(bookReview.showOnHomePage, true))
+      .orderBy(desc(bookReview.createdAt))
+      .limit(5);
+
+    return {
+      reviews: homeReviews.map((review) => ({
+        ...review,
+        rating: parseFloat(review.rating),
+      })),
+    };
+  } catch (error) {
+    logger(
+      error instanceof Error ? error.message : "Unknown error",
+      "error",
+      "actions/shop/books/public.ts"
+    );
+    return {
+      reviews: [],
     };
   }
 };

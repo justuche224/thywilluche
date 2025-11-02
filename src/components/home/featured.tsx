@@ -1,15 +1,23 @@
 import Image from "next/image";
 import React from "react";
-import {  Oswald } from "next/font/google";
+import { Oswald } from "next/font/google";
 import { Button } from "../ui/button";
 import Link from "next/link";
+import { Star, User } from "lucide-react";
 import { georgiaItalic } from "@/utils/georgia-italic";
-
 
 const oswald = Oswald({
   variable: "--font-oswald",
   subsets: ["latin"],
 });
+
+interface BookReview {
+  id: string;
+  reviewerName: string;
+  rating: number;
+  content: string;
+  createdAt: Date;
+}
 
 interface FeaturedProps {
   title?: string;
@@ -17,6 +25,7 @@ interface FeaturedProps {
   description?: string;
   image1?: string;
   image2?: string;
+  reviews?: BookReview[];
 }
 
 const Featured = ({
@@ -25,6 +34,7 @@ const Featured = ({
   description = "In Days I Do Not Die, Thywill Uche opens the door to his most vulnerable truths-sharing a raw, unfiltered journey through struggle, survival, and the silent weight of mental illness. This is not just a story of pain; it is a story of recovery, rebirth, and the relentless will to live when life itself feels unbearable.",
   image1 = "/images/IMG_20250918_104735[2].jpg",
   image2 = "/images/IMG_20250716_093443[1].jpg",
+  reviews = [],
 }: FeaturedProps) => {
   return (
     <div className="w-full mt-24 bg-white/50 overflow-clip">
@@ -90,6 +100,57 @@ const Featured = ({
             <Link href="/shop/books">Buy Now</Link>
           </Button>
         </div>
+
+        {reviews.length > 0 && (
+          <div className="mt-16 max-w-4xl mx-auto">
+            <h3
+              className={`text-3xl ${georgiaItalic.className} text-center mb-8`}
+            >
+              What Readers Are Saying
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {reviews.map((review) => (
+                <div
+                  key={review.id}
+                  className="bg-white rounded-lg border border-gray-100 p-6 space-y-4 shadow-sm hover:shadow-md transition-shadow"
+                >
+                  <div className="flex items-start justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                        <User className="w-5 h-5 text-primary" />
+                      </div>
+                      <div>
+                        <h4
+                          className={`font-semibold text-sm ${oswald.className}`}
+                        >
+                          {review.reviewerName}
+                        </h4>
+                      </div>
+                    </div>
+                    <div className="flex gap-1">
+                      {Array.from({ length: 5 }).map((_, i) => (
+                        <Star
+                          key={i}
+                          size={14}
+                          className={`${
+                            i < Math.round(review.rating)
+                              ? "fill-yellow-400 text-yellow-400"
+                              : "text-gray-300"
+                          }`}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                  <p
+                    className={`text-sm text-gray-700 ${oswald.className} leading-relaxed line-clamp-4`}
+                  >
+                    {review.content}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
