@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Oswald } from "next/font/google";
 import { georgiaItalic } from "@/utils/georgia-italic";
 import BlogPostCard from "@/components/blog/blog-post-card";
+import { blogCategories } from "@/db/schema/blog";
 
 const oswald = Oswald({
   variable: "--font-oswald",
@@ -24,13 +25,7 @@ interface BlogPost {
   commentCount: number;
 }
 
-const categories = [
-  { name: "Poetry", slug: "Poetry" },
-  { name: "Essays", slug: "Essays" },
-  { name: "Reflections", slug: "Reflections" },
-  { name: "Thought Leadership", slug: "Thought Leadership" },
-  { name: "Winners of Game", slug: "Winners of Game" },
-];
+const categories = blogCategories.map((cat) => ({ name: cat, slug: cat }));
 
 interface BlogListingPageProps {
   searchParams: Promise<{ category?: string }>;

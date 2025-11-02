@@ -6,7 +6,12 @@ export const blogCategories = [
   "Essays",
   "Reflections",
   "Thought Leadership",
-  "Winners of Game",
+  "Play & Win",
+  "Healing & Personal Growth",
+  "Love, Sex & Relationships",
+  "Fashion & Identity",
+  "Lifestyle & Culture",
+  "Creativity & Storytelling",
 ] as const;
 
 export const blogStatus = ["draft", "published", "archived"] as const;
