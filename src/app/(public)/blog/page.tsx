@@ -73,7 +73,7 @@ export default async function BlogListingPage({
               {categories.map((cat) => (
                 <Link
                   key={cat.slug}
-                  href={`/blog?category=${cat.slug}`}
+                  href={`/blog?category=${encodeURIComponent(cat.slug)}`}
                   className={`px-6 py-3 rounded-full border transition-all duration-300 ${
                     oswald.className
                   } ${
