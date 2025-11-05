@@ -4,6 +4,7 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
+  serverExternalPackages: ['@countrystatecity/countries'],
   experimental: {
     serverActions: {
       bodySizeLimit: "3mb",

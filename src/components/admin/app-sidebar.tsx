@@ -128,6 +128,12 @@ const data = {
       isActive: true,
     },
     {
+      title: "Championship",
+      url: "/admin/championship",
+      icon: UserRoundCheck,
+      isActive: true,
+    },
+    {
       title: "Community",
       url: "#",
       icon: Users,

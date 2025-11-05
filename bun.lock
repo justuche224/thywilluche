@@ -4,6 +4,7 @@
     "": {
       "name": "thewilluche",
       "dependencies": {
+        "@countrystatecity/countries": "^1.0.4",
         "@floating-ui/react": "^0.27.16",
         "@hookform/resolvers": "^5.2.2",
         "@radix-ui/react-accordion": "^1.2.12",
@@ -174,6 +175,8 @@
     "@better-auth/utils": ["@better-auth/utils@0.3.0", "", {}, "sha512-W+Adw6ZA6mgvnSnhOki270rwJ42t4XzSK6YWGF//BbVXL6SwCLWfyzBc1lN2m/4RM28KubdBKQ4X5VMoLRNPQw=="],
 
     "@better-fetch/fetch": ["@better-fetch/fetch@1.1.18", "", {}, "sha512-rEFOE1MYIsBmoMJtQbl32PGHHXuG2hDxvEd7rUHE0vCBoFQVSDqaVs9hkZEtHCxRoY+CljXKFCOuJ8uxqw1LcA=="],
+
+    "@countrystatecity/countries": ["@countrystatecity/countries@1.0.4", "", {}, "sha512-BQyZJ5fUps+ArptYRvLoCzfKGsIz3yCMcGc/Pgi4fSSHGKI5YlsefGeblFUnkIFuSpOMnb/GAu/GL/hzz0Kq9g=="],
 
     "@date-fns/tz": ["@date-fns/tz@1.4.1", "", {}, "sha512-P5LUNhtbj6YfI3iJjw5EL9eUAG6OitD0W3fWQcpQjDRc/QIsL0tRNuO1PcDvPccWL1fSTXXdE1ds+l95DV/OFA=="],
 
