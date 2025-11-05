@@ -1,5 +1,108 @@
 import { sendMail } from "@/mailer";
 
+export const sendChampionshipRegistrationConfirmationEmail = async (
+  userEmail: string,
+  userName: string | null,
+  registrationId: string
+) => {
+  try {
+    const greetingName = userName || "there";
+    const registrationUrl = `${
+      process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"
+    }/championship/registration`;
+
+    const html = `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <h2 style="color: #800000; border-bottom: 2px solid #800000; padding-bottom: 10px;">
+          Championship Registration Received
+        </h2>
+        
+        <p>Hey ${greetingName},</p>
+        
+        <div style="background-color: #fff3cd; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #ffc107;">
+          <h3 style="color: #856404; margin-top: 0;">Registration Status: Pending</h3>
+          <p style="color: #856404; margin: 0;">
+            Thank you for registering for <strong>Thywill's Champion's League</strong>! Your registration has been received and is currently pending review.
+          </p>
+        </div>
+
+        <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+          <h3 style="color: #495057; margin-top: 0;">What Happens Next?</h3>
+          <p>Our team will review your registration and payment receipt. You will receive an email notification once your registration has been approved or if we need any additional information.</p>
+          <p>Please note that processing may take a few business days. We appreciate your patience!</p>
+        </div>
+
+        <div style="background-color: #f8f9fa; padding: 15px; border-radius: 8px; margin: 20px 0;">
+          <p style="margin: 0; color: #495057;">
+            <strong>Registration ID:</strong> ${registrationId}
+          </p>
+        </div>
+
+        <div style="text-align: center; margin: 30px 0;">
+          <a href="${registrationUrl}" style="display: inline-block; padding: 12px 30px; background-color: #800000; color: white; text-decoration: none; border-radius: 4px; font-weight: bold;">
+            View Registration Status
+          </a>
+        </div>
+
+        <div style="background-color: #e7f3ff; padding: 15px; border-radius: 8px; margin: 20px 0;">
+          <p style="margin: 0; color: #0051a5;">
+            <strong>Questions?</strong> If you have any questions about your registration, please contact us at <a href="mailto:support@thywilluche.com" style="color: #0051a5;">support@thywilluche.com</a>.
+          </p>
+        </div>
+
+        <hr style="margin: 30px 0; border: none; border-top: 1px solid #eee;">
+        <p style="color: #666; font-size: 14px;">
+          Best regards,<br>
+          Team Thywill
+        </p>
+      </div>
+    `;
+
+    const text = `
+Championship Registration Received
+
+Hey ${greetingName},
+
+Thank you for registering for Thywill's Champion's League! Your registration has been received and is currently pending review.
+
+Registration Status: Pending
+
+What Happens Next?
+Our team will review your registration and payment receipt. You will receive an email notification once your registration has been approved or if we need any additional information.
+
+Please note that processing may take a few business days. We appreciate your patience!
+
+Registration ID: ${registrationId}
+
+View Registration Status: ${registrationUrl}
+
+Questions? If you have any questions about your registration, please contact us at support@thywilluche.com.
+
+Best regards,
+Team Thywill
+    `.trim();
+
+    await sendMail({
+      to: userEmail,
+      subject: "Championship Registration Received - Pending Review",
+      text,
+      html,
+    });
+
+    console.log(
+      `Championship registration confirmation email sent to ${userEmail}`
+    );
+  } catch (error) {
+    console.error(
+      "Error sending championship registration confirmation email:",
+      error
+    );
+    throw new Error(
+      "Failed to send championship registration confirmation email: " + error
+    );
+  }
+};
+
 export const sendChampionshipRegistrationNotificationToAdmin = async (
   adminEmail: string,
   userName: string,

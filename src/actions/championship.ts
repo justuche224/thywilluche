@@ -6,7 +6,10 @@ import db from "@/db";
 import { championshipRegistrations } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { user } from "@/db/schema";
-import { sendChampionshipRegistrationNotificationToAdmin } from "@/mailer/handlers/championship";
+import {
+  sendChampionshipRegistrationNotificationToAdmin,
+  sendChampionshipRegistrationConfirmationEmail,
+} from "@/mailer/handlers/championship";
 
 const formSchema = z.object({
   phoneNumber: z.string().min(1, "Phone number is required"),
@@ -62,14 +65,27 @@ export async function registerForChampionship(
       where: eq(user.id, session.user.id),
     });
 
-    const adminUser = await db.query.user.findFirst({
-      where: eq(user.role, "ADMIN"),
-    });
+    if (userData) {
+      try {
+        await sendChampionshipRegistrationConfirmationEmail(
+          userData.email,
+          userData.name,
+          newRegistration[0].id
+        );
+      } catch (emailError) {
+        console.error(
+          "Failed to send registration confirmation email:",
+          emailError
+        );
+      }
+    }
 
-    if (adminUser?.email && userData) {
+    const NOTIFICATION_EMAIL = process.env.NOTIFICATION_EMAIL;
+
+    if (NOTIFICATION_EMAIL && userData) {
       try {
         await sendChampionshipRegistrationNotificationToAdmin(
-          adminUser.email,
+          NOTIFICATION_EMAIL,
           userData.name || userData.email,
           userData.email,
           validatedData.phoneNumber,
