@@ -44,6 +44,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { toast } from "sonner";
+import Link from "next/link";
 
 const oswald = Oswald({
   variable: "--font-oswald",
@@ -511,7 +512,7 @@ const Registration = ({ user }: { user: ExtendedUser }) => {
                   </div>
                   <FieldDescription className="px-6 text-center">
                     By clicking submit, you agree to our{" "}
-                    <a href="#">Terms and Conditions</a>
+                    <Link href="/championship/terms-and-conditions">Terms and Conditions</Link>
                   </FieldDescription>
                 </form>
               </Form>
