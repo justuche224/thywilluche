@@ -5,12 +5,12 @@ const nextConfig: NextConfig = {
     unoptimized: true,
   },
   serverExternalPackages: ['@countrystatecity/countries'],
+  outputFileTracingIncludes: {
+    '/api/**/*': ['./node_modules/@countrystatecity/countries/dist/data/**/*'],
+  },
   experimental: {
     serverActions: {
       bodySizeLimit: "3mb",
-    },
-    outputFileTracingIncludes: {
-      '/api/**/*': ['./node_modules/@countrystatecity/countries/dist/data/**/*'],
     },
   },
   typescript: {
