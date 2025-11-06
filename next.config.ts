@@ -9,6 +9,9 @@ const nextConfig: NextConfig = {
     serverActions: {
       bodySizeLimit: "3mb",
     },
+    outputFileTracingIncludes: {
+      '/api/**/*': ['./node_modules/@countrystatecity/countries/dist/data/**/*'],
+    },
   },
   typescript: {
     // !! WARN !!
