@@ -25,8 +25,8 @@ const Championship = () => {
             >
               THYWILL&apos;S CHAMPIONS LEAGUE
             </h1>
-            <p className="text-xl lg:text-2xl text-gray-600 font-light mb-8">
-              Welcome to Thywill&apos;s Champions League — where readers become
+            <p className="text-xl lg:text-2xl text-gray-600 mb-8 font-bold italic">
+              Welcome to Thywill&apos;s Champions League; where readers become
               legends. A movement for minds that listen, feel, and speak truth
               through words. If Days I Do Not Die spoke to you, now&apos;s your
               chance to speak back, and be rewarded.
