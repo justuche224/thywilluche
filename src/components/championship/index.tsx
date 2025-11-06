@@ -23,7 +23,7 @@ const Championship = () => {
             <h1
               className={`text-4xl lg:text-6xl font-bold text-[#800000] mb-6 ${oswald.className}`}
             >
-              THYWILL&apos;S CHAMPIONS LEAGUE
+              THYWILL&apos;S CHAMPIONS LEAGUE 🏆
             </h1>
             <p className="text-xl lg:text-2xl text-gray-600 mb-8 font-bold italic">
               Welcome to Thywill&apos;s Champions League; where readers become
@@ -38,8 +38,11 @@ const Championship = () => {
               in your own words. Be bold. Be original. Be real. The finest
               voices will earn recognition, rewards, and a place among
               tomorrow&apos;s literary legends. This isn&apos;t just a competition, it&apos;s a
-              call to rise, write, and be remembered. Proudly sponsored by
-              Thywill Fountain of Hope for the Poor Initiative.
+              call to rise, write, and be remembered. <br />
+              <span className="font-bold italic text-black">
+                Proudly sponsored by
+                Thywill Fountain of Hope for the Poor Initiative.
+              </span>
             </p>
           </motion.div>
         </div>
