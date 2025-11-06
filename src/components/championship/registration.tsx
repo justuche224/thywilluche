@@ -8,7 +8,6 @@ import Image from "next/image";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { fetchCountries, fetchStates, fetchCities } from "@/actions/location";
 import {
   registerForChampionship,
   getChampionshipPaymentInfo,
@@ -106,7 +105,8 @@ const Registration = ({ user }: { user: ExtendedUser }) => {
   useEffect(() => {
     const loadCountries = async () => {
       try {
-        const result = await fetchCountries();
+        const response = await fetch("/api/location/countries");
+        const result = await response.json();
         if (result.success && result.data) {
           setCountries(result.data);
         } else {
@@ -125,7 +125,10 @@ const Registration = ({ user }: { user: ExtendedUser }) => {
     const loadStates = async () => {
       if (selectedCountry) {
         try {
-          const result = await fetchStates(selectedCountry);
+          const response = await fetch(
+            `/api/location/states?countryIso2=${selectedCountry}`
+          );
+          const result = await response.json();
           if (result.success && result.data) {
             setStates(result.data);
             form.resetField("state");
@@ -150,7 +153,10 @@ const Registration = ({ user }: { user: ExtendedUser }) => {
     const loadCities = async () => {
       if (selectedCountry && selectedState) {
         try {
-          const result = await fetchCities(selectedCountry, selectedState);
+          const response = await fetch(
+            `/api/location/cities?countryIso2=${selectedCountry}&stateIso2=${selectedState}`
+          );
+          const result = await response.json();
           if (result.success && result.data) {
             setCities(result.data);
             form.resetField("city");
@@ -512,7 +518,9 @@ const Registration = ({ user }: { user: ExtendedUser }) => {
                   </div>
                   <FieldDescription className="px-6 text-center">
                     By clicking submit, you agree to our{" "}
-                    <Link href="/championship/terms-and-conditions">Terms and Conditions</Link>
+                    <Link href="/championship/terms-and-conditions">
+                      Terms and Conditions
+                    </Link>
                   </FieldDescription>
                 </form>
               </Form>
