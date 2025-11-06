@@ -23,18 +23,23 @@ const Championship = () => {
             <h1
               className={`text-4xl lg:text-6xl font-bold text-[#800000] mb-6 ${oswald.className}`}
             >
-              THYWILL&apos;S CHAMPION&apos;S LEAGUE
+              THYWILL&apos;S CHAMPIONS LEAGUE
             </h1>
             <p className="text-xl lg:text-2xl text-gray-600 font-light mb-8">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam,
-              quos.
+              Welcome to Thywill&apos;s Champions League — where readers become
+              legends. A movement for minds that listen, feel, and speak truth
+              through words. If Days I Do Not Die spoke to you, now&apos;s your
+              chance to speak back, and be rewarded.
             </p>
             <p className="text-lg text-gray-700 leading-relaxed max-w-3xl mx-auto">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque
-              illo ex asperiores, vitae dolorem delectus minus deserunt error
-              sapiente quod consequuntur! Numquam, quibusdam architecto sunt
-              earum nisi sint ducimus aliquam? Dolor soluta eos, officiis
-              repellat blanditiis ducimus cum incidunt
+              Every reader has a voice, and every story deserves an echo.
+              Thywill&apos;s Champions League is where reflection meets reward; a
+              space for truth, creativity, and courage. Review Days I Do Not Die
+              in your own words. Be bold. Be original. Be real. The finest
+              voices will earn recognition, rewards, and a place among
+              tomorrow&apos;s literary legends. This isn&apos;t just a competition, it&apos;s a
+              call to rise, write, and be remembered. Proudly sponsored by
+              Thywill Fountain of Hope for the Poor Initiative.
             </p>
           </motion.div>
         </div>
