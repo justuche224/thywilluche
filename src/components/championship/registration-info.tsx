@@ -83,7 +83,7 @@ const RegistrationInfo = ({
             <h1
               className={`text-4xl lg:text-6xl font-bold text-[#800000] mb-6 ${oswald.className}`}
             >
-              THYWILL&apos;S CHAMPION&apos;S LEAGUE
+              THYWILL&apos;S CHAMPIONS LEAGUE 🏆
             </h1>
             <p className="text-xl lg:text-2xl text-gray-600 font-light mb-8">
               Registration Status
