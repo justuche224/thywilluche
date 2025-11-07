@@ -7,6 +7,7 @@ import Purpose from "@/components/home/purpose";
 import React, { useState } from "react";
 import Community from "@/components/home/community";
 import Welcome from "@/components/home/welcome";
+import ChampionshipAnnouncement from "@/components/home/championship-announcement";
 
 const HomeContent = ({
   heroData,
@@ -59,6 +60,7 @@ const HomeContent = ({
             description={whoIAmData.description}
             image={whoIAmData.image}
           />
+          <ChampionshipAnnouncement />
           <Featured
             title={featuredData.title}
             quote={featuredData.quote}
