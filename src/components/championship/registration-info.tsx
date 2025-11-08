@@ -105,7 +105,7 @@ const RegistrationInfo = ({
           >
             <Card className="bg-white/70 border-gray-200">
               <CardHeader>
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col gap-2 md:flex-row items-center justify-between">
                   <h2
                     className={`text-3xl lg:text-4xl font-bold text-[#800000] ${oswald.className}`}
                   >
