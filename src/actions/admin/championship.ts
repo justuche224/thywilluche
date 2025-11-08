@@ -5,6 +5,7 @@ import db from "@/db";
 import {
   championshipRegistrations,
   championshipPaymentSettings,
+  championshipReviewSubmissions,
 } from "@/db/schema";
 import { eq, desc } from "drizzle-orm";
 import { user } from "@/db/schema";
@@ -370,6 +371,93 @@ export async function updateChampionshipPaymentSettings(
     return {
       success: false,
       message: "Failed to update payment settings",
+    };
+  }
+}
+
+export async function getAllChampionshipReviews() {
+  const isPermitted = await requireAdmin();
+  if (!isPermitted) {
+    return {
+      success: false,
+      message: "Unauthorized",
+      reviews: [],
+    };
+  }
+
+  try {
+    const reviews = await db.query.championshipReviewSubmissions.findMany({
+      orderBy: desc(championshipReviewSubmissions.createdAt),
+    });
+
+    const reviewsWithUsers = await Promise.all(
+      reviews.map(async (review) => {
+        const reviewUser = await db.query.user.findFirst({
+          where: eq(user.id, review.userId),
+        });
+        return {
+          ...review,
+          user: reviewUser,
+        };
+      })
+    );
+
+    return {
+      success: true,
+      reviews: reviewsWithUsers,
+    };
+  } catch (error) {
+    console.error("Error fetching championship reviews:", error);
+    return {
+      success: false,
+      message: "Failed to fetch reviews",
+      reviews: [],
+    };
+  }
+}
+
+export async function getChampionshipReviewById(id: string) {
+  const isPermitted = await requireAdmin();
+  if (!isPermitted) {
+    return {
+      success: false,
+      message: "Unauthorized",
+    };
+  }
+
+  try {
+    const review = await db.query.championshipReviewSubmissions.findFirst({
+      where: eq(championshipReviewSubmissions.id, id),
+    });
+
+    if (!review) {
+      return {
+        success: false,
+        message: "Review not found",
+      };
+    }
+
+    const reviewUser = await db.query.user.findFirst({
+      where: eq(user.id, review.userId),
+    });
+
+    const registration = await db.query.championshipRegistrations.findFirst({
+      where: eq(championshipRegistrations.userId, review.userId),
+    });
+
+    return {
+      success: true,
+      review: {
+        ...review,
+        user: reviewUser,
+        registration,
+      },
+    };
+  } catch (error) {
+    console.error("Error fetching championship review:", error);
+    return {
+      success: false,
+      message: "Failed to fetch review",
     };
   }
 }

@@ -8,6 +8,8 @@ import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { CheckCircle2, Clock, XCircle } from "lucide-react";
+import { Button } from "../ui/button";
+import Link from "next/link";
 
 const oswald = Oswald({
   variable: "--font-oswald",
@@ -36,12 +38,14 @@ interface RegistrationInfoProps {
   user: ExtendedUser;
   registration: RegistrationData;
   status: "pending" | "approved" | "rejected";
+  hasSubmittedReview?: boolean;
 }
 
 const RegistrationInfo = ({
   user,
   registration,
   status,
+  hasSubmittedReview = false,
 }: RegistrationInfoProps) => {
   const statusConfig = {
     pending: {
@@ -107,12 +111,21 @@ const RegistrationInfo = ({
                   >
                     Registration Status
                   </h2>
-                  <Badge
-                    className={`${currentStatus.color} border flex items-center gap-2 px-4 py-2`}
-                  >
-                    <StatusIcon className="w-4 h-4" />
-                    {currentStatus.label}
-                  </Badge>
+                  <div className="flex items-center gap-2">
+                    <Badge
+                      className={`${currentStatus.color} border flex items-center gap-2 px-4 py-2`}
+                    >
+                      <StatusIcon className="w-4 h-4" />
+                      {currentStatus.label}
+                    </Badge>
+                    {registration.status === "approved" && (
+                      <Button asChild>
+                        <Link href="/championship/submit">
+                          {hasSubmittedReview ? "View review" : "Submit review"}
+                        </Link>
+                      </Button>
+                    )}
+                  </div>
                 </div>
               </CardHeader>
               <CardContent className="space-y-6">

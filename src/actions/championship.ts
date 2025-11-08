@@ -3,7 +3,10 @@
 import { serverAuth } from "@/lib/server-auth";
 import { z } from "zod";
 import db from "@/db";
-import { championshipRegistrations } from "@/db/schema";
+import {
+  championshipRegistrations,
+  championshipReviewSubmissions,
+} from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { user } from "@/db/schema";
 import {
@@ -187,6 +190,127 @@ export async function getChampionshipPaymentInfo() {
       success: false,
       message: "Failed to fetch payment information",
       settings: null,
+    };
+  }
+}
+
+export async function getReviewSubmission() {
+  try {
+    const session = await serverAuth();
+
+    if (!session || !session.user) {
+      return {
+        success: false,
+        message: "Unauthorized",
+        submission: null,
+      };
+    }
+
+    const submission = await db.query.championshipReviewSubmissions.findFirst({
+      where: eq(championshipReviewSubmissions.userId, session.user.id),
+    });
+
+    if (!submission) {
+      return {
+        success: true,
+        submission: null,
+        message: "No submission found",
+      };
+    }
+
+    return {
+      success: true,
+      submission,
+    };
+  } catch (error) {
+    console.error("Error fetching review submission:", error);
+    return {
+      success: false,
+      message: "Failed to fetch review submission",
+      submission: null,
+    };
+  }
+}
+
+const reviewSubmissionSchema = z
+  .object({
+    reviewText: z.string().optional(),
+    reviewDocumentUrl: z.string().optional(),
+  })
+  .refine((data) => data.reviewText || data.reviewDocumentUrl, {
+    message: "Either review text or document is required",
+    path: ["reviewText"],
+  });
+
+export async function submitReview(
+  formData: z.infer<typeof reviewSubmissionSchema>
+) {
+  try {
+    const session = await serverAuth();
+
+    if (!session || !session.user) {
+      return {
+        success: false,
+        message: "Unauthorized",
+      };
+    }
+
+    const registration = await db.query.championshipRegistrations.findFirst({
+      where: eq(championshipRegistrations.userId, session.user.id),
+    });
+
+    if (!registration || registration.status !== "approved") {
+      return {
+        success: false,
+        message: "You must be approved to submit a review",
+      };
+    }
+
+    const existingSubmission =
+      await db.query.championshipReviewSubmissions.findFirst({
+        where: eq(championshipReviewSubmissions.userId, session.user.id),
+      });
+
+    if (existingSubmission) {
+      return {
+        success: false,
+        message: "You have already submitted a review",
+      };
+    }
+
+    const validatedData = reviewSubmissionSchema.parse(formData);
+
+    const newSubmission = await db
+      .insert(championshipReviewSubmissions)
+      .values({
+        userId: session.user.id,
+        reviewText: validatedData.reviewText || null,
+        reviewDocumentUrl: validatedData.reviewDocumentUrl || null,
+      })
+      .returning();
+
+    return {
+      success: true,
+      message: "Review submitted successfully",
+      data: newSubmission[0],
+    };
+  } catch (error) {
+    console.error("Error submitting review:", error);
+
+    if (error instanceof z.ZodError) {
+      return {
+        success: false,
+        message: "Please check your form and try again.",
+        errors: error.issues.map((err) => ({
+          field: String(err.path[0]),
+          message: err.message,
+        })),
+      };
+    }
+
+    return {
+      success: false,
+      message: "Failed to submit review. Please try again later.",
     };
   }
 }

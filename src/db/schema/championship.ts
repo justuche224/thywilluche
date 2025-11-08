@@ -48,3 +48,22 @@ export const championshipPaymentSettings = pgTable(
       .notNull(),
   }
 );
+
+export const championshipReviewSubmissions = pgTable(
+  "championship_review_submissions",
+  {
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    reviewText: text("review_text"),
+    reviewDocumentUrl: text("review_document_url"),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at")
+      .defaultNow()
+      .$onUpdate(() => new Date())
+      .notNull(),
+  }
+);

@@ -4,7 +4,10 @@ import React from "react";
 import { Metadata } from "next";
 import Registration from "@/components/championship/registration";
 import RegistrationInfo from "@/components/championship/registration-info";
-import { checkChampionshipRegistration } from "@/actions/championship";
+import {
+  checkChampionshipRegistration,
+  getReviewSubmission,
+} from "@/actions/championship";
 
 export const metadata: Metadata = {
   title: "Championship Registration | Thywill Uche",
@@ -42,11 +45,13 @@ const page = async () => {
   };
 
   if (registrationCheck.success && registrationCheck.registered) {
+    const submissionCheck = await getReviewSubmission();
     return (
       <RegistrationInfo
         user={userData}
         registration={registrationCheck.data!}
         status={registrationCheck.status!}
+        hasSubmittedReview={!!submissionCheck.submission}
       />
     );
   }
