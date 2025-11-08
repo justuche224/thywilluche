@@ -12,6 +12,7 @@ import { user } from "@/db/schema";
 import {
   sendChampionshipRegistrationNotificationToAdmin,
   sendChampionshipRegistrationConfirmationEmail,
+  sendChampionshipReviewSubmissionNotificationToAdmin,
 } from "@/mailer/handlers/championship";
 
 const formSchema = z.object({
@@ -288,6 +289,27 @@ export async function submitReview(
         reviewDocumentUrl: validatedData.reviewDocumentUrl || null,
       })
       .returning();
+
+    const userData = await db.query.user.findFirst({
+      where: eq(user.id, session.user.id),
+    });
+
+    const NOTIFICATION_EMAIL = process.env.NOTIFICATION_EMAIL;
+
+    if (NOTIFICATION_EMAIL && userData) {
+      try {
+        await sendChampionshipReviewSubmissionNotificationToAdmin(
+          NOTIFICATION_EMAIL,
+          userData.name || userData.email,
+          userData.email,
+          newSubmission[0].id,
+          !!validatedData.reviewText,
+          !!validatedData.reviewDocumentUrl
+        );
+      } catch (emailError) {
+        console.error("Failed to send admin notification email:", emailError);
+      }
+    }
 
     return {
       success: true,

@@ -382,3 +382,93 @@ Team Thywill
     throw new Error("Failed to send championship rejection email: " + error);
   }
 };
+
+export const sendChampionshipReviewSubmissionNotificationToAdmin = async (
+  adminEmail: string,
+  userName: string,
+  userEmail: string,
+  reviewId: string,
+  hasTextReview: boolean,
+  hasDocument: boolean
+) => {
+  try {
+    const adminUrl = `${
+      process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"
+    }/admin/championship/reviews/${reviewId}`;
+
+    const submissionTypes = [];
+    if (hasTextReview) submissionTypes.push("Text Review");
+    if (hasDocument) submissionTypes.push("Document");
+    const submissionTypeText = submissionTypes.join(" and ");
+
+    const html = `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <h2 style="color: #800000; border-bottom: 2px solid #800000; padding-bottom: 10px;">
+          New Review Submission Received
+        </h2>
+        
+        <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+          <h3 style="color: #495057; margin-top: 0;">Submission Information</h3>
+          <p><strong>Review ID:</strong> ${reviewId}</p>
+          <p><strong>User Name:</strong> ${userName}</p>
+          <p><strong>User Email:</strong> ${userEmail}</p>
+          <p><strong>Submission Type:</strong> ${submissionTypeText}</p>
+        </div>
+
+        <div style="background-color: #d4edda; padding: 15px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #28a745;">
+          <p style="margin: 0; color: #155724;">
+            <strong>New Review Submitted:</strong> A participant has submitted their review for the championship.
+          </p>
+        </div>
+
+        <div style="text-align: center; margin: 30px 0;">
+          <a href="${adminUrl}" style="display: inline-block; padding: 12px 30px; background-color: #800000; color: white; text-decoration: none; border-radius: 4px; font-weight: bold;">
+            View Review
+          </a>
+        </div>
+
+        <div style="background-color: #e7f3ff; padding: 15px; border-radius: 8px; margin: 20px 0;">
+          <p style="margin: 0; color: #0051a5;">
+            <strong>Action Required:</strong> Please review this submission to evaluate the participant's work.
+          </p>
+        </div>
+      </div>
+    `;
+
+    const text = `
+New Review Submission Received
+
+Submission Information:
+- Review ID: ${reviewId}
+- User Name: ${userName}
+- User Email: ${userEmail}
+- Submission Type: ${submissionTypeText}
+
+New Review Submitted: A participant has submitted their review for the championship.
+
+View Review: ${adminUrl}
+
+Action Required: Please review this submission to evaluate the participant's work.
+    `.trim();
+
+    await sendMail({
+      to: adminEmail,
+      subject: `New Review Submission - ${userName}`,
+      text,
+      html,
+    });
+
+    console.log(
+      `Championship review submission notification sent to admin: ${adminEmail}`
+    );
+  } catch (error) {
+    console.error(
+      "Error sending championship review submission notification to admin:",
+      error
+    );
+    throw new Error(
+      "Failed to send championship review submission notification to admin: " +
+        error
+    );
+  }
+};
