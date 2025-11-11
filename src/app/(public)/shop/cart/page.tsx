@@ -76,7 +76,7 @@ const CartPage = () => {
             <div className="space-y-4">
               <div className="flex flex-col sm:flex-row gap-2">
                 <Button asChild size="lg" className="gap-2 flex-1">
-                  <Link href="/shop/books">Browse Books</Link>
+                  <Link href="/shop/books" className="py-2">Browse Books</Link>
                 </Button>
                 <Button
                   asChild
@@ -84,7 +84,7 @@ const CartPage = () => {
                   variant="outline"
                   className="gap-2 flex-1"
                 >
-                  <Link href="/shop/merch">Browse Merch</Link>
+                  <Link href="/shop/merch" className="py-2">Browse Merch</Link>
                 </Button>
               </div>
               <div>

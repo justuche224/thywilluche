@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { Menu, ChevronDown } from "lucide-react";
+import { Menu, ChevronDown, ShoppingBag } from "lucide-react";
 
 import {
   NavigationMenu,
@@ -30,6 +30,7 @@ import Image from "next/image";
 import { Oswald } from "next/font/google";
 import { usePathname, useRouter } from "next/navigation";
 import { useBreakpoint } from "@/hooks/use-breakpoint";
+import Cart from "../cart";
 
 const oswald = Oswald({
   variable: "--font-oswald",
@@ -78,15 +79,18 @@ export function Navbar() {
             className={isNGOPage ? "w-auto h-30" : "w-auto h-20"}
             onClick={() => router.push(isNGOPage ? "/ngo" : "/")}
           />
-          <Sheet open={isOpen} onOpenChange={setIsOpen}>
-            <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="lg:hidden">
-                <Menu className="h-6 w-6" />
-                <span className="sr-only">Toggle menu</span>
-              </Button>
-            </SheetTrigger>
-            <MobileNavContent onClose={() => setIsOpen(false)} />
-          </Sheet>
+          <div className="flex items-center gap-2">
+          <Cart Icon={ShoppingBag} variant="ghost" />
+            <Sheet open={isOpen} onOpenChange={setIsOpen}>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon" className="lg:hidden">
+                  <Menu className="h-6 w-6" />
+                  <span className="sr-only">Toggle menu</span>
+                </Button>
+              </SheetTrigger>
+              <MobileNavContent onClose={() => setIsOpen(false)} />
+            </Sheet>
+          </div>
         </div>
       )}
       {!isMobile && (
@@ -103,18 +107,6 @@ export function Navbar() {
           />
           <NavigationMenu viewport={false} className="relative z-[999]">
             <NavigationMenuList>
-              {/* Home */}
-              <NavigationMenuItem>
-                <NavigationMenuLink
-                  asChild
-                  className={
-                    navigationMenuTriggerStyle() +
-                    ` bg-transparent ${oswald.className} text-[#800000]`
-                  }
-                >
-                  <Link href="/">Home</Link>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
               {/* About Me */}
               <NavigationMenuItem>
                 <NavigationMenuTrigger
@@ -290,6 +282,18 @@ export function Navbar() {
                   }
                 >
                   <Link href="/community/home">Login</Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+              {/* Cart */}
+              <NavigationMenuItem>
+                <NavigationMenuLink
+                  asChild
+                  className={
+                    navigationMenuTriggerStyle() +
+                    ` bg-transparent ${oswald.className} text-[#800000]`
+                  }
+                >
+                  <Cart Icon={ShoppingBag} variant="ghost" />
                 </NavigationMenuLink>
               </NavigationMenuItem>
             </NavigationMenuList>
