@@ -5,6 +5,12 @@ export * from "./ngo-content";
 export * from "./contact-info";
 export * from "./blog";
 export * from "./books";
+export {
+  baseMerch,
+  merchVariant,
+  variant as merchVariantType,
+  status as merchStatus,
+} from "./merch";
 export * from "./services-content";
 export * from "./media-highlights";
 export * from "./projects";

@@ -14,10 +14,9 @@ import {
   ArrowLeft,
   CreditCard,
 } from "lucide-react";
-import {  Oswald } from "next/font/google";
+import { Oswald } from "next/font/google";
 import { toast } from "sonner";
 import { georgiaItalic } from "@/utils/georgia-italic";
-
 
 const oswald = Oswald({
   variable: "--font-oswald",
@@ -75,9 +74,19 @@ const CartPage = () => {
               </p>
             </div>
             <div className="space-y-4">
-              <Button asChild size="lg" className="gap-2">
-                <Link href="/shop/books">Browse Books</Link>
-              </Button>
+              <div className="flex flex-col sm:flex-row gap-2">
+                <Button asChild size="lg" className="gap-2 flex-1">
+                  <Link href="/shop/books">Browse Books</Link>
+                </Button>
+                <Button
+                  asChild
+                  size="lg"
+                  variant="outline"
+                  className="gap-2 flex-1"
+                >
+                  <Link href="/shop/merch">Browse Merch</Link>
+                </Button>
+              </div>
               <div>
                 <Button variant="outline" asChild>
                   <Link href="/" className="gap-2">
@@ -97,7 +106,7 @@ const CartPage = () => {
     <div className="container mx-auto px-4 py-10">
       <div className="max-w-6xl mx-auto">
         <div className="space-y-8">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between">
             <div>
               <h1
                 className={`text-4xl lg:text-5xl font-bold ${georgiaItalic.className} text-gray-900`}
@@ -108,12 +117,20 @@ const CartPage = () => {
                 {totalItems} {totalItems === 1 ? "item" : "items"} in your cart
               </p>
             </div>
-            <Button variant="outline" asChild>
-              <Link href="/shop/books" className="gap-2">
-                <ArrowLeft className="w-4 h-4" />
-                Continue Shopping
-              </Link>
-            </Button>
+            <div className="flex gap-2">
+              <Button variant="outline" asChild className="flex-1">
+                <Link href="/shop/books" className="gap-2">
+                  <ArrowLeft className="w-4 h-4" />
+                  Books
+                </Link>
+              </Button>
+              <Button variant="outline" asChild className="flex-1">
+                <Link href="/shop/merch" className="gap-2">
+                  <ArrowLeft className="w-4 h-4" />
+                  Merch
+                </Link>
+              </Button>
+            </div>
           </div>
 
           <div className="grid lg:grid-cols-3 gap-8">
@@ -127,10 +144,18 @@ const CartPage = () => {
                     <div className="flex-shrink-0">
                       <Image
                         src={item.image}
-                        alt={`${item.bookTitle} - ${item.variantName}`}
+                        alt={`${
+                          item.type === "book"
+                            ? item.bookTitle
+                            : item.merchTitle
+                        } - ${item.variantName}`}
                         width={120}
-                        height={160}
-                        className="rounded-md object-cover"
+                        height={item.type === "book" ? 160 : 120}
+                        className={`rounded-md object-cover ${
+                          item.type === "merch"
+                            ? "aspect-square"
+                            : "aspect-[3/4]"
+                        }`}
                       />
                     </div>
                     <div className="flex-1 space-y-4">
@@ -138,7 +163,9 @@ const CartPage = () => {
                         <h3
                           className={`text-xl font-semibold ${oswald.className} text-gray-900`}
                         >
-                          {item.bookTitle}
+                          {item.type === "book"
+                            ? item.bookTitle
+                            : item.merchTitle}
                         </h3>
                         <p className="text-muted-foreground">
                           {item.variantName}
@@ -148,7 +175,7 @@ const CartPage = () => {
                         </p>
                       </div>
 
-                      <div className="flex items-center justify-between">
+                      <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
                         <div className="flex items-center gap-3">
                           <Button
                             size="sm"
@@ -181,7 +208,7 @@ const CartPage = () => {
                           </Button>
                         </div>
 
-                        <div className="flex items-center gap-4">
+                        <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
                           <p className="text-lg font-semibold">
                             ${(item.price * item.quantity).toFixed(2)}
                           </p>
@@ -191,7 +218,7 @@ const CartPage = () => {
                             className="text-destructive hover:text-destructive-foreground hover:bg-destructive"
                             onClick={() => handleRemoveItem(item.variantId)}
                           >
-                            <Trash2 className="h-4 w-4" />
+                            <Trash2 className="h-4 w-4" /> <span className="md:hidden">Remove</span>
                           </Button>
                         </div>
                       </div>
@@ -245,14 +272,19 @@ const CartPage = () => {
                 <div className="space-y-4 mt-8">
                   <Button size="lg" asChild className="w-full gap-2">
                     <Link href="/shop/checkout">
-                        <CreditCard className="w-5 h-5" />
-                        Proceed to Checkout
+                      <CreditCard className="w-5 h-5" />
+                      Proceed to Checkout
                     </Link>
                   </Button>
 
-                  <Button variant="outline" asChild className="w-full">
-                    <Link href="/shop/books">Continue Shopping</Link>
-                  </Button>
+                  <div className="flex gap-2">
+                    <Button variant="outline" asChild className="flex-1">
+                      <Link href="/shop/books">Books</Link>
+                    </Button>
+                    <Button variant="outline" asChild className="flex-1">
+                      <Link href="/shop/merch">Merch</Link>
+                    </Button>
+                  </div>
                 </div>
 
                 <div className="mt-6 text-sm text-muted-foreground text-center">

@@ -5,7 +5,7 @@ import { useCartStore, CartItem } from "@/lib/cart";
 import { Minus, Plus, ShoppingCart } from "lucide-react";
 import { toast } from "sonner";
 
-interface BookVariant {
+interface MerchVariant {
   id: string;
   variant: string;
   price: number;
@@ -13,13 +13,19 @@ interface BookVariant {
   status: string;
 }
 
-interface Book {
+interface Merch {
   id: string;
-  tittle: string;
+  name: string;
   slug: string;
 }
 
-const AddToCart = ({ book, variant }: { book: Book; variant: BookVariant }) => {
+const AddMerchToCart = ({
+  merch,
+  variant,
+}: {
+  merch: Merch;
+  variant: MerchVariant;
+}) => {
   const { items, addItem, removeItem, updateItemQuantity } = useCartStore();
   const cartItem = items.find(
     (item: CartItem) => item.variantId === variant.id
@@ -33,10 +39,10 @@ const AddToCart = ({ book, variant }: { book: Book; variant: BookVariant }) => {
 
     addItem({
       variantId: variant.id,
-      type: "book",
-      bookId: book.id,
-      bookTitle: book.tittle,
-      bookSlug: book.slug,
+      type: "merch",
+      merchId: merch.id,
+      merchTitle: merch.name,
+      merchSlug: merch.slug,
       variantName: variant.variant,
       price: variant.price,
       image: variant.imageUrl,
@@ -109,4 +115,4 @@ const AddToCart = ({ book, variant }: { book: Book; variant: BookVariant }) => {
   );
 };
 
-export default AddToCart;
+export default AddMerchToCart;
