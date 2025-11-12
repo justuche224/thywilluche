@@ -123,7 +123,10 @@ const CheckoutPage = () => {
                 </Link>
               </Button>
             </div>
-            <form onSubmit={handleSubmit} className="grid lg:grid-cols-3 gap-12">
+            <form
+              onSubmit={handleSubmit}
+              className="grid lg:grid-cols-3 gap-12"
+            >
               <div className="lg:col-span-2 space-y-12">
                 <div className="space-y-8">
                   <div className="flex items-center gap-3">
@@ -348,6 +351,10 @@ const CheckoutPage = () => {
                           ${totalPrice.toFixed(2)}
                         </span>
                       </div>
+                    </div>
+                    <div className="text-sm text-muted-foreground text-center">
+                      Please note that for digital items, you will receive a
+                      download link via email after your order is processed.
                     </div>
                     <Button
                       type="submit"

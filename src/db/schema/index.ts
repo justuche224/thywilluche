@@ -20,3 +20,4 @@ export * from "./announcements";
 export * from "./games";
 export * from "./support";
 export * from "./championship";
+export * from "./shop";
