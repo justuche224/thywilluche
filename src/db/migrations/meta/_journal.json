@@ -239,6 +239,13 @@
       "when": 1762841021127,
       "tag": "0033_magical_satana",
       "breakpoints": true
+    },
+    {
+      "idx": 34,
+      "version": "7",
+      "when": 1762930378411,
+      "tag": "0034_foamy_alice",
+      "breakpoints": true
     }
   ]
 }

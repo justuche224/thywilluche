@@ -64,6 +64,7 @@ export const orders = pgTable("orders", {
     .$type<(typeof paymentStatus)[number]>()
     .default("Pending")
     .notNull(),
+  paymentReference: text("payment_reference").unique(),
   transactionId: text("transaction_id"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at")

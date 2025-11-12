@@ -51,17 +51,62 @@ const CheckoutPage = () => {
     setIsProcessing(true);
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      const orderData = {
+        items: items.map((item) => ({
+          variantId: item.variantId,
+          type: item.type,
+          bookId: item.bookId,
+          merchId: item.merchId,
+          variantName: item.variantName,
+          price: item.price,
+          quantity: item.quantity,
+        })),
+        shippingInfo: {
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+          phone: formData.phone || undefined,
+          address: formData.address,
+          city: formData.city,
+          state: formData.state,
+          zipCode: formData.zipCode,
+          country: formData.country,
+        },
+        subtotal: totalPrice,
+        shippingCost: 0,
+        tax: 0,
+        total: totalPrice,
+      };
 
-      toast.success("Order placed successfully!");
-      clearCart();
+      const response = await fetch("/api/order", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(orderData),
+      });
 
-      setTimeout(() => {
-        window.location.href = "/shop";
-      }, 2000);
-    } catch {
-      toast.error("Something went wrong. Please try again.");
-    } finally {
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to create order");
+      }
+
+      if (data.authorization_url) {
+        toast.success("Opening payment page...");
+        window.open(data.authorization_url, "_blank");
+        setIsProcessing(false);
+        clearCart();
+      } else {
+        throw new Error("No authorization URL received");
+      }
+    } catch (error) {
+      console.error("Order creation error:", error);
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Something went wrong. Please try again."
+      );
       setIsProcessing(false);
     }
   };
