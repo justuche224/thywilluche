@@ -9,6 +9,7 @@ import { georgiaItalic } from "@/utils/georgia-italic";
 import React from "react";
 import BlogInteractions from "@/components/blog/blog-interactions";
 import BlogComments from "@/components/blog/blog-comments";
+import type { Metadata } from "next";
 
 const oswald = Oswald({
   variable: "--font-oswald",
@@ -17,6 +18,91 @@ const oswald = Oswald({
 
 interface BlogPostPageProps {
   params: Promise<{ slug: string }>;
+}
+
+export async function generateMetadata({
+  params,
+}: BlogPostPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const post = await getBlogPostBySlug(slug);
+
+  if (!post || post.status !== "published") {
+    return {
+      title: "Post Not Found",
+    };
+  }
+
+  const title = post.title;
+  const description = post.excerpt || post.title;
+  const imageUrl = post.imageUrl
+    ? post.imageUrl.startsWith("http")
+      ? post.imageUrl
+      : `https://thywilluche.com${post.imageUrl}`
+    : "https://thywilluche.com/images/main.jpg";
+  const url = `https://thywilluche.com/blog/${post.slug}`;
+  const publishedTime = post.publishedAt
+    ? new Date(post.publishedAt).toISOString()
+    : undefined;
+  const modifiedTime = post.updatedAt
+    ? new Date(post.updatedAt).toISOString()
+    : undefined;
+
+  return {
+    title,
+    description,
+    keywords: [
+      ...(post.tags || []),
+      post.category,
+      "blog",
+      "Thywill Uche",
+      "poetry",
+      "essays",
+      "thought leadership",
+    ],
+    authors: [{ name: "Thywill Uche", url: "https://thywilluche.com" }],
+    openGraph: {
+      title,
+      description,
+      url,
+      siteName: "Thywill Uche",
+      locale: "en_US",
+      type: "article",
+      publishedTime,
+      modifiedTime,
+      authors: ["Thywill Uche"],
+      section: post.category,
+      tags: post.tags || [],
+      images: [
+        {
+          url: imageUrl,
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [imageUrl],
+      creator: "@thywilluche",
+    },
+    alternates: {
+      canonical: url,
+    },
+    other: {
+      "article:author": "Thywill Uche",
+      "article:published_time": publishedTime || "",
+      "article:modified_time": modifiedTime || "",
+      "article:section": post.category,
+      ...(post.tags && post.tags.length > 0
+        ? {
+            "article:tag": post.tags.join(", "),
+          }
+        : {}),
+    },
+  };
 }
 
 interface ContentNode {

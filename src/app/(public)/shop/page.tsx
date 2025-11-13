@@ -3,13 +3,57 @@ import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { BookOpen, ShoppingBag, ArrowRight } from "lucide-react";
-import {  Oswald } from "next/font/google";
+import { Oswald } from "next/font/google";
 import { georgiaItalic } from "@/utils/georgia-italic";
+import type { Metadata } from "next";
 
 const oswald = Oswald({
   variable: "--font-oswald",
   subsets: ["latin"],
 });
+
+export const metadata: Metadata = {
+  title: "Shop",
+  description:
+    "Discover our collection of inspiring books and exclusive merchandise by Thywill Uche. Support independent creativity and find something special for yourself or as a gift.",
+  keywords: [
+    "shop",
+    "books",
+    "merchandise",
+    "Thywill Uche shop",
+    "author merchandise",
+    "inspirational books",
+    "exclusive merchandise",
+    "Days I Do Not Die",
+  ],
+  openGraph: {
+    title: "Shop | Thywill Uche",
+    description:
+      "Discover our collection of inspiring books and exclusive merchandise by Thywill Uche. Support independent creativity and find something special.",
+    url: "https://thywilluche.com/shop",
+    siteName: "Thywill Uche",
+    locale: "en_US",
+    type: "website",
+    images: [
+      {
+        url: "https://thywilluche.com/images/main.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Thywill Uche Shop",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Shop | Thywill Uche",
+    description:
+      "Discover our collection of inspiring books and exclusive merchandise by Thywill Uche.",
+    images: ["https://thywilluche.com/images/main.jpg"],
+  },
+  alternates: {
+    canonical: "https://thywilluche.com/shop",
+  },
+};
 
 const page = () => {
   return (

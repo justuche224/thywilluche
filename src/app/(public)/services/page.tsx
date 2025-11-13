@@ -6,11 +6,63 @@ import { Lightbulb, Users, PenTool, ArrowRight } from "lucide-react";
 import { Oswald } from "next/font/google";
 import { getServiceSection } from "@/actions/services-content";
 import { georgiaItalic } from "@/utils/georgia-italic";
+import type { Metadata } from "next";
 
 const oswald = Oswald({
   variable: "--font-oswald",
   subsets: ["latin"],
 });
+
+export async function generateMetadata(): Promise<Metadata> {
+  const content = await getServiceSection("overview");
+  const title = content.title || "Services | Thywill Uche";
+  const description =
+    content.subtitle ||
+    "Transform your vision into reality with personalized guidance, expert consulting, and professional writing services tailored to your unique journey.";
+
+  return {
+    title,
+    description,
+    keywords: [
+      "services",
+      "coaching",
+      "consulting",
+      "ghostwriting",
+      "life coaching",
+      "personal development",
+      "mental wellness",
+      "Thywill Uche services",
+      "professional writing",
+      "book writing",
+      "content strategy",
+    ],
+    openGraph: {
+      title,
+      description,
+      url: "https://thywilluche.com/services",
+      siteName: "Thywill Uche",
+      locale: "en_US",
+      type: "website",
+      images: [
+        {
+          url: "https://thywilluche.com/images/main.jpg",
+          width: 1200,
+          height: 630,
+          alt: "Thywill Uche Services",
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: ["https://thywilluche.com/images/main.jpg"],
+    },
+    alternates: {
+      canonical: "https://thywilluche.com/services",
+    },
+  };
+}
 
 const page = async () => {
   const content = await getServiceSection("overview");

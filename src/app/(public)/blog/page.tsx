@@ -4,6 +4,7 @@ import { Oswald } from "next/font/google";
 import { georgiaItalic } from "@/utils/georgia-italic";
 import BlogPostCard from "@/components/blog/blog-post-card";
 import { blogCategories } from "@/db/schema/blog";
+import type { Metadata } from "next";
 
 const oswald = Oswald({
   variable: "--font-oswald",
@@ -29,6 +30,65 @@ const categories = blogCategories.map((cat) => ({ name: cat, slug: cat }));
 
 interface BlogListingPageProps {
   searchParams: Promise<{ category?: string }>;
+}
+
+export async function generateMetadata({
+  searchParams,
+}: BlogListingPageProps): Promise<Metadata> {
+  const { category } = await searchParams;
+  const categoryName = category
+    ? categories.find((cat) => cat.slug === category)?.name || category
+    : null;
+
+  const title = categoryName
+    ? `${categoryName} | Blog | Thywill Uche`
+    : "Blog | Thywill Uche";
+  const description =
+    "Poetry, essays, reflections, and thought leadership. Stories that inspire, thoughts that challenge, and words that heal.";
+
+  const canonicalUrl = category
+    ? `https://thywilluche.com/blog?category=${encodeURIComponent(category)}`
+    : "https://thywilluche.com/blog";
+
+  return {
+    title,
+    description,
+    keywords: [
+      "blog",
+      "poetry",
+      "essays",
+      "thought leadership",
+      "inspiration",
+      "motivation",
+      "personal growth",
+      ...(categoryName ? [categoryName.toLowerCase()] : []),
+    ],
+    openGraph: {
+      title,
+      description,
+      url: canonicalUrl,
+      siteName: "Thywill Uche",
+      locale: "en_US",
+      type: "website",
+      images: [
+        {
+          url: "https://thywilluche.com/images/main.jpg",
+          width: 1200,
+          height: 630,
+          alt: "Thywill Uche Blog",
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: ["https://thywilluche.com/images/main.jpg"],
+    },
+    alternates: {
+      canonical: canonicalUrl,
+    },
+  };
 }
 
 export default async function BlogListingPage({

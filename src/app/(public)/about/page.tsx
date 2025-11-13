@@ -1,7 +1,71 @@
-import React from "react";
 import About from "@/components/about";
 import { getAboutContent } from "@/actions/about-content";
 import { getMediaHighlights } from "@/actions/media-highlights";
+import type { Metadata } from "next";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const content = await getAboutContent();
+  const whoIAmData = content.whoIAm || {};
+  const purposeData = content.purpose || {};
+
+  const title = "About | Thywill Uche";
+  const description =
+    whoIAmData.paragraph1 ||
+    purposeData.paragraph1 ||
+    "Learn about Thywill Uche - writer, poet, founder, ghostwriter, and life coach. Discover the journey, mission, and vision behind Days I Do Not Die.";
+
+  const whoIAmImage = whoIAmData.image
+    ? whoIAmData.image.startsWith("http")
+      ? whoIAmData.image
+      : `https://thywilluche.com${whoIAmData.image}`
+    : "https://thywilluche.com/images/main.jpg";
+
+  return {
+    title,
+    description,
+    keywords: [
+      "Thywill Uche",
+      "about Thywill Uche",
+      "author biography",
+      "writer",
+      "poet",
+      "life coach",
+      "ghostwriter",
+      "Days I Do Not Die",
+      "author story",
+      "personal journey",
+      "mission",
+      "vision",
+    ],
+    authors: [{ name: "Thywill Uche", url: "https://thywilluche.com" }],
+    openGraph: {
+      title,
+      description,
+      url: "https://thywilluche.com/about",
+      siteName: "Thywill Uche",
+      locale: "en_US",
+      type: "profile",
+      images: [
+        {
+          url: whoIAmImage,
+          width: 1200,
+          height: 630,
+          alt: "Thywill Uche",
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [whoIAmImage],
+      creator: "@thywilluche",
+    },
+    alternates: {
+      canonical: "https://thywilluche.com/about",
+    },
+  };
+}
 
 const page = async () => {
   const content = await getAboutContent();
