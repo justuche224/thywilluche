@@ -224,7 +224,7 @@ export const sendChampionshipRegistrationApprovedEmail = async (
     const html = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
         <h2 style="color: #800000; border-bottom: 2px solid #800000; padding-bottom: 10px;">
-          Championship Registration Approved! 🎉
+          Championship Registration Approved!
         </h2>
         
         <p>Hey ${greetingName},</p>

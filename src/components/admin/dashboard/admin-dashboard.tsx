@@ -452,7 +452,7 @@ export function AdminDashboard({ stats }: AdminDashboardProps) {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-3xl font-semibold tracking-tight">
-                Welcome back! 👋
+                Welcome back!
               </h1>
               <p className="text-muted-foreground mt-1">
                 Here&apos;s what&apos;s happening with your content today.
@@ -605,7 +605,7 @@ export function AdminDashboard({ stats }: AdminDashboardProps) {
           <div className="text-center py-8">
             <CheckCircle className="h-12 w-12 text-green-600 mx-auto mb-3" />
             <h3 className="text-lg font-medium text-green-600 mb-2">
-              All caught up! 🎉
+              All caught up!
             </h3>
             <p className="text-muted-foreground">
               No pending tasks require your attention right now.
@@ -616,7 +616,7 @@ export function AdminDashboard({ stats }: AdminDashboardProps) {
         {/* Content Sections */}
         <div className="space-y-4">
           <div className="flex items-center gap-2">
-            <h2 className="text-lg font-medium">📊 Content Overview</h2>
+            <h2 className="text-lg font-medium">Content Overview</h2>
             <Tooltip>
               <TooltipTrigger asChild>
                 <HelpCircle className="h-4 w-4 text-muted-foreground" />
@@ -690,7 +690,7 @@ export function AdminDashboard({ stats }: AdminDashboardProps) {
         {stats.community.posts.total > 0 && (
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <h2 className="text-lg font-medium">💬 Community Engagement</h2>
+              <h2 className="text-lg font-medium">Community Engagement</h2>
               <Tooltip>
                 <TooltipTrigger asChild>
                   <HelpCircle className="h-4 w-4 text-muted-foreground" />
@@ -749,7 +749,7 @@ export function AdminDashboard({ stats }: AdminDashboardProps) {
           {/* Website Pages */}
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <h2 className="text-lg font-medium">🌐 Website Pages</h2>
+              <h2 className="text-lg font-medium">Website Pages</h2>
               <Tooltip>
                 <TooltipTrigger asChild>
                   <HelpCircle className="h-4 w-4 text-muted-foreground" />
@@ -794,7 +794,7 @@ export function AdminDashboard({ stats }: AdminDashboardProps) {
           {/* Other Settings */}
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <h2 className="text-lg font-medium">⚙️ Settings & More</h2>
+              <h2 className="text-lg font-medium">Settings & More</h2>
               <Tooltip>
                 <TooltipTrigger asChild>
                   <HelpCircle className="h-4 w-4 text-muted-foreground" />
