@@ -79,6 +79,10 @@ const data = {
           title: "Tickets",
           url: "/admin/shop/tickets",
         },
+        {
+          title: "Orders",
+          url: "/admin/shop/orders",
+        },
       ],
     },
     {

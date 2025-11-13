@@ -3,7 +3,14 @@
 import React from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { CheckCircle2, ShoppingBag, Package, ArrowRight, Truck } from "lucide-react";
+import {
+  CheckCircle2,
+  ShoppingBag,
+  Package,
+  ArrowRight,
+  Truck,
+  MessageCircle,
+} from "lucide-react";
 import { Oswald } from "next/font/google";
 import { georgiaItalic } from "@/utils/georgia-italic";
 import { Confetti } from "./confetti";
@@ -60,7 +67,7 @@ const SuccessPage = ({ order, items }: SuccessPageProps) => {
   });
 
   return (
-        <div className="min-h-screen">
+    <div className="min-h-screen">
       <Confetti />
       <div className="container mx-auto px-4 py-16">
         <div className="max-w-3xl mx-auto">
@@ -200,7 +207,7 @@ const SuccessPage = ({ order, items }: SuccessPageProps) => {
               {hasDigitalItems && (
                 <div className="bg-purple-50 border border-purple-200 rounded-lg p-6">
                   <div className="flex items-start gap-3">
-                  <Truck className="w-6 h-6 text-purple-600 flex-shrink-0 mt-0.5" />
+                    <Truck className="w-6 h-6 text-purple-600 flex-shrink-0 mt-0.5" />
                     <div>
                       <h3
                         className={`font-semibold ${oswald.className} text-purple-900 mb-2`}
@@ -228,6 +235,18 @@ const SuccessPage = ({ order, items }: SuccessPageProps) => {
                 <Link href="/shop" className="gap-2">
                   Continue Shopping
                   <ArrowRight className="w-5 h-5" />
+                </Link>
+              </Button>
+            </div>
+
+            <div className="mt-6 pt-6 border-t text-center">
+              <p className="text-sm text-muted-foreground mb-4">
+                Need help with your order?
+              </p>
+              <Button asChild variant="ghost" size="sm">
+                <Link href="/support" className="gap-2">
+                  <MessageCircle className="w-4 h-4" />
+                  Contact Support
                 </Link>
               </Button>
             </div>
