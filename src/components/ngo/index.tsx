@@ -2,6 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { Oswald } from "next/font/google";
 import { motion } from "framer-motion";
 
@@ -149,20 +150,28 @@ const NGO = ({
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.6 }}
               >
-                <motion.button
-                  className="bg-[#800000] text-white px-8 py-4 rounded-lg font-semibold hover:bg-[#600000] transition-colors"
+                <motion.div
                   whileHover={{ scale: 1.05, y: -2 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  {heroButton1Text}
-                </motion.button>
-                <motion.button
-                  className="border-2 border-[#800000] text-[#800000] px-8 py-4 rounded-lg font-semibold hover:bg-[#800000] hover:text-white transition-colors"
+                  <Link
+                    href="/ngo/volunteer"
+                    className="bg-[#800000] text-white px-8 py-4 rounded-lg font-semibold hover:bg-[#600000] transition-colors inline-block"
+                  >
+                    {heroButton1Text}
+                  </Link>
+                </motion.div>
+                <motion.div
                   whileHover={{ scale: 1.05, y: -2 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  {heroButton2Text}
-                </motion.button>
+                  <Link
+                    href="/ngo/partner"
+                    className="border-2 border-[#800000] text-[#800000] px-8 py-4 rounded-lg font-semibold hover:bg-[#800000] hover:text-white transition-colors inline-block"
+                  >
+                    {heroButton2Text}
+                  </Link>
+                </motion.div>
               </motion.div>
             </motion.div>
             <motion.div
@@ -588,27 +597,39 @@ const NGO = ({
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <motion.button
-              className="bg-white text-[#800000] px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+            <motion.div
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
             >
-              {ctaButton1Text}
-            </motion.button>
-            <motion.button
-              className="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-[#800000] transition-colors"
+              <Link
+                href="/ngo/donate"
+                className="bg-white text-[#800000] px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors inline-block"
+              >
+                {ctaButton1Text}
+              </Link>
+            </motion.div>
+            <motion.div
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
             >
-              {ctaButton2Text}
-            </motion.button>
-            <motion.button
-              className="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-[#800000] transition-colors"
+              <Link
+                href="/ngo/volunteer"
+                className="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-[#800000] transition-colors inline-block"
+              >
+                {ctaButton2Text}
+              </Link>
+            </motion.div>
+            <motion.div
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
             >
-              {ctaButton3Text}
-            </motion.button>
+              <Link
+                href="/ngo/partner"
+                className="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-[#800000] transition-colors inline-block"
+              >
+                {ctaButton3Text}
+              </Link>
+            </motion.div>
           </motion.div>
         </div>
       </section>
