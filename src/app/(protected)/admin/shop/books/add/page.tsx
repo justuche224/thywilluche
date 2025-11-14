@@ -3,12 +3,16 @@ import { requireAdmin } from "@/lib/server-auth";
 import { redirect } from "next/navigation";
 
 const page = async () => {
-    const isPermitted = await requireAdmin();
-    if (!isPermitted) {
-        return redirect("/auth/login");
-    }
-  return <div className="w-full max-w-7xl mx-auto">
-    <AddBookPage />
-  </div>;
+  const isAdmin = await requireAdmin();
+
+  if (!isAdmin) {
+    return redirect("/");
+  }
+
+  return (
+    <div className="w-full max-w-7xl mx-auto">
+      <AddBookPage />
+    </div>
+  );
 };
 export default page;

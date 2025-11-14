@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { redirect } from "next/navigation";
+import { requireAdmin } from "@/lib/server-auth";
 
 async function create(formData: FormData) {
   "use server";
@@ -21,7 +22,13 @@ async function create(formData: FormData) {
   redirect("/admin/testimonials");
 }
 
-const Page = () => {
+const Page = async () => {
+  const isAdmin = await requireAdmin();
+
+  if (!isAdmin) {
+    return redirect("/");
+  }
+
   return (
     <div className="p-6">
       <Card className="max-w-2xl">

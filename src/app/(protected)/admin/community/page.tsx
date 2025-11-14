@@ -1,20 +1,16 @@
-import { serverAuth } from "@/lib/server-auth";
 import { redirect } from "next/navigation";
 import {
   getCommunityStats,
   getRecentActivity,
 } from "@/actions/admin/community";
 import { CommunityDashboard } from "@/components/admin/community/community-dashboard";
+import { requireAdmin } from "@/lib/server-auth";
 
 export default async function CommunityAdminPage() {
-  const data = await serverAuth();
+  const isAdmin = await requireAdmin();
 
-  if (!data?.user) {
-    redirect("/auth/login");
-  }
-
-  if (data.user.role !== "ADMIN") {
-    redirect("/");
+  if (!isAdmin) {
+    return redirect("/");
   }
 
   const [statsResult, activityResult] = await Promise.all([

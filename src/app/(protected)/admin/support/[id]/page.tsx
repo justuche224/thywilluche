@@ -6,7 +6,7 @@ import { AdminSupportTicketDetail } from "@/components/support/admin-support-tic
 export default async function AdminSupportTicketPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
   const authData = await serverAuth();
   if (!authData?.user) {
@@ -14,10 +14,11 @@ export default async function AdminSupportTicketPage({
   }
 
   if (authData.user.role !== "ADMIN") {
-    redirect("/");
+    return redirect("/");
   }
 
-  const ticketId = parseInt(params.id);
+  const { id } = await params;
+  const ticketId = parseInt(id);
   if (isNaN(ticketId)) {
     redirect("/admin/support");
   }

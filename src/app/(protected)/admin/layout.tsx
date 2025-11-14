@@ -20,7 +20,6 @@ export default async function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // TODO: move to individual pages
   const data = await serverAuth();
 
   if (!data?.user) {
@@ -28,7 +27,7 @@ export default async function AdminLayout({
   }
 
   if (data.user.role !== "ADMIN") {
-    redirect("/");
+    return redirect("/");
   }
   return (
     <SidebarProvider>

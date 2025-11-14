@@ -8,8 +8,16 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { requireAdmin } from "@/lib/server-auth";
+import { redirect } from "next/navigation";
 
 export default async function AdminNgoPage() {
+  const isAdmin = await requireAdmin();
+
+  if (!isAdmin) {
+    return redirect("/");
+  }
+
   const content = await getNgoContent();
 
   const heroData = content.hero || {};

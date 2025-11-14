@@ -11,7 +11,7 @@ export default async function AdminPage() {
   }
 
   if (data.user.role !== "ADMIN") {
-    redirect("/");
+    return redirect("/");
   }
 
   const statsResult = await getDashboardStats();

@@ -8,8 +8,16 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
+import { requireAdmin } from "@/lib/server-auth";
+import { redirect } from "next/navigation";
 
 const Page = async () => {
+  const isAdmin = await requireAdmin();
+
+  if (!isAdmin) {
+    return redirect("/");
+  }
+
   const res = await getAllTestimonials();
   if (!res.success) {
     return <div className="p-6">Unauthorized</div>;

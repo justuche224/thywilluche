@@ -3,8 +3,16 @@ import { PaymentSettingsButton } from "@/components/admin/championship/payment-s
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { FileText } from "lucide-react";
+import { requireAdmin } from "@/lib/server-auth";
+import { redirect } from "next/navigation";
 
 export default async function ChampionshipPage() {
+  const isAdmin = await requireAdmin();
+
+  if (!isAdmin) {
+    return redirect("/");
+  }
+
   return (
     <div className="space-y-6 max-w-7xl mx-auto p-4 container">
       <div className="flex items-center justify-between">

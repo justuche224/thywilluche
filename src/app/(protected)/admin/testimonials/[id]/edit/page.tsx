@@ -10,8 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { notFound, redirect } from "next/navigation";
-
-type Props = { params: { id: string } };
+import { requireAdmin } from "@/lib/server-auth";
 
 async function update(id: string, formData: FormData) {
   "use server";
@@ -34,8 +33,16 @@ async function update(id: string, formData: FormData) {
   redirect("/admin/testimonials");
 }
 
-const Page = async ({ params }: Props) => {
-  const res = await getTestimonialById(params.id);
+const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
+  const isAdmin = await requireAdmin();
+
+  if (!isAdmin) {
+    return redirect("/");
+  }
+
+  const { id } = await params;
+  const res = await getTestimonialById(id);
+
   if (!res.success || !res.testimonial) {
     notFound();
   }
@@ -47,7 +54,7 @@ const Page = async ({ params }: Props) => {
           <CardTitle>Edit Testimonial</CardTitle>
         </CardHeader>
         <CardContent>
-          <form action={update.bind(null, params.id)} className="space-y-4">
+          <form action={update.bind(null, id)} className="space-y-4">
             <div className="grid gap-2">
               <Label htmlFor="name">Name</Label>
               <Input id="name" name="name" defaultValue={t.name} required />

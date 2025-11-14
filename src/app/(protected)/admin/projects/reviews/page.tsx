@@ -1,7 +1,15 @@
 import { getAllReviews } from "@/actions/admin/projects";
 import { ReviewsList } from "@/components/admin/projects/reviews-list";
+import { requireAdmin } from "@/lib/server-auth";
+import { redirect } from "next/navigation";
 
 export default async function ReviewsPage() {
+  const isAdmin = await requireAdmin();
+
+  if (!isAdmin) {
+    return redirect("/");
+  }
+
   const result = await getAllReviews();
 
   if (!result.success) {

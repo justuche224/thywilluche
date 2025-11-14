@@ -3,7 +3,8 @@ import { BlogPostForm } from "@/components/admin/blog/blog-post-form";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
+import { requireAdmin } from "@/lib/server-auth";
 
 interface EditBlogPostPageProps {
   params: Promise<{ id: string }>;
@@ -12,6 +13,12 @@ interface EditBlogPostPageProps {
 export default async function EditBlogPostPage({
   params,
 }: EditBlogPostPageProps) {
+  const isAdmin = await requireAdmin();
+
+  if (!isAdmin) {
+    return redirect("/");
+  }
+
   const { id } = await params;
   const post = await getBlogPostById(id);
 
@@ -32,7 +39,7 @@ export default async function EditBlogPostPage({
           <p className="text-muted-foreground">Update your blog post content</p>
         </div>
       </div>
-        {/* @ts-expect-error: something */}
+      {/* @ts-expect-error: something */}
       <BlogPostForm post={post} />
     </div>
   );

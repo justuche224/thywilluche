@@ -1,10 +1,10 @@
 import { Metadata } from "next";
-import { serverAuth } from "@/lib/server-auth";
 import { redirect } from "next/navigation";
 import db from "@/db";
 import { orders } from "@/db/schema";
 import { desc } from "drizzle-orm";
 import OrdersList from "@/components/admin/shop/orders/orders-list";
+import { requireAdmin } from "@/lib/server-auth";
 
 export const metadata: Metadata = {
   title: "Orders Management | Admin",
@@ -12,9 +12,10 @@ export const metadata: Metadata = {
 };
 
 const page = async () => {
-  const user = await serverAuth();
-  if (!user || user.user.role !== "ADMIN") {
-    redirect("/");
+  const isAdmin = await requireAdmin();
+
+  if (!isAdmin) {
+    return redirect("/");
   }
 
   const allOrders = await db

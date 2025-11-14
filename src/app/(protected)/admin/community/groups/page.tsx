@@ -10,7 +10,7 @@ export default async function GroupsManagementPage() {
   }
 
   if (data.user.role !== "ADMIN") {
-    redirect("/");
+    return redirect("/");
   }
 
   return (

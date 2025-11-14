@@ -1,6 +1,14 @@
 import { ProjectForm } from "@/components/admin/projects/project-form";
+import { requireAdmin } from "@/lib/server-auth";
+import { redirect } from "next/navigation";
 
-export default function NewProjectPage() {
+export default async function NewProjectPage() {
+  const isAdmin = await requireAdmin();
+
+  if (!isAdmin) {
+    return redirect("/");
+  }
+
   return (
     <div className="space-y-6">
       <div>

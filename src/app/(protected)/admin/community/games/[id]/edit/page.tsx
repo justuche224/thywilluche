@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { serverAuth } from "@/lib/server-auth";
+import { requireAdmin } from "@/lib/server-auth";
 import { redirect } from "next/navigation";
 import GameEditForm from "@/components/admin/community/game-edit-form";
 
@@ -15,9 +15,9 @@ interface EditGamePageProps {
 }
 
 export default async function EditGamePage({ params }: EditGamePageProps) {
-  const user = await serverAuth();
-  if (!user) {
-    redirect("/auth/login?callbackUrl=/admin/community/games");
+  const isAdmin = await requireAdmin();
+  if (!isAdmin) {
+    return redirect("/");
   }
 
   const { id } = await params;

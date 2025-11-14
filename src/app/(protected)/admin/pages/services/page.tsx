@@ -1,7 +1,15 @@
 import { getServiceSection } from "@/actions/admin/services-content";
 import { ServicesTabsWrapper } from "@/components/admin/pages/services/services-tabs-wrapper";
+import { requireAdmin } from "@/lib/server-auth";
+import { redirect } from "next/navigation";
 
 const page = async () => {
+  const isAdmin = await requireAdmin();
+
+  if (!isAdmin) {
+    return redirect("/");
+  }
+
   const overviewData = await getServiceSection("overview");
   const coachingData = await getServiceSection("coaching");
   const ghostwritingData = await getServiceSection("ghostwriting");

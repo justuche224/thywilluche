@@ -41,7 +41,7 @@ export default async function GameSubmissionsPage({
   }
 
   if (session.user.role !== "ADMIN") {
-    redirect("/");
+    return redirect("/");
   }
 
   const result = await getGameById({ gameId: params.id });

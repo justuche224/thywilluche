@@ -1,13 +1,21 @@
 import { getProjectById } from "@/actions/admin/projects";
 import { ProjectForm } from "@/components/admin/projects/project-form";
+import { requireAdmin } from "@/lib/server-auth";
 import { redirect } from "next/navigation";
 
 export default async function EditProjectPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const result = await getProjectById(params.id);
+  const isAdmin = await requireAdmin();
+
+  if (!isAdmin) {
+    return redirect("/");
+  }
+
+  const { id } = await params;
+  const result = await getProjectById(id);
 
   if (!result.success || !result.project) {
     redirect("/admin/projects");

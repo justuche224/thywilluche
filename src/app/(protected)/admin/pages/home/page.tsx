@@ -12,8 +12,16 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { requireAdmin } from "@/lib/server-auth";
+import { redirect } from "next/navigation";
 
 const page = async () => {
+  const isAdmin = await requireAdmin();
+
+  if (!isAdmin) {
+    return redirect("/");
+  }
+
   const heroData = await getHomeSection("hero");
   const whoIAmData = await getHomeSection("whoIAm");
   const featuredData = await getHomeSection("featured");

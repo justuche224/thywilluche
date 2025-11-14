@@ -2,8 +2,16 @@ import { getAllBlogPosts } from "@/actions/admin/blog";
 import { BlogPostsList } from "@/components/admin/blog/blog-posts-list";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { requireAdmin } from "@/lib/server-auth";
+import { redirect } from "next/navigation";
 
 export default async function BlogPage() {
+  const isAdmin = await requireAdmin();
+
+  if (!isAdmin) {
+    return redirect("/");
+  }
+
   const posts = await getAllBlogPosts();
 
   return (

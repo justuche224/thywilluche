@@ -2,8 +2,16 @@ import { getAllProjects } from "@/actions/admin/projects";
 import { ProjectsList } from "@/components/admin/projects/projects-list";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { requireAdmin } from "@/lib/server-auth";
+import { redirect } from "next/navigation";
 
 export default async function ProjectsPage() {
+  const isAdmin = await requireAdmin();
+
+  if (!isAdmin) {
+    return redirect("/");
+  }
+
   const result = await getAllProjects();
 
   if (!result.success) {

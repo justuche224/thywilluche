@@ -11,7 +11,7 @@ export default async function page() {
   }
 
   if (data.user.role !== "ADMIN") {
-    redirect("/");
+    return redirect("/");
   }
 
   return <AdminSupportPage userId={data.user.id} />;

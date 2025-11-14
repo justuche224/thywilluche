@@ -16,7 +16,7 @@ export default async function AdminBadgesPage() {
   }
 
   if (session.user.role !== "ADMIN") {
-    redirect("/");
+    return redirect("/");
   }
 
   return (

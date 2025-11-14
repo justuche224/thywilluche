@@ -12,7 +12,7 @@ const page = async () => {
   }
 
   if (data.user.role !== "ADMIN") {
-    redirect("/");
+    return redirect("/");
   }
 
   const mediaHighlightsResult = await getAllMediaHighlights();

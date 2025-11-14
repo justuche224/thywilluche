@@ -1,5 +1,7 @@
 import { Metadata } from "next";
 import { ChampionshipReviewsList } from "@/components/admin/championship/championship-reviews-list";
+import { requireAdmin } from "@/lib/server-auth";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Championship Reviews | Admin | Thywill Uche",
@@ -7,6 +9,12 @@ export const metadata: Metadata = {
 };
 
 export default async function ChampionshipReviewsPage() {
+  const isAdmin = await requireAdmin();
+
+  if (!isAdmin) {
+    return redirect("/");
+  }
+
   return (
     <div className="space-y-6 max-w-7xl mx-auto p-4 container">
       <div className="flex items-center justify-between">

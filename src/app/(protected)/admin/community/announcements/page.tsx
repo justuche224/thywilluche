@@ -10,7 +10,7 @@ export default async function AnnouncementsManagementPage() {
   }
 
   if (data.user.role !== "ADMIN") {
-    redirect("/");
+    return redirect("/");
   }
 
   return (

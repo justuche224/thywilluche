@@ -1,7 +1,7 @@
 import { Metadata } from "next";
-import { serverAuth } from "@/lib/server-auth";
 import { redirect } from "next/navigation";
 import GameForm from "@/components/admin/community/game-form";
+import { requireAdmin } from "@/lib/server-auth";
 
 export const metadata: Metadata = {
   title: "Create New Game | Admin | Community | Thywill Uche",
@@ -9,9 +9,10 @@ export const metadata: Metadata = {
 };
 
 export default async function NewGamePage() {
-  const user = await serverAuth();
-  if (!user) {
-    redirect("/auth/login?callbackUrl=/admin/community/games/new");
+  const isAdmin = await requireAdmin();
+
+  if (!isAdmin) {
+    return redirect("/");
   }
 
   return (

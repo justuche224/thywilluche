@@ -7,9 +7,9 @@ interface PageProps {
 }
 
 const page = async ({ params }: PageProps) => {
-  const isPermitted = await requireAdmin();
-  if (!isPermitted) {
-    return redirect("/auth/login");
+  const isAdmin = await requireAdmin();
+  if (!isAdmin) {
+    return redirect("/");
   }
 
   const { id } = await params;
