@@ -7,6 +7,7 @@ import { ReactQueryProvider } from "@/providers/react-query-provider";
 import NextTopLoader from "nextjs-toploader";
 import { MessageCircle } from "lucide-react";
 import Link from "next/link";
+import { DebugErrorTrigger } from "@/components/debug-error-trigger";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -125,15 +126,13 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
-  throw new Error("Internal Server Error");
-
   return (
     <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Pattern />
+        <DebugErrorTrigger />
         <ReactQueryProvider>{children}</ReactQueryProvider>
         <NextTopLoader color="#800000" />
         <Toaster position={"top-center"} richColors />
