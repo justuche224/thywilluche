@@ -125,6 +125,9 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  throw new Error("Internal Server Error");
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body
