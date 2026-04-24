@@ -1,7 +1,7 @@
 import db from "@/db";
 import { contactInfo } from "@/db/schema";
 
-async function seedContactInfo() {
+export async function seedContactInfo() {
   const defaultData = [
     {
       key: "email",
@@ -55,10 +55,3 @@ async function seedContactInfo() {
 
   console.log("Contact info seeded successfully!");
 }
-
-seedContactInfo()
-  .then(() => process.exit(0))
-  .catch((error) => {
-    console.error("Error seeding contact info:", error);
-    process.exit(1);
-  });

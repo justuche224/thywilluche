@@ -1,7 +1,7 @@
 import db from "@/db";
 import { communityGroups } from "@/db/schema";
 
-async function seedCommunityGroups() {
+export async function seedCommunityGroups() {
   const defaultGroups = [
     {
       name: "Poetry",
@@ -45,10 +45,3 @@ async function seedCommunityGroups() {
 
   console.log("Community groups seeded successfully!");
 }
-
-seedCommunityGroups()
-  .then(() => process.exit(0))
-  .catch((error) => {
-    console.error("Error seeding community groups:", error);
-    process.exit(1);
-  });

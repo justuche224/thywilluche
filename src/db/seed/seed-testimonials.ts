@@ -82,7 +82,7 @@ const testimonialsData = [
   },
 ];
 
-async function seedTestimonials() {
+export async function seedTestimonials() {
   console.log("Seeding testimonials...");
 
   for (const item of testimonialsData) {
@@ -101,10 +101,3 @@ async function seedTestimonials() {
 
   console.log("Testimonials seeded successfully!");
 }
-
-seedTestimonials()
-  .then(() => process.exit(0))
-  .catch((error) => {
-    console.error("Error seeding testimonials:", error);
-    process.exit(1);
-  });

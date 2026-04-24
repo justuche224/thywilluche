@@ -1,7 +1,7 @@
 import db from "@/db";
 import { homeContent } from "@/db/schema";
 
-async function seedHomeContent() {
+export async function seedHomeContent() {
   const defaultData = [
     { section: "hero", key: "title1", value: "365 TIPS,", valueType: "text" },
     { section: "hero", key: "title2", value: "365 WINS,", valueType: "text" },
@@ -78,10 +78,3 @@ async function seedHomeContent() {
 
   console.log("Home content seeded successfully!");
 }
-
-seedHomeContent()
-  .then(() => process.exit(0))
-  .catch((error) => {
-    console.error("Error seeding home content:", error);
-    process.exit(1);
-  });

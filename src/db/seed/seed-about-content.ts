@@ -1,7 +1,7 @@
 import db from "@/db";
 import { aboutContent } from "@/db/schema";
 
-async function seedAboutContent() {
+export async function seedAboutContent() {
   const defaultData = [
     // Journey Section
     {
@@ -113,10 +113,3 @@ async function seedAboutContent() {
 
   console.log("About content seeded successfully!");
 }
-
-seedAboutContent()
-  .then(() => process.exit(0))
-  .catch((error) => {
-    console.error("Error seeding about content:", error);
-    process.exit(1);
-  });
