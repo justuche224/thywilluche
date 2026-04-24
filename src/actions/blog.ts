@@ -103,11 +103,6 @@ export async function getPublishedBlogPosts(category?: string) {
     .where(eq(blogPosts.status, "published"))
     .orderBy(blogPosts.publishedAt);
 
-  console.log("posts.length: " + posts.length);
-  console.log("posts[0].likeCount: " + posts[0].likeCount);
-  console.log("posts[0].shareCount: " + posts[0].shareCount);
-  console.log("posts[0].commentCount: " + posts[0].commentCount);
-
   return posts;
 }
 
@@ -148,10 +143,6 @@ export async function getBlogPostBySlug(slug: string) {
     .from(blogPosts)
     .where(eq(blogPosts.slug, slug))
     .limit(1);
-
-  console.log("post.likeCount: " + post.likeCount);
-  console.log("post.shareCount: " + post.shareCount);
-  console.log("post.commentCount: " + post.commentCount);
 
   return post;
 }
